@@ -213,5 +213,5 @@
 
       </ul>
     </nav><!-- End Icons Navigation --><!-- End Icons Navigation -->
-
+<div id="loader"></div>
   </header>

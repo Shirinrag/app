@@ -18,6 +18,9 @@
   <script src="<?=base_url();?>assets/js/main.js"></script>
 
   <script type="text/javascript">
+      setTimeout(function(){
+             document.getElementById('loader').style.visibility="hidden";
+        },1000);
     $(document).ready(function() {
     resizeChosen();
     jQuery(window).on('resize', resizeChosen);
