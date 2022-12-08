@@ -2,84 +2,54 @@
 <html lang="en">
 
 <head>
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Login </title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-<style>
-body {
-  background-image: url("http://localhost/Parking_Adda/app/assets/img/parkingaddalogo.jpg");
-}
-</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Login</title>
  <?php include 'common/cssfiles.php';?>
 </head>
 
 <body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <div class="brand-logo image_data">
+                <img src="<?=base_url();?>assets/images/parkingaddalogo.jpg" alt="logo" >
 
-  <main>
-
-    <div class="container">
-
-      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-
-              <div class="d-flex justify-content-center py-4">
-                <a href="index.html" class="logo d-flex align-items-center w-auto">
-                  <img src="<?=base_url();?>assets/img/parkingaddalogo.jpg" alt="">
-                  <span class="d-none d-lg-block">Parking Adda</span>
-                </a>
-              </div><!-- End Logo -->
-
-              <div class="card mb-3">
-
-                <div class="card-body">
-
-                  <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                   <!--  <p class="text-center small">Enter your username & password to login</p> -->
-                  </div>
-
-                  <form class="row g-3 needs-validation" novalidate>
-
-                    <div class="col-12">
-                      <label for="yourUsername" class="form-label">Email</label>
-                      <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
-                        <div class="invalid-feedback">Please enter your username.</div>
-                      </div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
-                      <div class="invalid-feedback">Please enter your password!</div>
-                    </div>
-                    <div class="col-12">
-                      <button class="btn btn-primary w-100 button_color" type="submit">Login</button>
-                    </div>
-                   <!--  <div class="col-12">
-                      <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
-                    </div> -->
-                  </form>
-
+              </div>
+              <h4 class="login_data">Login to Your Account</h4>
+              <!-- <h6 class="font-weight-light">Sign in to continue.</h6> -->
+               <?php echo form_open('common/login', array('id'=>'login_form')) ?>
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-lg" id="login_email" name="login_email" placeholder="Username">
+                   <span class="error_msg" id="login_email_error"></span>
                 </div>
-              </div>              
+                <div class="form-group">
+                  <input type="password" class="form-control form-control-lg" id="login_password" name="login_password" placeholder="Password">
+                  <span class="error_msg" id="login_password_error"></span>
+                </div>
+                <div class="mt-3 button_data">
+                  <button  type="submit" class="btn btn-block btn-lg font-weight-medium auth-form-btn button_color text_color" id="login_button"data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading">SIGN IN</button>
+                </div>
+                <div class="my-2 d-flex justify-content-between align-items-center">
+                </div>
+               
+                 <?php echo form_close() ?>
             </div>
           </div>
         </div>
-
-      </section>
-
+      </div>
+      <!-- content-wrapper ends -->
     </div>
-  </main><!-- End #main -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
  <?php include 'common/jsfiles.php';?>
+  <script src="<?=base_url()?>assets/view_js/login.js"></script>
+
 </body>
 
 </html>

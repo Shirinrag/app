@@ -3,10 +3,7 @@ class Model extends CI_Model {
 	
 	function __construct() {
 		parent::__construct();
-	}
-
-	
-	
+	}	
 	function getData($tableName, $where_data=array(), $where_in = array(), $like = array()){
         try{
 			if (isset($tableName) && isset($where_data)) {

@@ -1,682 +1,657 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
- <?php include 'common/cssfiles.php';?>
-</head>
-
-<body>
-
-  <!-- ======= Header ======= -->
-  <?php include 'common/header.php';?><!-- End Header -->
-
-  <!-- ======= Sidebar ======= -->
-    <?php include 'common/sidebar.php';?>
-  <!-- End Sidebar-->
-
-  <main id="main" class="main">
-
-    <div class="pagetitle">
-      <h1>Dashboard</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section dashboard">
-      <div class="row">
-
-        <!-- Left side columns -->
-        <div class="col-lg-8">
-          <div class="row">
-
-            <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card sales-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Sales <span>| Today</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>145</h6>
-                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
-                    </div>
+   <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Dashboard</title>
+      <!-- plugins:css -->
+      <?php include 'common/cssfiles.php';?>
+   </head>
+   <body>
+      <div class="container-scroller">
+         <!-- partial:partials/_navbar.html -->
+         <?php include 'common/header.php';?>
+         <!-- partial -->
+         <div class="container-fluid page-body-wrapper">
+           
+            <!-- partial -->
+            <!-- partial:partials/_sidebar.html -->
+            <?php include 'common/sidebar.php';?>
+            <!-- partial -->
+            <div class="main-panel">
+               <div class="content-wrapper">
+                 
+                  <div class="row">
+                     <!--  <div class="col-md-6 grid-margin stretch-card">
+                        <div class="card tale-bg">
+                          <div class="card-people mt-auto">
+                            <img src="<?=base_url()?>assets/images/dashboard/people.svg" alt="people">
+                            <div class="weather-info">
+                              <div class="d-flex">
+                                <div>
+                                  <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup></h2>
+                                </div>
+                                <div class="ml-2">
+                                  <h4 class="location font-weight-normal">Bangalore</h4>
+                                  <h6 class="font-weight-normal">India</h6>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        </div> -->
+                     <!-- <div class="col-md-6 grid-margin transparent"> -->
+                        <div class="row">
+                           <div class="col-md-6 mb-4 stretch-card transparent">
+                              <div class="card card-tale">
+                                 <div class="card-body">
+                                    <p class="mb-4">Today’s Bookings</p>
+                                    <p class="fs-30 mb-2">4006</p>
+                                    <p>10.00% (30 days)</p>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-6 mb-4 stretch-card transparent">
+                              <div class="card card-dark-blue">
+                                 <div class="card-body">
+                                    <p class="mb-4">Total Bookings</p>
+                                    <p class="fs-30 mb-2">61344</p>
+                                    <p>22.00% (30 days)</p>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                              <div class="card card-light-blue">
+                                 <div class="card-body">
+                                    <p class="mb-4">Number of Meetings</p>
+                                    <p class="fs-30 mb-2">34040</p>
+                                    <p>2.00% (30 days)</p>
+                                 </div>
+                              </div>
+                           </div>
+                            <div class="col-md-6 stretch-card transparent">
+                              <div class="card card-light-danger">
+                                 <div class="card-body">
+                                    <p class="mb-4">Number of Clients</p>
+                                    <p class="fs-30 mb-2">47033</p>
+                                    <p>0.22% (30 days)</p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                      
+                     <!-- </div> -->
                   </div>
-                </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-
-            <!-- Revenue Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card revenue-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-currency-dollar"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>$3,264</h6>
-                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Revenue Card -->
-
-            <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
-
-              <div class="card info-card customers-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Customers <span>| This Year</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-people"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>1244</h6>
-                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
-
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-            </div><!-- End Customers Card -->
-
-            <!-- Reports -->
-            <div class="col-12">
-              <div class="card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Reports <span>/Today</span></h5>
-
-                  <!-- Line Chart -->
-                  <div id="reportsChart"></div>
-
-                  <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Sales',
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        }, {
-                          name: 'Revenue',
-                          data: [11, 32, 45, 32, 34, 52, 41]
-                        }, {
-                          name: 'Customers',
-                          data: [15, 11, 32, 18, 9, 24, 11]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'dd/MM/yy HH:mm'
-                          },
-                        }
-                      }).render();
-                    });
-                  </script>
-                  <!-- End Line Chart -->
-
-                </div>
-
-              </div>
-            </div><!-- End Reports -->
-
-            <!-- Recent Sales -->
-            <div class="col-12">
-              <div class="card recent-sales overflow-auto">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Recent Sales <span>| Today</span></h5>
-
-                  <table class="table table-borderless datatable">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row"><a href="#">#2457</a></th>
-                        <td>Brandon Jacob</td>
-                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                        <td>$64</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2147</a></th>
-                        <td>Bridie Kessler</td>
-                        <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                        <td>$47</td>
-                        <td><span class="badge bg-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2049</a></th>
-                        <td>Ashleigh Langosh</td>
-                        <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                        <td>$147</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2644</a></th>
-                        <td>Angus Grady</td>
-                        <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                        <td>$67</td>
-                        <td><span class="badge bg-danger">Rejected</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2644</a></th>
-                        <td>Raheem Lehner</td>
-                        <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                        <td>$165</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                </div>
-
-              </div>
-            </div><!-- End Recent Sales -->
-
-            <!-- Top Selling -->
-            <div class="col-12">
-              <div class="card top-selling overflow-auto">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body pb-0">
-                  <h5 class="card-title">Top Selling <span>| Today</span></h5>
-
-                  <table class="table table-borderless">
-                    <thead>
-                      <tr>
-                        <th scope="col">Preview</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Sold</th>
-                        <th scope="col">Revenue</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="<?=base_url();?>assets/img/product-1.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Ut inventore ipsa voluptas nulla</a></td>
-                        <td>$64</td>
-                        <td class="fw-bold">124</td>
-                        <td>$5,828</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="<?=base_url();?>assets/img/product-2.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Exercitationem similique doloremque</a></td>
-                        <td>$46</td>
-                        <td class="fw-bold">98</td>
-                        <td>$4,508</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="<?=base_url();?>assets/img/product-3.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Doloribus nisi exercitationem</a></td>
-                        <td>$59</td>
-                        <td class="fw-bold">74</td>
-                        <td>$4,366</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="<?=base_url();?>assets/img/product-4.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Officiis quaerat sint rerum error</a></td>
-                        <td>$32</td>
-                        <td class="fw-bold">63</td>
-                        <td>$2,016</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="<?=base_url();?>assets/img/product-5.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Sit unde debitis delectus repellendus</a></td>
-                        <td>$79</td>
-                        <td class="fw-bold">41</td>
-                        <td>$3,239</td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                </div>
-
-              </div>
-            </div><!-- End Top Selling -->
-
-          </div>
-        </div><!-- End Left side columns -->
-
-        <!-- Right side columns -->
-        <div class="col-lg-4">
-
-          <!-- Recent Activity -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
+                  <!-- <div class="row">
+                     <div class="col-md-6 grid-margin stretch-card">
+                       <div class="card">
+                         <div class="card-body">
+                           <p class="card-title">Order Details</p>
+                           <p class="font-weight-500">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
+                           <div class="d-flex flex-wrap mb-5">
+                             <div class="mr-5 mt-3">
+                               <p class="text-muted">Order value</p>
+                               <h3 class="text-primary fs-30 font-weight-medium">12.3k</h3>
+                             </div>
+                             <div class="mr-5 mt-3">
+                               <p class="text-muted">Orders</p>
+                               <h3 class="text-primary fs-30 font-weight-medium">14k</h3>
+                             </div>
+                             <div class="mr-5 mt-3">
+                               <p class="text-muted">Users</p>
+                               <h3 class="text-primary fs-30 font-weight-medium">71.56%</h3>
+                             </div>
+                             <div class="mt-3">
+                               <p class="text-muted">Downloads</p>
+                               <h3 class="text-primary fs-30 font-weight-medium">34040</h3>
+                             </div> 
+                           </div>
+                           <canvas id="order-chart"></canvas>
+                         </div>
+                       </div>
+                     </div>
+                     <div class="col-md-6 grid-margin stretch-card">
+                       <div class="card">
+                         <div class="card-body">
+                          <div class="d-flex justify-content-between">
+                           <p class="card-title">Sales Report</p>
+                           <a href="#" class="text-info">View all</a>
+                          </div>
+                           <p class="font-weight-500">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
+                           <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                           <canvas id="sales-chart"></canvas>
+                         </div>
+                       </div>
+                     </div>
+                     </div>
+                     <div class="row">
+                     <div class="col-md-12 grid-margin stretch-card">
+                       <div class="card position-relative">
+                         <div class="card-body">
+                           <div id="detailedReports" class="carousel slide detailed-report-carousel position-static pt-2" data-ride="carousel">
+                             <div class="carousel-inner">
+                               <div class="carousel-item active">
+                                 <div class="row">
+                                   <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
+                                     <div class="ml-xl-4 mt-3">
+                                     <p class="card-title">Detailed Reports</p>
+                                       <h1 class="text-primary">$34040</h1>
+                                       <h3 class="font-weight-500 mb-xl-4 text-primary">North America</h3>
+                                       <p class="mb-2 mb-xl-0">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
+                                     </div>  
+                                     </div>
+                                   <div class="col-md-12 col-xl-9">
+                                     <div class="row">
+                                       <div class="col-md-6 border-right">
+                                         <div class="table-responsive mb-3 mb-md-0 mt-3">
+                                           <table class="table table-borderless report-table">
+                                             <tr>
+                                               <td class="text-muted">Illinois</td>
+                                               <td class="w-100 px-0">
+                                                 <div class="progress progress-md mx-4">
+                                                   <div class="progress-bar bg-primary" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </td>
+                                               <td><h5 class="font-weight-bold mb-0">713</h5></td>
+                                             </tr>
+                                             <tr>
+                                               <td class="text-muted">Washington</td>
+                                               <td class="w-100 px-0">
+                                                 <div class="progress progress-md mx-4">
+                                                   <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </td>
+                                               <td><h5 class="font-weight-bold mb-0">583</h5></td>
+                                             </tr>
+                                             <tr>
+                                               <td class="text-muted">Mississippi</td>
+                                               <td class="w-100 px-0">
+                                                 <div class="progress progress-md mx-4">
+                                                   <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </td>
+                                               <td><h5 class="font-weight-bold mb-0">924</h5></td>
+                                             </tr>
+                                             <tr>
+                                               <td class="text-muted">California</td>
+                                               <td class="w-100 px-0">
+                                                 <div class="progress progress-md mx-4">
+                                                   <div class="progress-bar bg-info" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </td>
+                                               <td><h5 class="font-weight-bold mb-0">664</h5></td>
+                                             </tr>
+                                             <tr>
+                                               <td class="text-muted">Maryland</td>
+                                               <td class="w-100 px-0">
+                                                 <div class="progress progress-md mx-4">
+                                                   <div class="progress-bar bg-primary" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </td>
+                                               <td><h5 class="font-weight-bold mb-0">560</h5></td>
+                                             </tr>
+                                             <tr>
+                                               <td class="text-muted">Alaska</td>
+                                               <td class="w-100 px-0">
+                                                 <div class="progress progress-md mx-4">
+                                                   <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </td>
+                                               <td><h5 class="font-weight-bold mb-0">793</h5></td>
+                                             </tr>
+                                           </table>
+                                         </div>
+                                       </div>
+                                       <div class="col-md-6 mt-3">
+                                         <canvas id="north-america-chart"></canvas>
+                                         <div id="north-america-legend"></div>
+                                       </div>
+                                     </div>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="carousel-item">
+                                 <div class="row">
+                                   <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
+                                     <div class="ml-xl-4 mt-3">
+                                     <p class="card-title">Detailed Reports</p>
+                                       <h1 class="text-primary">$34040</h1>
+                                       <h3 class="font-weight-500 mb-xl-4 text-primary">North America</h3>
+                                       <p class="mb-2 mb-xl-0">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
+                                     </div>  
+                                     </div>
+                                   <div class="col-md-12 col-xl-9">
+                                     <div class="row">
+                                       <div class="col-md-6 border-right">
+                                         <div class="table-responsive mb-3 mb-md-0 mt-3">
+                                           <table class="table table-borderless report-table">
+                                             <tr>
+                                               <td class="text-muted">Illinois</td>
+                                               <td class="w-100 px-0">
+                                                 <div class="progress progress-md mx-4">
+                                                   <div class="progress-bar bg-primary" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </td>
+                                               <td><h5 class="font-weight-bold mb-0">713</h5></td>
+                                             </tr>
+                                             <tr>
+                                               <td class="text-muted">Washington</td>
+                                               <td class="w-100 px-0">
+                                                 <div class="progress progress-md mx-4">
+                                                   <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </td>
+                                               <td><h5 class="font-weight-bold mb-0">583</h5></td>
+                                             </tr>
+                                             <tr>
+                                               <td class="text-muted">Mississippi</td>
+                                               <td class="w-100 px-0">
+                                                 <div class="progress progress-md mx-4">
+                                                   <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </td>
+                                               <td><h5 class="font-weight-bold mb-0">924</h5></td>
+                                             </tr>
+                                             <tr>
+                                               <td class="text-muted">California</td>
+                                               <td class="w-100 px-0">
+                                                 <div class="progress progress-md mx-4">
+                                                   <div class="progress-bar bg-info" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </td>
+                                               <td><h5 class="font-weight-bold mb-0">664</h5></td>
+                                             </tr>
+                                             <tr>
+                                               <td class="text-muted">Maryland</td>
+                                               <td class="w-100 px-0">
+                                                 <div class="progress progress-md mx-4">
+                                                   <div class="progress-bar bg-primary" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </td>
+                                               <td><h5 class="font-weight-bold mb-0">560</h5></td>
+                                             </tr>
+                                             <tr>
+                                               <td class="text-muted">Alaska</td>
+                                               <td class="w-100 px-0">
+                                                 <div class="progress progress-md mx-4">
+                                                   <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </td>
+                                               <td><h5 class="font-weight-bold mb-0">793</h5></td>
+                                             </tr>
+                                           </table>
+                                         </div>
+                                       </div>
+                                       <div class="col-md-6 mt-3">
+                                         <canvas id="south-america-chart"></canvas>
+                                         <div id="south-america-legend"></div>
+                                       </div>
+                                     </div>
+                                   </div>
+                                 </div>
+                               </div>
+                             </div>
+                             <a class="carousel-control-prev" href="#detailedReports" role="button" data-slide="prev">
+                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                               <span class="sr-only">Previous</span>
+                             </a>
+                             <a class="carousel-control-next" href="#detailedReports" role="button" data-slide="next">
+                               <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                               <span class="sr-only">Next</span>
+                             </a>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                     </div>
+                     <div class="row">
+                     <div class="col-md-7 grid-margin stretch-card">
+                       <div class="card">
+                         <div class="card-body">
+                           <p class="card-title mb-0">Top Products</p>
+                           <div class="table-responsive">
+                             <table class="table table-striped table-borderless">
+                               <thead>
+                                 <tr>
+                                   <th>Product</th>
+                                   <th>Price</th>
+                                   <th>Date</th>
+                                   <th>Status</th>
+                                 </tr>  
+                               </thead>
+                               <tbody>
+                                 <tr>
+                                   <td>Search Engine Marketing</td>
+                                   <td class="font-weight-bold">$362</td>
+                                   <td>21 Sep 2018</td>
+                                   <td class="font-weight-medium"><div class="badge badge-success">Completed</div></td>
+                                 </tr>
+                                 <tr>
+                                   <td>Search Engine Optimization</td>
+                                   <td class="font-weight-bold">$116</td>
+                                   <td>13 Jun 2018</td>
+                                   <td class="font-weight-medium"><div class="badge badge-success">Completed</div></td>
+                                 </tr>
+                                 <tr>
+                                   <td>Display Advertising</td>
+                                   <td class="font-weight-bold">$551</td>
+                                   <td>28 Sep 2018</td>
+                                   <td class="font-weight-medium"><div class="badge badge-warning">Pending</div></td>
+                                 </tr>
+                                 <tr>
+                                   <td>Pay Per Click Advertising</td>
+                                   <td class="font-weight-bold">$523</td>
+                                   <td>30 Jun 2018</td>
+                                   <td class="font-weight-medium"><div class="badge badge-warning">Pending</div></td>
+                                 </tr>
+                                 <tr>
+                                   <td>E-Mail Marketing</td>
+                                   <td class="font-weight-bold">$781</td>
+                                   <td>01 Nov 2018</td>
+                                   <td class="font-weight-medium"><div class="badge badge-danger">Cancelled</div></td>
+                                 </tr>
+                                 <tr>
+                                   <td>Referral Marketing</td>
+                                   <td class="font-weight-bold">$283</td>
+                                   <td>20 Mar 2018</td>
+                                   <td class="font-weight-medium"><div class="badge badge-warning">Pending</div></td>
+                                 </tr>
+                                 <tr>
+                                   <td>Social media marketing</td>
+                                   <td class="font-weight-bold">$897</td>
+                                   <td>26 Oct 2018</td>
+                                   <td class="font-weight-medium"><div class="badge badge-success">Completed</div></td>
+                                 </tr>
+                               </tbody>
+                             </table>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                     <div class="col-md-5 grid-margin stretch-card">
+                     <div class="card">
+                     <div class="card-body">
+                     <h4 class="card-title">To Do Lists</h4>
+                     <div class="list-wrapper pt-2">
+                     <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
+                     <li>
+                     <div class="form-check form-check-flat">
+                      <label class="form-check-label">
+                        <input class="checkbox" type="checkbox">
+                        Meeting with Urban Team
+                      </label>
+                     </div>
+                     <i class="remove ti-close"></i>
+                     </li>
+                     <li class="completed">
+                     <div class="form-check form-check-flat">
+                      <label class="form-check-label">
+                        <input class="checkbox" type="checkbox" checked>
+                        Duplicate a project for new customer
+                      </label>
+                     </div>
+                     <i class="remove ti-close"></i>
+                     </li>
+                     <li>
+                     <div class="form-check form-check-flat">
+                      <label class="form-check-label">
+                        <input class="checkbox" type="checkbox">
+                        Project meeting with CEO
+                      </label>
+                     </div>
+                     <i class="remove ti-close"></i>
+                     </li>
+                     <li class="completed">
+                     <div class="form-check form-check-flat">
+                      <label class="form-check-label">
+                        <input class="checkbox" type="checkbox" checked>
+                        Follow up of team zilla
+                      </label>
+                     </div>
+                     <i class="remove ti-close"></i>
+                     </li>
+                     <li>
+                     <div class="form-check form-check-flat">
+                      <label class="form-check-label">
+                        <input class="checkbox" type="checkbox">
+                        Level up for Antony
+                      </label>
+                     </div>
+                     <i class="remove ti-close"></i>
+                     </li>
+                     </ul>
+                           </div>
+                           <div class="add-items d-flex mb-0 mt-2">
+                     <input type="text" class="form-control todo-list-input"  placeholder="Add new task">
+                     <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"><i class="icon-circle-plus"></i></button>
+                     </div>
+                     </div>
+                     </div>
+                     </div>
+                     </div>
+                     <div class="row">
+                     <div class="col-md-4 stretch-card grid-margin">
+                       <div class="card">
+                         <div class="card-body">
+                           <p class="card-title mb-0">Projects</p>
+                           <div class="table-responsive">
+                             <table class="table table-borderless">
+                               <thead>
+                                 <tr>
+                                   <th class="pl-0  pb-2 border-bottom">Places</th>
+                                   <th class="border-bottom pb-2">Orders</th>
+                                   <th class="border-bottom pb-2">Users</th>
+                                 </tr>
+                               </thead>
+                               <tbody>
+                                 <tr>
+                                   <td class="pl-0">Kentucky</td>
+                                   <td><p class="mb-0"><span class="font-weight-bold mr-2">65</span>(2.15%)</p></td>
+                                   <td class="text-muted">65</td>
+                                 </tr>
+                                 <tr>
+                                   <td class="pl-0">Ohio</td>
+                                   <td><p class="mb-0"><span class="font-weight-bold mr-2">54</span>(3.25%)</p></td>
+                                   <td class="text-muted">51</td>
+                                 </tr>
+                                 <tr>
+                                   <td class="pl-0">Nevada</td>
+                                   <td><p class="mb-0"><span class="font-weight-bold mr-2">22</span>(2.22%)</p></td>
+                                   <td class="text-muted">32</td>
+                                 </tr>
+                                 <tr>
+                                   <td class="pl-0">North Carolina</td>
+                                   <td><p class="mb-0"><span class="font-weight-bold mr-2">46</span>(3.27%)</p></td>
+                                   <td class="text-muted">15</td>
+                                 </tr>
+                                 <tr>
+                                   <td class="pl-0">Montana</td>
+                                   <td><p class="mb-0"><span class="font-weight-bold mr-2">17</span>(1.25%)</p></td>
+                                   <td class="text-muted">25</td>
+                                 </tr>
+                                 <tr>
+                                   <td class="pl-0">Nevada</td>
+                                   <td><p class="mb-0"><span class="font-weight-bold mr-2">52</span>(3.11%)</p></td>
+                                   <td class="text-muted">71</td>
+                                 </tr>
+                                 <tr>
+                                   <td class="pl-0 pb-0">Louisiana</td>
+                                   <td class="pb-0"><p class="mb-0"><span class="font-weight-bold mr-2">25</span>(1.32%)</p></td>
+                                   <td class="pb-0">14</td>
+                                 </tr>
+                               </tbody>
+                             </table>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                     <div class="col-md-4 stretch-card grid-margin">
+                       <div class="row">
+                         <div class="col-md-12 grid-margin stretch-card">
+                           <div class="card">
+                             <div class="card-body">
+                               <p class="card-title">Charts</p>
+                               <div class="charts-data">
+                                 <div class="mt-3">
+                                   <p class="mb-0">Data 1</p>
+                                   <div class="d-flex justify-content-between align-items-center">
+                                     <div class="progress progress-md flex-grow-1 mr-4">
+                                       <div class="progress-bar bg-inf0" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                     </div>
+                                     <p class="mb-0">5k</p>
+                                   </div>
+                                 </div>
+                                 <div class="mt-3">
+                                   <p class="mb-0">Data 2</p>
+                                   <div class="d-flex justify-content-between align-items-center">
+                                     <div class="progress progress-md flex-grow-1 mr-4">
+                                       <div class="progress-bar bg-info" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                     </div>
+                                     <p class="mb-0">1k</p>
+                                   </div>
+                                 </div>
+                                 <div class="mt-3">
+                                   <p class="mb-0">Data 3</p>
+                                   <div class="d-flex justify-content-between align-items-center">
+                                     <div class="progress progress-md flex-grow-1 mr-4">
+                                       <div class="progress-bar bg-info" role="progressbar" style="width: 48%" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
+                                     </div>
+                                     <p class="mb-0">992</p>
+                                   </div>
+                                 </div>
+                                 <div class="mt-3">
+                                   <p class="mb-0">Data 4</p>
+                                   <div class="d-flex justify-content-between align-items-center">
+                                     <div class="progress progress-md flex-grow-1 mr-4">
+                                       <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                     </div>
+                                     <p class="mb-0">687</p>
+                                   </div>
+                                 </div>
+                               </div>  
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-md-12 stretch-card grid-margin grid-margin-md-0">
+                           <div class="card data-icon-card-primary">
+                             <div class="card-body">
+                               <p class="card-title text-white">Number of Meetings</p>                      
+                               <div class="row">
+                                 <div class="col-8 text-white">
+                                   <h3>34040</h3>
+                                   <p class="text-white font-weight-500 mb-0">The total number of sessions within the date range.It is calculated as the sum . </p>
+                                 </div>
+                                 <div class="col-4 background-icon">
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                     <div class="col-md-4 stretch-card grid-margin">
+                       <div class="card">
+                         <div class="card-body">
+                           <p class="card-title">Notifications</p>
+                           <ul class="icon-data-list">
+                             <li>
+                               <div class="d-flex">
+                                 <img src="<?=base_url()?>assets/images/faces/face1.jpg" alt="user">
+                                 <div>
+                                   <p class="text-info mb-1">Isabella Becker</p>
+                                   <p class="mb-0">Sales dashboard have been created</p>
+                                   <small>9:30 am</small>
+                                 </div>
+                               </div>
+                             </li>
+                             <li>
+                               <div class="d-flex">
+                                 <img src="<?=base_url()?>assets/images/faces/face2.jpg" alt="user">
+                                 <div>
+                                   <p class="text-info mb-1">Adam Warren</p>
+                                   <p class="mb-0">You have done a great job #TW111</p>
+                                   <small>10:30 am</small>
+                                 </div>
+                               </div>
+                             </li>
+                             <li>
+                               <div class="d-flex">
+                               <img src="<?=base_url()?>assets/images/faces/face3.jpg" alt="user">
+                              <div>
+                               <p class="text-info mb-1">Leonard Thornton</p>
+                               <p class="mb-0">Sales dashboard have been created</p>
+                               <small>11:30 am</small>
+                              </div>
+                               </div>
+                             </li>
+                             <li>
+                               <div class="d-flex">
+                                 <img src="<?=base_url()?>assets/images/faces/face4.jpg" alt="user">
+                                 <div>
+                                   <p class="text-info mb-1">George Morrison</p>
+                                   <p class="mb-0">Sales dashboard have been created</p>
+                                   <small>8:50 am</small>
+                                 </div>
+                               </div>
+                             </li>
+                             <li>
+                               <div class="d-flex">
+                                 <img src="<?=base_url()?>assets/images/faces/face5.jpg" alt="user">
+                                 <div>
+                                 <p class="text-info mb-1">Ryan Cortez</p>
+                                 <p class="mb-0">Herbs are fun and easy to grow.</p>
+                                 <small>9:00 am</small>
+                                 </div>
+                               </div>
+                             </li>
+                           </ul>
+                         </div>
+                       </div>
+                     </div>
+                     </div>
+                     <div class="row">
+                     <div class="col-md-12 grid-margin stretch-card">
+                       <div class="card">
+                         <div class="card-body">
+                           <p class="card-title">Advanced Table</p>
+                           <div class="row">
+                             <div class="col-12">
+                               <div class="table-responsive">
+                                 <table id="example" class="display expandable-table" style="width:100%">
+                                   <thead>
+                                     <tr>
+                                       <th>Quote#</th>
+                                       <th>Product</th>
+                                       <th>Business type</th>
+                                       <th>Policy holder</th>
+                                       <th>Premium</th>
+                                       <th>Status</th>
+                                       <th>Updated at</th>
+                                       <th></th>
+                                     </tr>
+                                   </thead>
+                               </table>
+                               </div>
+                             </div>
+                           </div>
+                           </div>
+                         </div>
+                       </div>
+                     </div> -->
+               </div>
+               <!-- content-wrapper ends -->
+               <!-- partial:partials/_footer.html -->
+               <?php include 'common/footer.php';?>
+               <!-- partial -->
             </div>
-
-            <div class="card-body">
-              <h5 class="card-title">Recent Activity <span>| Today</span></h5>
-
-              <div class="activity">
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">32 min</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                  <div class="activity-content">
-                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">56 min</div>
-                  <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                  <div class="activity-content">
-                    Voluptatem blanditiis blanditiis eveniet
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">2 hrs</div>
-                  <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                  <div class="activity-content">
-                    Voluptates corrupti molestias voluptatem
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">1 day</div>
-                  <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                  <div class="activity-content">
-                    Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">2 days</div>
-                  <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                  <div class="activity-content">
-                    Est sit eum reiciendis exercitationem
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">4 weeks</div>
-                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                  <div class="activity-content">
-                    Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                  </div>
-                </div><!-- End activity item-->
-
-              </div>
-
-            </div>
-          </div><!-- End Recent Activity -->
-
-          <!-- Budget Report -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
-            <div class="card-body pb-0">
-              <h5 class="card-title">Budget Report <span>| This Month</span></h5>
-
-              <div id="budgetChart" style="min-height: 400px;" class="echart"></div>
-
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  var budgetChart = echarts.init(document.querySelector("#budgetChart")).setOption({
-                    legend: {
-                      data: ['Allocated Budget', 'Actual Spending']
-                    },
-                    radar: {
-                      // shape: 'circle',
-                      indicator: [{
-                          name: 'Sales',
-                          max: 6500
-                        },
-                        {
-                          name: 'Administration',
-                          max: 16000
-                        },
-                        {
-                          name: 'Information Technology',
-                          max: 30000
-                        },
-                        {
-                          name: 'Customer Support',
-                          max: 38000
-                        },
-                        {
-                          name: 'Development',
-                          max: 52000
-                        },
-                        {
-                          name: 'Marketing',
-                          max: 25000
-                        }
-                      ]
-                    },
-                    series: [{
-                      name: 'Budget vs spending',
-                      type: 'radar',
-                      data: [{
-                          value: [4200, 3000, 20000, 35000, 50000, 18000],
-                          name: 'Allocated Budget'
-                        },
-                        {
-                          value: [5000, 14000, 28000, 26000, 42000, 21000],
-                          name: 'Actual Spending'
-                        }
-                      ]
-                    }]
-                  });
-                });
-              </script>
-
-            </div>
-          </div><!-- End Budget Report -->
-
-          <!-- Website Traffic -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
-            <div class="card-body pb-0">
-              <h5 class="card-title">Website Traffic <span>| Today</span></h5>
-
-              <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
-
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  echarts.init(document.querySelector("#trafficChart")).setOption({
-                    tooltip: {
-                      trigger: 'item'
-                    },
-                    legend: {
-                      top: '5%',
-                      left: 'center'
-                    },
-                    series: [{
-                      name: 'Access From',
-                      type: 'pie',
-                      radius: ['40%', '70%'],
-                      avoidLabelOverlap: false,
-                      label: {
-                        show: false,
-                        position: 'center'
-                      },
-                      emphasis: {
-                        label: {
-                          show: true,
-                          fontSize: '18',
-                          fontWeight: 'bold'
-                        }
-                      },
-                      labelLine: {
-                        show: false
-                      },
-                      data: [{
-                          value: 1048,
-                          name: 'Search Engine'
-                        },
-                        {
-                          value: 735,
-                          name: 'Direct'
-                        },
-                        {
-                          value: 580,
-                          name: 'Email'
-                        },
-                        {
-                          value: 484,
-                          name: 'Union Ads'
-                        },
-                        {
-                          value: 300,
-                          name: 'Video Ads'
-                        }
-                      ]
-                    }]
-                  });
-                });
-              </script>
-
-            </div>
-          </div><!-- End Website Traffic -->
-
-          <!-- News & Updates Traffic -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
-            <div class="card-body pb-0">
-              <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
-
-              <div class="news">
-                <div class="post-item clearfix">
-                  <img src="<?=base_url();?>assets/img/news-1.jpg" alt="">
-                  <h4><a href="#">Nihil blanditiis at in nihil autem</a></h4>
-                  <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
-                </div>
-
-                <div class="post-item clearfix">
-                  <img src="<?=base_url();?>assets/img/news-2.jpg" alt="">
-                  <h4><a href="#">Quidem autem et impedit</a></h4>
-                  <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
-                </div>
-
-                <div class="post-item clearfix">
-                  <img src="<?=base_url();?>assets/img/news-3.jpg" alt="">
-                  <h4><a href="#">Id quia et et ut maxime similique occaecati ut</a></h4>
-                  <p>Fugiat voluptas vero eaque accusantium eos. Consequuntur sed ipsam et totam...</p>
-                </div>
-
-                <div class="post-item clearfix">
-                  <img src="<?=base_url();?>assets/img/news-4.jpg" alt="">
-                  <h4><a href="#">Laborum corporis quo dara net para</a></h4>
-                  <p>Qui enim quia optio. Eligendi aut asperiores enim repellendusvel rerum cuder...</p>
-                </div>
-
-                <div class="post-item clearfix">
-                  <img src="<?=base_url();?>assets/img/news-5.jpg" alt="">
-                  <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
-                  <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
-                </div>
-
-              </div><!-- End sidebar recent posts-->
-
-            </div>
-          </div><!-- End News & Updates -->
-
-        </div><!-- End Right side columns -->
-
+            <!-- main-panel ends -->
+         </div>
+         <!-- page-body-wrapper ends -->
       </div>
-    </section>
-
-  </main><!-- End #main -->
-<?php include 'common/footer.php';?>
-
-  <!-- ======= Footer ======= -->
-  
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <?php include 'common/jsfiles.php';?>
-
-</body>
-
+      <!-- container-scroller -->
+      <!-- plugins:js -->
+      <?php include 'common/jsfiles.php';?>
+      <!-- End custom js for this page-->
+   </body>
 </html>
