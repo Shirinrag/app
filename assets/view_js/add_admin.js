@@ -3,7 +3,7 @@ $(document).ready(function() {
 });
 
 function load_admin_data() {
-    var dataTable = $('#role_data_table').DataTable({
+    var dataTable = $('#admin_data_table').DataTable({
         dom: 'lBfrtip',
         rowReorder: {
             selector: 'td:nth-child(2)'

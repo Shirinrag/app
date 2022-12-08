@@ -40,6 +40,8 @@
 }
 .ti-trash:before {
 	content: "\e605";
+	color: #D60606;
+	font-size: 1.5em;
 }
 .ti-thought:before {
 	content: "\e606";
@@ -109,6 +111,9 @@
 }
 .ti-pencil:before {
 	content: "\e61c";
+	color: #D60606;
+	font-size: 1.5em;
+
 }
 .ti-pencil-alt:before {
 	content: "\e61d";
