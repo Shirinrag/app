@@ -24,11 +24,13 @@
               <!-- <h6 class="font-weight-light">Sign in to continue.</h6> -->
                <?php echo form_open('common/login', array('id'=>'login_form')) ?>
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" id="login_email" name="login_email" placeholder="Username">
+                  <label>Username</label>
+                  <input type="text" class="form-control input-text" id="login_email" name="login_email" placeholder="Username">
                    <span class="error_msg" id="login_email_error"></span>
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" id="login_password" name="login_password" placeholder="Password">
+                   <label>Password</label>
+                  <input type="password" class="form-control input-text" id="login_password" name="login_password" placeholder="Password">
                   <span class="error_msg" id="login_password_error"></span>
                 </div>
                 <div class="mt-3 button_data">
