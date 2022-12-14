@@ -1,12 +1,10 @@
+   <link rel="stylesheet" href="<?=base_url()?>assets/vendors/css/vendor.bundle.base.css">
  <link rel="stylesheet" href="<?=base_url()?>assets/vendors/feather/feather.css">
   <link rel="stylesheet" href="<?=base_url()?>assets/vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="<?=base_url()?>assets/vendors/css/vendor.bundle.base.css">
+
   <!-- endinject -->
   <!-- Plugin css for this page -->
-  <link rel="stylesheet" href="<?=base_url()?>assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-  <!-- <link rel="stylesheet" href="<?=base_url()?>assets/vendors/ti-icons/css/themify-icons.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/js/select.dataTables.min.css"> -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+  <link rel="stylesheet" href=" https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="<?=base_url()?>assets/plugins/chosen/chosen.css" />
   <link rel="stylesheet" href="<?=base_url()?>assets/plugins/chosen/prism.css" />
   

@@ -32,18 +32,19 @@
               <span class="menu-title">User List</span>
             </a>
           </li>
-           <li class="nav-item">
-            <a class="nav-link" href="<?=base_url()?>superadmin/booking_history" aria-controls="form-elements">
-             <i class="icon-book menu-icon"></i>
-              <span class="menu-title">Booking History</span>
-            </a>
-          </li>
           <li class="nav-item">
             <a class="nav-link" href="<?=base_url()?>superadmin/add_admin" aria-controls="form-elements">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">Add Admin</span>
             </a>
           </li>
+           <li class="nav-item">
+            <a class="nav-link" href="<?=base_url()?>superadmin/booking_history" aria-controls="form-elements">
+             <i class="icon-book menu-icon"></i>
+              <span class="menu-title">Booking History</span>
+            </a>
+          </li>
+          
           <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
               <i class="icon-bar-graph menu-icon"></i>

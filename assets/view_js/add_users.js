@@ -20,17 +20,18 @@ $(document).ready(function() {
                     }
                 },
             },
-            // { "data": "status",
-            //     "className": "change_status",
-            //     render: function(data) {
-            //         var data_info=data.split(",");
-            //         if (data_info[0] == '1') {
-            //             return '<div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="switch'+data_info[1]+'" name="example" checked onclick="change_status('+data_info[0]+','+data_info[1]+');"><label class="custom-control-label" for="switch'+data_info[1]+'"></label></div>';
-            //         } else {
-            //             return '<div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="switch'+data_info[1]+'" name="example" onclick="change_status('+data_info[0]+','+data_info[1]+');"><label class="custom-control-label" for="switch'+data_info[1]+'"></label></div>';
-            //         }
-            //     },
-            // }, 
+            { "data": "statusdata",
+                "className": "change_status",
+                render: function(data) {
+                    var change_status=data.split(",");
+                    if (change_status[0] == 1) {
+                        return '<label class="toggle"><input class="toggle-checkbox" type="checkbox" checked id="switch'+change_status[1]+'" onclick="change_status('+change_status[0]+','+change_status[1]+');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
+                    } else {
+                        return '<label class="toggle"><input class="toggle-checkbox" type="checkbox" id="switch'+change_status[1]+'" onclick="change_status('+change_status[0]+','+change_status[1]+');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
+                       
+                    }
+                },
+            }, 
             
         ],
         "order": [[ 0, 'desc' ]]       
@@ -42,3 +43,41 @@ $(document).ready(function() {
   
       }).draw();
 });
+
+
+function change_status(status,id){ 
+    var status=status;
+    if(status==1){
+        var user_status=0;
+    }
+    else{
+        var user_status=1;
+    }
+    var user_id=id;
+     //console.log(domain_id);
+    $.ajax({
+       url: frontend_path+"superadmin/change_user_status",
+       type: "POST",
+       data:{
+        'id':user_id,
+        'status':user_status
+       },
+       dataType: 'json',
+        // beforeSend:function(){
+        //     document.getElementById('header_loader').style.visibility = "visible";
+        // },
+       success: function(data) {
+           // document.getElementById('header_loader').style.visibility = "hidden";
+           // table.ajax.reload(null,false);
+                   $('#user_data_table').DataTable().ajax.reload(null,false);
+
+            swal({
+                title: "success",
+                text: data.message,
+                icon: "success",
+                dangerMode: true,
+                timer: 1500
+             });
+       }
+   });    
+}

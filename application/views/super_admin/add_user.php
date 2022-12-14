@@ -41,7 +41,7 @@
                           <th>Contact No</th>
                           <th>Car No.</th>
                           <th>OTP Verified</th>
-                          <!-- <th>Status</th> -->
+                          <th>Status</th>
                         </tr>
                       </thead>
                      
