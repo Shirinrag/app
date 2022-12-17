@@ -4,7 +4,7 @@
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Admin</title>
+      <title>Place</title>
       <!-- plugins:css -->
       <?php include 'common/cssfiles.php';?>
    </head>
@@ -26,69 +26,168 @@
                         <div class="col">
                            <div class="card">
                               <div class="card-body">
-                                 <h4 class="card-title">Add Admin</h4>
-                                 <?php echo form_open('superadmin/save_admin_data', array('id'=>'add_admin_form')) ?>
+                                 <h4 class="card-title">Add Place</h4>
+                                 <?php echo form_open('superadmin/save_parking_place', array('id'=>'add_parking_place_form')) ?>
                                  <div class="row">
                                     <div class="col-md-4">
                                        <div class="form-group">
-                                          <label>Username</label>
-                                          <input type="text" class="form-control input-text" name="username" placeholder="Username">
-                                          <span class="error_msg" id="username_error"></span>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                       <div class="form-group">
-                                          <label>First Name</label>
-                                          <input type="text" class="form-control input-text" name="first_name" placeholder="First Name">
-                                          <span class="error_msg" id="first_name_error"></span>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                       <div class="form-group">
-                                          <label>Last Name</label>
-                                          <input type="text" class="form-control input-text" name="last_name" placeholder="Last Name">
-                                          <span class="error_msg" id="last_name_error"></span>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                       <div class="form-group">
-                                          <label>Email</label>
-                                          <input type="text" class="form-control input-text" name="email" placeholder="Email">
-                                          <span class="error_msg" id="email_error"></span>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                       <div class="form-group">
-                                          <label>Conatct No</label>
-                                          <input type="text" class="form-control input-text" name="contact_no" placeholder="Conatct No">
-                                          <span class="error_msg" id="contact_no_error"></span>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                       <div class="form-group">
-                                          <label>Password</label>
-                                          <input type="text" class="form-control input-text" name="password" placeholder="Password">
-                                          <span class="error_msg" id="password_error"></span>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                       <div class="form-group">
-                                          <label>Select Admin Role</label>
-                                          <select type="text" class="form-control chosen-select-deselect" name="user_type" id="user_type" placeholder="Select Admin Role">
+                                          <label>Select Vendor</label>
+                                          <select type="text" class="form-control chosen-select-deselect" name="fk_vendor_id" id="fk_vendor_id" placeholder="Select Vendor">
                                              <option value=""></option>
                                              <?php 
-                                                foreach ($user_type_data as $user_type_data_key => $user_type_data_row) { ?>
-                                             <option value="<?=$user_type_data_row['id']?>"><?=$user_type_data_row['user_type']?></option>
+                                                foreach ($vendor as $vendor_key => $vendor_row) { ?>
+                                             <option value="<?=$vendor_row['id']?>"><?=$vendor_row['firstName']." ".$vendor_row['lastName']?></option>
                                              <?php }
                                                 ?>
                                           </select>
-                                          <span class="error_msg" id="user_type_error"></span>
+                                          <span class="error_msg" id="fk_vendor_id_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>Select Country</label>
+                                          <select type="text" class="form-control chosen-select-deselect" name="fk_country_id" id="fk_country_id" placeholder="Select Country">
+                                             <option value=""></option>
+                                             <?php 
+                                                foreach ($countries_data as $countries_data_key => $countries_data_row) { 
+                                                   if($countries_data_row['id']==101){
+                                                         $selected = "selected";
+                                                      }else{
+                                                          $selected = "";
+                                                      }
+                                                   ?>
+                                             <option value="<?=$countries_data_row['id']?>" <?=$selected?>><?=$countries_data_row['name']?></option>
+                                             <?php }
+                                                ?>
+                                          </select>
+                                          <span class="error_msg" id="fk_country_id_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>Select State</label>
+                                          <select type="text" class="form-control chosen-select-deselect" name="fk_state_id" id="fk_state_id" placeholder="Select Country">
+                                             <option value=""></option>
+                                          </select>
+                                          <span class="error_msg" id="fk_state_id_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>Select City</label>
+                                          <select type="text" class="form-control chosen-select-deselect" name="fk_city_id" id="fk_city_id" placeholder="Select Country">
+                                             <option value=""></option>
+                                          </select>
+                                          <span class="error_msg" id="fk_city_id_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>Place Name</label>
+                                          <input type="text" class="form-control input-text" name="place_name" placeholder="Place Name">
+                                          <span class="error_msg" id="place_name_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>Place Address</label>
+                                          <textarea class="form-control input-text" name="address" placeholder="Place Address"></textarea> 
+                                          <span class="error_msg" id="address_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>Pincode</label>
+                                          <input type="text" class="form-control input-text" name="pincode" placeholder="Pincode" onkeypress="return isNumber(event)" maxlength="6">
+                                          <span class="error_msg" id="pincode_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>Latitude</label>
+                                          <input type="text" class="form-control input-text" name="latitude" placeholder="Latitude">
+                                          <span class="error_msg" id="latitude_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>Longitude</label>
+                                          <input type="text" class="form-control input-text" name="longitude" placeholder="Longitude">
+                                          <span class="error_msg" id="longitude_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>No. of Slots</label>
+                                          <input type="text" class="form-control input-text" name="slots" placeholder="No. of Slots" onkeypress="return isNumber(event)">
+                                          <span class="error_msg" id="slots_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>Select Place Status</label>
+                                          <select type="text" class="form-control chosen-select-deselect" name="fk_place_status_id" id="fk_place_status_id" placeholder="Select Place Status">
+                                             <option value=""></option>
+                                             <?php 
+                                                foreach ($place_status as $place_status_key => $place_status_row) { ?>
+                                             <option value="<?=$place_status_row['id']?>"><?=$place_status_row['place_status']?></option>
+                                             <?php }
+                                                ?>
+                                          </select>
+                                          <span class="error_msg" id="fk_place_status_id_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>Select Price Type</label>
+                                          <select type="text" class="form-control chosen-select-deselect" name="fk_parking_price_type" id="fk_parking_price_type" placeholder="Select Price Type">
+                                             <option value=""></option>
+                                             <?php 
+                                                foreach ($price_type as $price_type_key => $price_type_row) { ?>
+                                             <option value="<?=$price_type_row['id']?>"><?=$price_type_row['price_type']?></option>
+                                             <?php }
+                                                ?>
+                                          </select>
+                                          <span class="error_msg" id="fk_parking_price_type_error"></span>
                                        </div>
                                     </div>
                                  </div>
                                  <div class="row">
+                                    <h4 class="card-title">Daily Price Slab</h4>
+                                    <div class="col-md-3">
+                                       <div class="form-group">
+                                          <label>From Hours</label>
+                                          <input type="text" class="form-control input-text" name="from_hours[]" id="from_hours_0" placeholder="From Hours">
+                                          <span class="error_msg" id="from_hours_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                       <div class="form-group">
+                                          <label>To Hours</label>
+                                          <input type="text" class="form-control input-text" name="to_hours[]" id="to_hours_0" placeholder="To Hours">
+                                          <span class="error_msg" id="to_hours_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                       <div class="form-group">
+                                          <label>Price</label>
+                                          <input type="text" class="form-control input-text" name="price[]" id="price_0" placeholder="Price" onkeypress="return isNumber(event)">
+                                          <span class="error_msg" id="price_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                       <button id="addRows" type="button" class="btn btn-info" style="margin-top: 22px; margin-left: -20px;"><i class="icon-plus"></i>
+                                       </button>
+                                       <input type="hidden" class="form-control"  name="count" id="count" value="0">
+                                    </div>
+                                 </div>
+                                 <hr>
+                                 
+                                    <div id="price_data_append"></div>
+                                 
+                                 <div class="row">
                                     <div class="float-right">
-                                       <button  type="submit" class="btn btn-block btn-lg  button_color text_color" id="add_admin_button"data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading">Submit</button>
+                                       <button  type="submit" class="btn btn-block btn-lg  button_color text_color" id="add_parking_place_button"data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading">Submit</button>
                                     </div>
                                  </div>
                                  <?php echo form_close() ?>
@@ -99,16 +198,17 @@
                      <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                            <div class="card-body">
-                              <h4 class="card-title">Admin List</h4>
+                              <h4 class="card-title">Place List</h4>
                               <div class="table-responsive">
-                                 <table class="table" id="admin_data_table">
+                                 <table class="table" id="parking_place_data_table">
                                     <thead>
                                        <tr>
                                           <th>SR. No</th>
-                                          <th>Name</th>
-                                          <th>Username</th>
-                                          <th>Email</th>
-                                          <th>Role</th>
+                                          <th>Place Name</th>
+                                          <th>Country</th>
+                                          <th>Vendor</th>
+                                          <!-- <th>Book Type</th> -->
+                                          <th>Slots</th>
                                           <th>Status</th>
                                           <th>Action</th>
                                        </tr>
@@ -144,11 +244,11 @@
                      </div>
                   </div>
                </div>
-               <div class="modal fade" id="edit_user_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal fade" id="edit_place_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-lg" role="document">
                      <div class="modal-content">
                         <div class="modal-header">
-                           <h5 class="modal-title" id="exampleModalLabel">Edit Admin Details</h5>
+                           <h5 class="modal-title" id="exampleModalLabel">Edit Place Details</h5>
                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                            <span aria-hidden="true">&times;</span>
                            </button>
@@ -235,7 +335,7 @@
       <!-- container-scroller -->
       <!-- plugins:js -->
       <?php include 'common/jsfiles.php';?>
-      <script type="text/javascript" src="<?=base_url()?>assets/view_js/add_admin.js"></script>
+      <script type="text/javascript" src="<?=base_url()?>assets/view_js/add_place.js"></script>
       <!-- End custom js for this page-->
    </body>
 </html>

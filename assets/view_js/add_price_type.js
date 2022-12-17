@@ -1,6 +1,6 @@
-$('#add_admin_form').submit(function(e) {
+$('#add_price_type_form').submit(function(e) {
     e.preventDefault();
-    var formData = new FormData($("#add_admin_form")[0]);
+    var formData = new FormData($("#add_price_type_form")[0]);
     var InvoiceTypeForm = $(this);
     jQuery.ajax({
         dataType: 'json',
@@ -12,15 +12,13 @@ $('#add_admin_form').submit(function(e) {
         contentType: false,
         mimeType: "multipart/form-data",
         beforeSend: function() {
-            $('#add_admin_button').button('loading');
+            $('#add_price_type_button').button('loading');
         },
         success: function(response) {
-            $('#add_admin_button').button('reset');
+            $('#add_price_type_button').button('reset');
             if (response.status == 'success') {
-                $('form#add_admin_form').trigger('reset');
-                $(".chosen-select-deselect").val('');
-                $('.chosen-select-deselect').trigger("chosen:updated");
-                $('#admin_data_table').DataTable().ajax.reload(null, false);
+                $('form#add_price_type_form').trigger('reset');
+                $('#price_type_data_table').DataTable().ajax.reload(null, false);
                 swal({
                     title: "success",
                     text: response.msg,
@@ -41,44 +39,31 @@ $('#add_admin_form').submit(function(e) {
     return false;
 });
 $(document).ready(function() {
-    table = $('#admin_data_table').DataTable({
-        "ajax": frontend_path + "superadmin/display_all_admin_data",
+    table = $('#price_type_data_table').DataTable({
+        "ajax": frontend_path + "superadmin/display_all_price_type_data",
         "columns": [{
                 "data": null
             },
             {
-                "data": "firstName"
-            },
-            {
-                "data": "userName"
-            },
-            {
-                "data": "email"
-            },
-            // { "data": "phoneNo"},
-            {
-                "data": "user_type_name",
-                render: function(data) {
-                    var data_info = data;
-                    return '<label class="badge badge-success">' + data_info + '</label>';
-                },
+                "data": "price_type"
             },
             {
                 "data": "statusdata",
-                "className": "change_status",
+                "className": "change_price_type",
                 render: function(data) {
-                    var change_status = data.split(",");
-                    if (change_status[0] == 1) {
-                        return '<label class="toggle"><input class="toggle-checkbox" type="checkbox" checked id="switch' + change_status[1] + '" onclick="change_status(' + change_status[0] + ',' + change_status[1] + ');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
+                    var change_price_type = data.split(",");
+                    if (change_price_type[0] == 1) {
+                        return '<label class="toggle"><input class="toggle-checkbox" type="checkbox" checked id="switch' + change_price_type[1] + '" onclick="change_price_type(' + change_price_type[0] + ',' + change_price_type[1] + ');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
                     } else {
-                        return '<label class="toggle"><input class="toggle-checkbox" type="checkbox" id="switch' + change_status[1] + '" onclick="change_status(' + change_status[0] + ',' + change_status[1] + ');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
+                        return '<label class="toggle"><input class="toggle-checkbox" type="checkbox" id="switch' + change_price_type[1] + '" onclick="change_price_type(' + change_price_type[0] + ',' + change_price_type[1] + ');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
                     }
                 },
             },
             {
                 "data": null,
-                "className": "edit_admin_details",
-                "defaultContent": '<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Edit Details" ><i class="ti-pencil" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_user_modal"></i></a><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Delete Details" class="remove-row"><i class="ti-trash a_delete_user" href="#a_delete_user_modal" class="trigger-btn" data-bs-toggle="modal" data-bs-target="#delete_admin" aria-hidden="true"></i></a></span>'
+                "className": "edit_price_type",
+                "defaultContent": '<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Edit Details" ><i class="ti-pencil" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_price_type_modal"></i></a></span>'
+                // <a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Delete Details" class="remove-row"><i class="ti-trash a_delete_user" href="#a_delete_user_modal" class="trigger-btn" data-bs-toggle="modal" data-bs-target="#delete_admin" aria-hidden="true"></i></a>
             },
         ],
         "order": [
@@ -95,23 +80,18 @@ $(document).ready(function() {
 
     }).draw();
 });
-    $(document).on("click","#admin_data_table tbody tr, .edit_admin_details tbody tr td",function(){
+// $('#price_type_data_table tbody').on('click', 'td.edit_price_type', function(e) {
+    $(document).on("click","#price_type_data_table tbody tr, .edit_price_type tbody tr td",function(){
     var tr = $(this).closest('tr');
     var row = table.row(tr);
     var data1 = row.data();
     
-    $('#edit_username').val(data1.userName);
-    $('#edit_first_name').val(data1.firstName);
-    $('#edit_last_name').val(data1.lastName);
-    $('#edit_email').val(data1.email);
-    $('#edit_contact_no').val(data1.phoneNo);
-    $('#edit_user_type').val(data1.user_type);
-    $('#edit_user_type').trigger("chosen:updated");
-    $('#delete_admin_id').val(data1.id);
+    $('#edit_price_type').val(data1.price_type);
     $('#edit_id').val(data1.id);
 });
 
-function change_status(status, id) {
+function change_price_type(status, id) {
+    console.log(status);console.log(id);
     var status = status;
     if (status == 1) {
         var user_status = 0;
@@ -121,7 +101,7 @@ function change_status(status, id) {
     var user_id = id;
     //console.log(domain_id);
     $.ajax({
-        url: frontend_path + "superadmin/change_user_status",
+        url: frontend_path + "superadmin/update_price_type_status",
         type: "POST",
         data: {
             'id': user_id,
@@ -133,7 +113,7 @@ function change_status(status, id) {
         // },
         success: function(data) {
             // document.getElementById('header_loader').style.visibility = "hidden";
-            $('#admin_data_table').DataTable().ajax.reload(null, false);
+            $('#price_type_data_table').DataTable().ajax.reload(null, false);
 
             swal({
                 title: "success",
@@ -146,9 +126,9 @@ function change_status(status, id) {
     });
 }
 
-$('#update_admin_form').submit(function(e) {
+$('#update_price_type_form').submit(function(e) {
     e.preventDefault();
-    var formData = new FormData($("#update_admin_form")[0]);
+    var formData = new FormData($("#update_price_type_form")[0]);
     var InvoiceTypeForm = $(this);
     jQuery.ajax({
         dataType: 'json',
@@ -160,16 +140,14 @@ $('#update_admin_form').submit(function(e) {
         contentType: false,
         mimeType: "multipart/form-data",
         beforeSend: function() {
-            $('#update_admin_button').button('loading');
+            $('#update_price_type_button').button('loading');
         },
         success: function(response) {
-            $('#update_admin_button').button('reset');
+            $('#update_price_type_button').button('reset');
             if (response.status == 'success') {
-                $('form#update_admin_form').trigger('reset');
-                $(".chosen-select-deselect").val('');
-                $('.chosen-select-deselect').trigger("chosen:updated");
-                $('#admin_data_table').DataTable().ajax.reload(null, false);
-                $('#edit_user_modal').modal('hide');
+                $('form#update_price_type_form').trigger('reset');
+                $('#price_type_data_table').DataTable().ajax.reload(null, false);
+                $('#edit_price_type_modal').modal('hide');
                 swal({
                     title: "success",
                     text: response.msg,

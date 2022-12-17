@@ -27,6 +27,12 @@
             </div>
           </li> -->
           <li class="nav-item">
+            <a class="nav-link" href="<?=base_url()?>superadmin/add_bonus_price" aria-controls="form-elements">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Add Bonus Price</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="<?=base_url()?>superadmin/user" aria-controls="form-elements">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">User List</span>
@@ -36,6 +42,24 @@
             <a class="nav-link" href="<?=base_url()?>superadmin/add_admin" aria-controls="form-elements">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">Add Admin</span>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" href="<?=base_url()?>superadmin/add_place_status" aria-controls="form-elements">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Add Place Status</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?=base_url()?>superadmin/add_price_type" aria-controls="form-elements">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Add Price Type</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?=base_url()?>superadmin/parking_place" aria-controls="form-elements">
+              <i class="icon-location menu-icon"></i>
+              <span class="menu-title">Add Place</span>
             </a>
           </li>
            <li class="nav-item">

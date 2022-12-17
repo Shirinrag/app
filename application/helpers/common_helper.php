@@ -43,3 +43,4 @@ function get_session_name($user_type='')
 		}
 		return $result;
 	}
+
