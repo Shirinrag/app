@@ -204,6 +204,11 @@ $(document).on("click", ".edit_place_data", function() {
             $('#edit_fk_place_status_id').trigger("chosen:updated");
             $('#edit_fk_parking_price_type').val(info[0]['fk_parking_price_type']);
             $('#edit_fk_parking_price_type').trigger("chosen:updated");
+            var html="";
+            $.each(info, function(info_index, info_row) {
+                html +="<div class='col-md-4'><div class='form-group'><label>Slab Name<label><div><span>"+info_row['slot_name']+"</span></div></div></div>";
+            });
+            $('#machine_details').html(html);
         },
     });
 });
