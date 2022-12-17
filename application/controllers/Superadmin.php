@@ -790,7 +790,7 @@ class Superadmin extends CI_Controller {
             $row[] = $parking_place_data_row['firstName']." ".$parking_place_data_row['lastName'];      
             $row[] = $parking_place_data_row['slots'];
 
-            $row[] = '<select class="chosen-select-deselect update_order_status " id="'.$parking_place_data_row['id'].'" name="status">'.$option.'
+            $row[] = '<select class="chosen-select-deselect update_order_status chosen_init " id="'.$parking_place_data_row['id'].'" name="status">'.$option.'
                         </select>';
             $edit_html = '';
             $edit_html = '<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Edit Details" ><i class="ti-pencil edit_place_data" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_place_modal" id="'.$parking_place_data_row['id'].'"></i></a><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Delete Details" class="remove-row"><i class="ti-trash a_delete_user" href="#a_delete_user_modal" class="trigger-btn" data-bs-toggle="modal" data-bs-target="#delete_admin" aria-hidden="true"></i></a></span>';
@@ -799,5 +799,19 @@ class Superadmin extends CI_Controller {
         }
         $output = array("draw" => @$_POST['draw'], "recordsTotal" => $parking_place_data['count'], "recordsFiltered" => $parking_place_data['count_filtered'], "data" => $data);
         echo json_encode($output);
+    }
+    public function get_parking_place_details_on_id() {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+                $id = $this->input->post('id');
+                $curl_data = array('id' => $id);
+                $curl = $this->link->hits('get-parking-place-details-on-id', $curl_data);
+                $curl = json_decode($curl, TRUE);
+                $data['parking_place_data'] = $curl['parking_place_data'];
+                $response = $data;
+        }else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
     }
 }

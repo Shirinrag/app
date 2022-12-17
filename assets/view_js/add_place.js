@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var id = $("#fk_country_id").val();
+
     $.ajax({
         type: "POST",
         url: frontend_path + "superadmin/get_state_data_on_country_id",
@@ -180,13 +181,29 @@ $(document).ready(function() {
 $(document).on("click", ".edit_place_data", function() {
     var id = $(this).attr("id");
      $.ajax({
-        url: frontend_path + "superadmin/get_place_edit_info",
+        url: frontend_path + "superadmin/get_parking_place_details_on_id",
         method: "POST",
         data: {
             id: id,
         },
         dataType: "json",
         success: function(data) {
+            var info = data['parking_place_data'];
+            console.log(info[0]['fk_parking_price_type']);
+            $('#edit_fk_vendor_id').val(info[0]['fk_vendor_id']);
+            $('#edit_fk_vendor_id').trigger("chosen:updated");
+            $('#edit_fk_country_id').val(info[0]['fk_country_id']);
+            $('#edit_fk_country_id').trigger("chosen:updated");
+            $('#edit_place_name').val(info[0]['place_name']);
+            $('#edit_address').val(info[0]['address']);
+            $('#edit_pincode').val(info[0]['pincode']);
+            $('#edit_latitude').val(info[0]['latitude']);
+            $('#edit_longitude').val(info[0]['longitude']);
+            $('#edit_slots').val(info[0]['slots']);
+            $('#edit_fk_place_status_id').val(info[0]['fk_place_status_id']);
+            $('#edit_fk_place_status_id').trigger("chosen:updated");
+            $('#edit_fk_parking_price_type').val(info[0]['fk_parking_price_type']);
+            $('#edit_fk_parking_price_type').trigger("chosen:updated");
         },
     });
 });
