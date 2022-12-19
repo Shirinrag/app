@@ -151,20 +151,27 @@
                                           <span class="error_msg" id="fk_parking_price_type_error"></span>
                                        </div>
                                     </div>
+                                    <div class="col-md-3">
+                                       <div class="form-group">
+                                          <label>Extension Price %</label>
+                                          <input type="text" class="form-control input-text" name="ext_price" id="ext_price" placeholder="Extension Price %" onkeypress="return isNumber(event)">
+                                          <span class="error_msg" id="ext_price_error"></span>
+                                       </div>
+                                    </div>
                                  </div>
                                  <div class="row">
                                     <h4 class="card-title">Daily Price Slab</h4>
                                     <div class="col-md-3">
                                        <div class="form-group">
                                           <label>From Hours</label>
-                                          <input type="text" class="form-control input-text" name="from_hours[]" id="from_hours_0" placeholder="From Hours">
+                                          <input type="text" class="form-control input-text" name="from_hours[]" id="from_hours_0" placeholder="From Hours" onkeypress="return isNumber(event)">
                                           <span class="error_msg" id="from_hours_error"></span>
                                        </div>
                                     </div>
                                     <div class="col-md-3">
                                        <div class="form-group">
                                           <label>To Hours</label>
-                                          <input type="text" class="form-control input-text" name="to_hours[]" id="to_hours_0" placeholder="To Hours">
+                                          <input type="text" class="form-control input-text" name="to_hours[]" id="to_hours_0" placeholder="To Hours" onkeypress="return isNumber(event)">
                                           <span class="error_msg" id="to_hours_error"></span>
                                        </div>
                                     </div>
@@ -251,9 +258,10 @@
                            <span aria-hidden="true">&times;</span>
                            </button>
                         </div>
-                        <?php echo form_open('superadmin/update_admin_data', array('id'=>'update_admin_form')) ?>
+                        <?php echo form_open('superadmin/update_place_details', array('id'=>'update_place_details_form')) ?>
                         <div class="modal-body">
                            <div class="row">
+                              <input type="hidden" name="edit_id" id="edit_id">
                               <div class="col-md-4">
                                  <div class="form-group">
                                     <label>Select Vendor</label>
@@ -372,14 +380,27 @@
                                     <span class="error_msg" id="edit_fk_parking_price_type_error"></span>
                                  </div>
                               </div>
+                              <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>Extension Price %</label>
+                                          <input type="text" class="form-control input-text" name="edit_ext_price" id="edit_ext_price" placeholder="Extension Price %" onkeypress="return isNumber(event)">
+                                          <span class="error_msg" id="edit_ext_price_error"></span>
+                                       </div>
+                                    </div>
                            </div>
+                           <div class="row">
+                                    <h4 class="card-title">Daily Price Slab</h4>
+                                    <div id="hour_price_details"></div>
+
+                           </div>
+                           <hr>
                            <div class="row">
                                     <h4 class="card-title">Machine Details</h4>
                                     <div id="machine_details"></div>             
                            </div>
                         </div>
                         <div class="modal-footer">
-                           <button type="submit" class="btn btn-success button_color text_color" id="update_admin_button" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading">Submit</button>
+                           <button type="submit" class="btn btn-success button_color text_color" id="update_place_button" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading">Submit</button>
                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
                         </div>
                         <?php echo form_close() ?>

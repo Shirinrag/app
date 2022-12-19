@@ -704,6 +704,8 @@ class Superadmin extends CI_Controller {
             $from_hours = $this->input->post('from_hours');              
             $to_hours = $this->input->post('to_hours');              
             $price = $this->input->post('price');              
+            $ext_price = $this->input->post('ext_price');
+
             $this->form_validation->set_rules('fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_country_id','Country', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_state_id','State', 'trim|required',array('required' => 'You must provide a %s',));
@@ -716,6 +718,7 @@ class Superadmin extends CI_Controller {
             $this->form_validation->set_rules('slots','Slots', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_place_status_id','Place Status', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_parking_price_type','Price Type', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('ext_price','Extension Price', 'trim|required',array('required' => 'You must provide a %s',));
             if ($this->form_validation->run() == false) {
                 $response['status'] = 'failure';
                 $response['error'] = array(
@@ -731,6 +734,7 @@ class Superadmin extends CI_Controller {
                     'slots' => strip_tags(form_error('slots')),
                     'fk_place_status_id' => strip_tags(form_error('fk_place_status_id')),
                     'fk_parking_price_type' => strip_tags(form_error('fk_parking_price_type')),
+                    'ext_price' => strip_tags(form_error('ext_price')),
                 );
             } else {
                 $curl_data = array(
@@ -746,6 +750,7 @@ class Superadmin extends CI_Controller {
                     'slots'=>$slots,
                     'fk_place_status_id'=>$fk_place_status_id,
                     'fk_parking_price_type'=>$fk_parking_price_type,
+                    'ext_price'=>$ext_price,
                     'from_hours'=>json_encode($from_hours),
                     'to_hours'=>json_encode($to_hours),
                     'price'=>json_encode($price),
@@ -807,11 +812,111 @@ class Superadmin extends CI_Controller {
                 $curl = $this->link->hits('get-parking-place-details-on-id', $curl_data);
                 $curl = json_decode($curl, TRUE);
                 $data['parking_place_data'] = $curl['parking_place_data'];
+                $data['hour_price_slab'] = $curl['hour_price_slab'];
+                $data['slot_info'] = $curl['slot_info'];
+                $data['state_details'] = $curl['state_details'];
+                $data['city_details'] = $curl['city_details'];
                 $response = $data;
         }else {
             $resoponse['status']='login_failure';
             $resoponse['url']=base_url().'superadmin';
         }
         echo json_encode($response);
+    }
+    public function update_place_details()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            
+            $id = $this->input->post('edit_id');        
+            $fk_vendor_id = $this->input->post('edit_fk_vendor_id');        
+            $fk_country_id = $this->input->post('edit_fk_country_id');       
+            $fk_state_id = $this->input->post('edit_fk_state_id');        
+            $fk_city_id = $this->input->post('edit_fk_city_id');        
+            $place_name = $this->input->post('edit_place_name');        
+            $address = $this->input->post('edit_address');        
+            $pincode = $this->input->post('edit_pincode');        
+            $latitude = $this->input->post('edit_latitude');        
+            $longitude = $this->input->post('edit_longitude');        
+            $slots = $this->input->post('edit_slots');        
+            $fk_place_status_id = $this->input->post('edit_fk_place_status_id');        
+            $fk_parking_price_type = $this->input->post('edit_fk_parking_price_type');              
+            $from_hours = $this->input->post('edit_from_hours');              
+            $to_hours = $this->input->post('edit_to_hours');              
+            $price = $this->input->post('edit_price');              
+            $ext_price = $this->input->post('edit_ext_price');
+
+            $this->form_validation->set_rules('edit_fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_fk_country_id','Country', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_fk_state_id','State', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_fk_city_id','City', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_place_name','Place Name', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_address','Address', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_pincode','Pincode', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_latitude','Latitude', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_longitude','Longitude', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_slots','Slots', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_fk_place_status_id','Place Status', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_fk_parking_price_type','Price Type', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_ext_price','Extension Price', 'trim|required',array('required' => 'You must provide a %s',));
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'edit_fk_vendor_id' => strip_tags(form_error('edit_fk_vendor_id')),
+                    'edit_fk_country_id' => strip_tags(form_error('edit_fk_country_id')),
+                    'edit_fk_state_id' => strip_tags(form_error('edit_fk_state_id')),
+                    'edit_fk_city_id' => strip_tags(form_error('edit_fk_city_id')),
+                    'edit_place_name' => strip_tags(form_error('edit_place_name')),
+                    'edit_address' => strip_tags(form_error('edit_address')),
+                    'edit_pincode' => strip_tags(form_error('edit_pincode')),
+                    'edit_latitude' => strip_tags(form_error('edit_latitude')),
+                    'edit_longitude' => strip_tags(form_error('edit_longitude')),
+                    'edit_slots' => strip_tags(form_error('edit_slots')),
+                    'edit_fk_place_status_id' => strip_tags(form_error('edit_fk_place_status_id')),
+                    'edit_fk_parking_price_type' => strip_tags(form_error('edit_fk_parking_price_type')),
+                    'edit_ext_price' => strip_tags(form_error('edit_ext_price')),
+                );
+            } else {
+                $curl_data = array(
+                    'fk_vendor_id'=>$fk_vendor_id,
+                    'fk_country_id'=>$fk_country_id,
+                    'fk_state_id'=>$fk_state_id,
+                    'fk_city_id'=>$fk_city_id,
+                    'place_name'=>$place_name,
+                    'address'=>$address,
+                    'pincode'=>$pincode,
+                    'latitude'=>$latitude,
+                    'longitude'=>$longitude,
+                    'slots'=>$slots,
+                    'fk_place_status_id'=>$fk_place_status_id,
+                    'fk_parking_price_type'=>$fk_parking_price_type,
+                    'ext_price'=>$ext_price,
+                    'from_hours'=>json_encode($from_hours),
+                    'to_hours'=>json_encode($to_hours),
+                    'price'=>json_encode($price),
+                );
+                $curl = $this->link->hits('update-place', $curl_data);
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                } else {
+                    $response['status'] = 'failure';
+                     $response['error'] = array("bonus_amount" => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function add_device()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $this->load->view('super_admin/add_device');
+        } else {
+            redirect(base_url().'superadmin');
+        }
     }
 }
