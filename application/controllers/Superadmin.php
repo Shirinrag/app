@@ -816,6 +816,7 @@ class Superadmin extends CI_Controller {
                 $data['slot_info'] = $curl['slot_info'];
                 $data['state_details'] = $curl['state_details'];
                 $data['city_details'] = $curl['city_details'];
+                $data['device_data'] = $curl['device_data'];
                 $response = $data;
         }else {
             $resoponse['status']='login_failure';
@@ -918,5 +919,148 @@ class Superadmin extends CI_Controller {
         } else {
             redirect(base_url().'superadmin');
         }
+    }
+     public function save_device_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');            
+            $device_id = $this->input->post('device_id');         
+            $curl_data = array(
+                'device_id'=>json_encode($device_id),
+            );
+            $curl = $this->link->hits('add-device', $curl_data);
+            $curl = json_decode($curl, true);
+            if ($curl['status']==1) {
+                $response['status']='success';
+            } else {
+                $response['status'] = 'failure';
+                $response['error'] = array("device_id" => $curl['message']);
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function display_all_device_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-device-data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['device_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function change_device_status()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('id'); 
+            $status = $this->input->post('status'); 
+            if (empty($id )) {
+                $response['message'] = 'id is required.';
+                $response['status'] = 0;
+            }else if($status=='') {
+                $response['message'] = 'status is required.';
+                $response['status'] = 0;
+            }else{
+                $curl_data = array(   
+                  'id'=>$id,
+                  'status'=>$status,
+                );
+                $curl = $this->link->hits('update-device-status',$curl_data);
+
+                $curl = json_decode($curl, TRUE);
+                if($curl['message']=='success'){
+                    $response['message']='Status Changed successfully';
+                    $response['status'] = 1;
+                }else{
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "login";
+        }
+        echo json_encode($response);
+    }
+    // ============== Ground Team Parking List==============================
+    public function parking_list()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $this->load->view('super_admin/parking_list');
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function display_all_parking_place_data()
+    {
+        $parking_place_data = $this->link->hits('display-all-parking-place-data', array());
+        $parking_place_data = json_decode($parking_place_data, true);
+        $place_status = $parking_place_data['place_status'];
+        $data = array();
+        $no = @$_POST['start'];
+        foreach ($parking_place_data['parking_place_data'] as $parking_place_data_key => $parking_place_data_row) {
+            $status1 ='';  $option='';
+            foreach ($place_status as $place_status_key => $place_status_row) {
+                if ($parking_place_data_row['fk_place_status_id'] == $place_status_row['id']) {
+                    $selected = "selected";
+                } else {
+                    $selected = "";
+                }
+                $option .= '<option value="'.$place_status_row['id'].'" '.$selected.'>'.$place_status_row['place_status'].'</option>';
+            }            
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $parking_place_data_row['place_name'];
+            $row[] = $parking_place_data_row['address'];
+            $row[] = $parking_place_data_row['firstName']." ".$parking_place_data_row['lastName'];      
+            $row[] = $parking_place_data_row['slots'];
+
+            // $row[] = '<select class="chosen-select-deselect update_order_status chosen_init " id="'.$parking_place_data_row['id'].'" name="status">'.$option.'
+            //             </select>';
+            $edit_html = '';
+            $edit_html = '<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Edit Details" ><i class="ti-pencil edit_place_data" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_place_modal" id="'.$parking_place_data_row['id'].'"></i></a></span>';
+            $row[] = $edit_html;
+            $data[] = $row;
+        }
+        $output = array("draw" => @$_POST['draw'], "recordsTotal" => $parking_place_data['count'], "recordsFiltered" => $parking_place_data['count_filtered'], "data" => $data);
+        echo json_encode($output);
+    }
+
+    public function save_device_mapped()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            
+            $edit_id = $this->input->post('edit_id');        
+            $fk_machine_id = $this->input->post('fk_machine_id');        
+            $edit_slot_id = $this->input->post('edit_slot_id');        
+            
+            $curl_data = array(
+                'edit_id'=>$edit_id,
+                'fk_machine_id'=>$fk_machine_id,
+                'slot_id'=>$edit_slot_id,
+            );
+            echo '<pre>'; print_r($curl_data); exit;
+            $curl = $this->link->hits('save-mapped-device', $curl_data);
+            $curl = json_decode($curl, true);
+            if ($curl['status']==1) {
+                $response['status']='success';
+            } else {
+                $response['status'] = 'failure';
+                 $response['error'] = array("price_type" => $curl['message']);
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
     }
 }

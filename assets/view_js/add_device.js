@@ -4,7 +4,7 @@ $('#addRows').click(function() {
     var new_count = parseInt(latest_count) + 1;
 
     var html2 = '';
-    html2 += '<div class="row"><div class="col-md-4"><div class="form-group"> <label>Add Device</label> <input type="text" class="form-control input-text" name="device[]" id="device_' + new_count + '" placeholder="Add Device"> <span class="error_msg" id="from_hours_error"></span> </div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
+    html2 += '<div class="row"><div class="col-md-4"><div class="form-group"> <label>Add Device</label> <input type="text" class="form-control input-text" name="device_id[]" id="device_id_' + new_count + '" placeholder="Add Device"> <span class="error_msg" id="from_hours_error"></span> </div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
 
     $('#device_data_append').append(html2);
 
@@ -15,9 +15,9 @@ $(document).on('click', '#removeRow', function() {
     $('#count').val(new_count);
     $(this).closest("div").remove();
 });
-$('#add_parking_place_form').submit(function(e) {
+$('#add_device_form').submit(function(e) {
     e.preventDefault();
-    var formData = new FormData($("#add_parking_place_form")[0]);
+    var formData = new FormData($("#add_device_form")[0]);
     var InvoiceTypeForm = $(this);
     jQuery.ajax({
         dataType: 'json',
@@ -34,11 +34,11 @@ $('#add_parking_place_form').submit(function(e) {
         success: function(response) {
             $('#add_parking_place_button').button('reset');
             if (response.status == 'success') {
-                $('form#add_parking_place_form').trigger('reset');
+                $('form#add_device_form').trigger('reset');
                 $(".chosen-select-deselect").val('');
                 $('.chosen-select-deselect').trigger("chosen:updated");
-                $('#price_data_append').html('');
-                $('#parking_place_data_table').DataTable().ajax.reload(null, false);
+                $('#device_data_append').html('');
+                $('#device_data_table').DataTable().ajax.reload(null, false);
                 swal({
                     title: "success",
                     text: response.msg,
@@ -58,3 +58,81 @@ $('#add_parking_place_form').submit(function(e) {
     });
     return false;
 });
+$(document).ready(function() {
+    table = $('#device_data_table').DataTable({
+        "ajax": frontend_path + "superadmin/display_all_device_data",
+        "columns": [{
+                "data": null
+            },
+            {
+                "data": "place_name"
+            },
+            {
+                "data": "slot_name"
+            },
+            {
+                "data": "display_id"
+            },
+            {
+                "data": "device_id"
+            },
+            {
+                "data": "statusdata",
+                "className": "device_status",
+                render: function(data) {
+                    var device_status = data.split(",");
+                    if (device_status[0] == 1) {
+                        return '<label class="toggle"><input class="toggle-checkbox" type="checkbox" checked id="switch' + device_status[1] + '" onclick="device_status(' + device_status[0] + ',' + device_status[1] + ');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
+                    } else {
+                        return '<label class="toggle"><input class="toggle-checkbox" type="checkbox" id="switch' + device_status[1] + '" onclick="device_status(' + device_status[0] + ',' + device_status[1] + ');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
+                    }
+                },
+            },
+        ],
+        "order": [
+            [0, 'desc']
+        ]
+    });
+    table.on('order.dt search.dt', function() {
+        table.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function(cell, i) {
+            cell.innerHTML = i + 1;
+        });
+
+    }).draw();
+});
+function device_status(status, id) {
+    var status = status;
+    if (status == 1) {
+        var user_status = 0;
+    } else {
+        var user_status = 1;
+    }
+    var user_id = id;
+    $.ajax({
+        url: frontend_path + "superadmin/change_device_status",
+        type: "POST",
+        data: {
+            'id': user_id,
+            'status': user_status
+        },
+        dataType: 'json',
+        // beforeSend:function(){
+        //     document.getElementById('header_loader').style.visibility = "visible";
+        // },
+        success: function(data) {
+            // document.getElementById('header_loader').style.visibility = "hidden";
+            $('#parking_place_data_table').DataTable().ajax.reload(null, false);
+
+            swal({
+                title: "success",
+                text: data.message,
+                icon: "success",
+                dangerMode: true,
+                timer: 1500
+            });
+        }
+    });
+}

@@ -32,7 +32,7 @@
                                     <div class="col-md-4">
                                        <div class="form-group">
                                           <label>Add Device</label>
-                                          <input type="text" class="form-control input-text" name="device[]" placeholder="Add Device">
+                                          <input type="text" class="form-control input-text" name="device_id[]" placeholder="Add Device">
                                           <span class="error_msg" id="device_error"></span>
                                        </div>
 
@@ -42,27 +42,8 @@
                                        </button>
                                        <input type="hidden" class="form-control"  name="count" id="count" value="0">
                                     </div>
-                                    
+                                    <div id="device_data_append"></div>
                                  </div>
-                               <!--   <div class="row">
-                                   
-                                    <div class="col-md-4">
-                                       <div class="form-group">
-                                          <label>Add Device</label>
-                                          <input type="text" class="form-control input-text" name="device[]" placeholder="Add Device">
-                                          <span class="error_msg" id="device_error"></span>
-                                       </div>
-
-                                    </div>
-                                    
-                                    <div class="col-md-2">
-                                       <button id="addRows" type="button" class="btn btn-info" style="margin-top: 22px; margin-left: -20px;"><i class="icon-plus"></i>
-                                       </button>
-                                       <input type="hidden" class="form-control"  name="count" id="count" value="0">
-                                    </div>
-                                 </div> -->
-                                 <hr>
-                                <div class="row" id="device_data_append"></div>
                                  <div class="row">
                                     <div class="float-right">
                                        <button  type="submit" class="btn btn-block btn-lg  button_color text_color" id="add_device_button"data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading">Submit</button>
@@ -82,9 +63,11 @@
                                     <thead>
                                        <tr>
                                           <th>SR. No</th>
-                                          <th>Add Device</th>
+                                          <th>Place Name</th>
+                                          <th>Slot Name</th>
+                                          <th>Display Id</th>
+                                          <th>Device Id</th>
                                           <th>Status</th>
-                                          <th>Action</th>
                                        </tr>
                                     </thead>
                                  </table>

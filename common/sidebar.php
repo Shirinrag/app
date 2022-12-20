@@ -62,12 +62,32 @@
               <span class="menu-title">Add Place</span>
             </a>
           </li>
-           <li class="nav-item">
-            <a class="nav-link" href="<?=base_url()?>superadmin/add_device" aria-controls="form-elements">
-             <i class="icon-menu menu-icon"></i>
-              <span class="menu-title">Add Device</span>
-            </a>
+          <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                      <i class="icon-layout menu-icon"></i>
+                      <span class="menu-title">Ground Team</span>
+                      <i class="menu-arrow"></i>
+                  </a>
+                  <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+               
+                <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>superadmin/add_device">
+                   <!-- <i class="icon-menu menu-icon"></i> -->
+                   Add Device
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>superadmin/parking_list">
+                   <!-- <i class="icon-menu menu-icon"></i> -->
+                    Parking List
+                  </a>
+                </li>
+              
+              </ul>
+            </div>
           </li>
+          
           <li class="nav-item">
             <a class="nav-link" href="<?=base_url()?>superadmin/booking_history" aria-controls="form-elements">
              <i class="icon-book menu-icon"></i>
