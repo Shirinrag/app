@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Booking History</title>
+  <title>Parking List</title>
   <!-- plugins:css -->
      <?php include 'common/cssfiles.php';?>
 </head>

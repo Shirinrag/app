@@ -895,8 +895,10 @@ class Superadmin extends CI_Controller {
                     'from_hours'=>json_encode($from_hours),
                     'to_hours'=>json_encode($to_hours),
                     'price'=>json_encode($price),
+                    'id'=>$id
                 );
                 $curl = $this->link->hits('update-place', $curl_data);
+                // echo '<pre>'; print_r($curl); exit;
                 $curl = json_decode($curl, true);
                 if ($curl['status']==1) {
                     $response['status']='success';
@@ -1045,17 +1047,17 @@ class Superadmin extends CI_Controller {
             
             $curl_data = array(
                 'edit_id'=>$edit_id,
-                'fk_machine_id'=>$fk_machine_id,
-                'slot_id'=>$edit_slot_id,
+                'fk_machine_id'=>json_encode($fk_machine_id),
+                'slot_id'=>json_encode($edit_slot_id),
             );
-            echo '<pre>'; print_r($curl_data); exit;
+            // echo '<pre>'; print_r($curl_data); exit;
             $curl = $this->link->hits('save-mapped-device', $curl_data);
             $curl = json_decode($curl, true);
             if ($curl['status']==1) {
                 $response['status']='success';
             } else {
-                $response['status'] = 'failure';
-                 $response['error'] = array("price_type" => $curl['message']);
+                 $response['status'] = 'failure';
+                 $response['error'] = array("fk_machine_id" => $curl['message']);
             }
         } else {
             $resoponse['status']='login_failure';
