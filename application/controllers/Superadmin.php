@@ -19,6 +19,11 @@ class Superadmin extends CI_Controller {
 	{
 		if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $curl = $this->link->hits('dashboard-data', array(), '', 0);
+
+            $curl = json_decode($curl, true);
+            // echo '<pre>'; print_r($curl); exit;
+            
 			$this->load->view('super_admin/dashboard');
 		} else {
             redirect(base_url().'superadmin');
@@ -842,6 +847,7 @@ class Superadmin extends CI_Controller {
             $slots = $this->input->post('edit_slots');        
             $fk_place_status_id = $this->input->post('edit_fk_place_status_id');        
             $fk_parking_price_type = $this->input->post('edit_fk_parking_price_type');              
+            $hour_price_slab_id = $this->input->post('hour_price_slab_id');
             $from_hours = $this->input->post('edit_from_hours');              
             $to_hours = $this->input->post('edit_to_hours');              
             $price = $this->input->post('edit_price');              
@@ -892,13 +898,13 @@ class Superadmin extends CI_Controller {
                     'fk_place_status_id'=>$fk_place_status_id,
                     'fk_parking_price_type'=>$fk_parking_price_type,
                     'ext_price'=>$ext_price,
+                    'hour_price_slab_id'=>json_encode($hour_price_slab_id),
                     'from_hours'=>json_encode($from_hours),
                     'to_hours'=>json_encode($to_hours),
                     'price'=>json_encode($price),
                     'id'=>$id
                 );
                 $curl = $this->link->hits('update-place', $curl_data);
-                // echo '<pre>'; print_r($curl); exit;
                 $curl = json_decode($curl, true);
                 if ($curl['status']==1) {
                     $response['status']='success';
@@ -1050,7 +1056,6 @@ class Superadmin extends CI_Controller {
                 'fk_machine_id'=>json_encode($fk_machine_id),
                 'slot_id'=>json_encode($edit_slot_id),
             );
-            // echo '<pre>'; print_r($curl_data); exit;
             $curl = $this->link->hits('save-mapped-device', $curl_data);
             $curl = json_decode($curl, true);
             if ($curl['status']==1) {
@@ -1062,6 +1067,38 @@ class Superadmin extends CI_Controller {
         } else {
             $resoponse['status']='login_failure';
             $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function update_machine_device_status()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('id'); 
+            $status = $this->input->post('status'); 
+            if (empty($id )) {
+                $response['message'] = 'User id is required.';
+                $response['status'] = 0;
+            }else if($status=='') {
+                $response['message'] = 'status is required.';
+                $response['status'] = 0;
+            }else{
+                $curl_data = array(   
+                  'id'=>$id,
+                  'status'=>$status,
+                );
+                $curl = $this->link->hits('update-machine-device-status',$curl_data);
+                $curl = json_decode($curl, TRUE);
+                if($curl['message']=='success'){
+                    $response['message']='Status Changed successfully';
+                    $response['status'] = 1;
+                }else{
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "login";
         }
         echo json_encode($response);
     }

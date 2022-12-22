@@ -241,7 +241,7 @@ $(document).on("click", ".edit_place_data", function() {
                 }
                 city_option += "<option value=" + city_details_row["id"] + " " + option_data1 + " >" + city_details_row["name"] + "</option>";
             });
-             $('#edit_fk_city_id').html(city_option);
+            $('#edit_fk_city_id').html(city_option);
             $('#edit_fk_city_id').trigger("chosen:updated");
             var html = "";
             var machine_id = "";
@@ -251,12 +251,12 @@ $(document).on("click", ".edit_place_data", function() {
                 } else {
                     machine_id = slot_info_row['device_id'];
                 }
-                html += "<div class='row'><input type='hidden' name='edit_slot_id' id='edit_slot_id_" + slot_info_index + " value='" + slot_info_row['slot_info_id'] + "'><div class='col-md-4'><div class='form-group'><label>Slab Name</label><br><span class='data_fetch'>" + slot_info_row['slot_name'] + "</span></div></div><div class='col-md-4'><div class='form-group'><label>Display Id</label><br><span class='data_fetch'>" + slot_info_row['display_id'] + "</span></div></div><div class='col-md-4'><div class='form-group'><label>Machine Id</label><br><span class='data_fetch'>" + machine_id + "</span></div></div></div>";
+                html += "<div class='row'><input type='hidden' name='edit_slot_id' id='edit_slot_id_" + slot_info_index + " value='" + slot_info_row['slot_info_id'] + "'><div class='col-md-4'><div class='form-group'><label>Slot Name</label><br><span class='data_fetch'>" + slot_info_row['slot_name'] + "</span></div></div><div class='col-md-4'><div class='form-group'><label>Display Id</label><br><span class='data_fetch'>" + slot_info_row['display_id'] + "</span></div></div><div class='col-md-4'><div class='form-group'><label>Machine Id</label><br><span class='data_fetch'>" + machine_id + "</span></div></div></div>";
             });
             $('#machine_details').html(html);
             var html3 = "";
             $.each(hour_price_slab, function(hour_price_slab_index, hour_price_slab_row) {
-                html3 += "<div class='row'><input type='hidden' name='hour_price_slab_id' id='hour_price_slab_id_" + hour_price_slab_index + " value='" + hour_price_slab_row['hour_price_slab_id'] + "'><div class='col-md-3'><div class='form-group'><label>From Hour</label><input class='form-control input-text' type='text' name='edit_from_hours[]' id='edit_from_hours_" + hour_price_slab_index + "' value='" + hour_price_slab_row['from_hours'] + "'></div></div><div class='col-md-3'><div class='form-group'><label>To Hour</label><input class='form-control input-text' type='text' name='edit_to_hours[]' id='edit_to_hours_" + hour_price_slab_index + "' value='" + hour_price_slab_row['to_hours'] + "'></div></div><div class='col-md-3'><div class='form-group'><label>Price</label><input class='form-control input-text' type='text' name='edit_price[]' id='edit_price_" + hour_price_slab_index + "' value='" + hour_price_slab_row['cost'] + "'></div></div></div>";
+                html3 += "<div class='row'><input type='hidden' name='hour_price_slab_id[]' id='hour_price_slab_id_" + hour_price_slab_index + "' value='" + hour_price_slab_row['hour_price_slab_id'] + "'><div class='col-md-3'><div class='form-group'><label>From Hour</label><input class='form-control input-text' type='text' name='edit_from_hours[]' id='edit_from_hours_" + hour_price_slab_index + "' value='" + hour_price_slab_row['from_hours'] + "'></div></div><div class='col-md-3'><div class='form-group'><label>To Hour</label><input class='form-control input-text' type='text' name='edit_to_hours[]' id='edit_to_hours_" + hour_price_slab_index + "' value='" + hour_price_slab_row['to_hours'] + "'></div></div><div class='col-md-3'><div class='form-group'><label>Price</label><input class='form-control input-text' type='text' name='edit_price[]' id='edit_price_" + hour_price_slab_index + "' value='" + hour_price_slab_row['cost'] + "'></div></div></div>";
             });
             html3 += "<div class='row'><div class='col-md-12'> <button id='addRows_edit' type='button' class='btn btn-info' style='margin-top: 22px; margin-left: 860px;'><i class='icon-plus'></i> </button> <input type='hidden' class='form-control' name='edit_count' id='edit_count' value='0'> </div><div> <hr><div id='edit_price_data_append'></div>";
             $('#hour_price_details').html(html3);

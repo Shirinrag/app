@@ -369,7 +369,7 @@
                               <div class="col-md-4">
                                  <div class="form-group">
                                     <label>Select Price Type</label>
-                                    <select type="text" class="form-control chosen-select-deselect" name="edit_fk_parking_price_type" id="fk_parking_price_type" placeholder="Select Price Type">
+                                    <select type="text" class="form-control chosen-select-deselect" name="edit_fk_parking_price_type" id="edit_fk_parking_price_type" placeholder="Select Price Type">
                                        <option value=""></option>
                                        <?php 
                                           foreach ($price_type as $price_type_key => $price_type_row) { ?>

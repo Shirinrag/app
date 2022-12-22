@@ -48,7 +48,7 @@
                                  <div class="card-body">
                                     <p class="mb-4">Today’s Bookings</p>
                                     <p class="fs-30 mb-2">4006</p>
-                                    <p>10.00% (30 days)</p>
+                                  
                                  </div>
                               </div>
                            </div>
@@ -57,7 +57,7 @@
                                  <div class="card-body">
                                     <p class="mb-4">Total Bookings</p>
                                     <p class="fs-30 mb-2">61344</p>
-                                    <p>22.00% (30 days)</p>
+                                    
                                  </div>
                               </div>
                            </div>
