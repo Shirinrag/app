@@ -20,10 +20,7 @@ class Superadmin extends CI_Controller {
 		if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
             $curl = $this->link->hits('dashboard-data', array(), '', 0);
-
-            $curl = json_decode($curl, true);
-            // echo '<pre>'; print_r($curl); exit;
-            
+            $curl = json_decode($curl, true);         
 			$this->load->view('super_admin/dashboard');
 		} else {
             redirect(base_url().'superadmin');
@@ -37,7 +34,6 @@ class Superadmin extends CI_Controller {
 		} else {
             redirect(base_url().'superadmin');
         }
-
 	}
     // ============================ Roles ================================
 	public function add_roles()
@@ -88,8 +84,6 @@ class Superadmin extends CI_Controller {
                   'status'=>$status,
                 );
                 $curl = $this->link->hits('update-user-status',$curl_data);
-                 // echo '<pre>'; print_r($curl); exit;
-
                 $curl = json_decode($curl, TRUE);
                 if($curl['message']=='success'){
                     $response['message']='Status Changed successfully';
@@ -160,8 +154,6 @@ class Superadmin extends CI_Controller {
                     'user_type'=>$user_type,
                 );
                 $curl = $this->link->hits('add-admin', $curl_data);
-                // echo '<pre>'; print_r($curl); exit;
-
                 $curl = json_decode($curl, true);
                 if ($curl['status']==1) {
                     $response['status']='success';
@@ -188,7 +180,6 @@ class Superadmin extends CI_Controller {
         if ($this->session->userdata('parking_adda_superadmin_logged_in'))
         {
             $curl = $this->link->hits('display-all-admin-data', array(), '', 0);
-            // echo '<pre>'; print_r(); exit;
             $curl = json_decode($curl, true);
             $response['data'] = $curl['admin_data'];
         } else {
@@ -325,7 +316,6 @@ class Superadmin extends CI_Controller {
                 );
                 $curl = $this->link->hits('add-place-status', $curl_data);
                 $curl = json_decode($curl, true);
-                // echo '<pre>'; print_r($curl); exit;
                 if ($curl['status']==1) {
                     $response['status']='success';
                 } else {
@@ -582,7 +572,6 @@ class Superadmin extends CI_Controller {
         if ($this->session->userdata('parking_adda_superadmin_logged_in'))
         {
             $curl = $this->link->hits('display-all-bonus-data', array(), '', 0);
-            // echo '<pre>'; print_r($curl); exit;
             $curl = json_decode($curl, true);
             $response['data'] = $curl['bonus_price'];
         } else {
@@ -692,8 +681,7 @@ class Superadmin extends CI_Controller {
     public function save_parking_place()
     {
          if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
-            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
-            
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');            
             $fk_vendor_id = $this->input->post('fk_vendor_id');        
             $fk_country_id = $this->input->post('fk_country_id');        
             $fk_state_id = $this->input->post('fk_state_id');        
@@ -705,7 +693,7 @@ class Superadmin extends CI_Controller {
             $longitude = $this->input->post('longitude');        
             $slots = $this->input->post('slots');        
             $fk_place_status_id = $this->input->post('fk_place_status_id');        
-            $fk_parking_price_type = $this->input->post('fk_parking_price_type');              
+            $fk_parking_price_type = $this->input->post('fk_parking_price_type');            
             $from_hours = $this->input->post('from_hours');              
             $to_hours = $this->input->post('to_hours');              
             $price = $this->input->post('price');              
@@ -832,8 +820,7 @@ class Superadmin extends CI_Controller {
     public function update_place_details()
     {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
-            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
-            
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');            
             $id = $this->input->post('edit_id');        
             $fk_vendor_id = $this->input->post('edit_fk_vendor_id');        
             $fk_country_id = $this->input->post('edit_fk_country_id');       
@@ -846,7 +833,7 @@ class Superadmin extends CI_Controller {
             $longitude = $this->input->post('edit_longitude');        
             $slots = $this->input->post('edit_slots');        
             $fk_place_status_id = $this->input->post('edit_fk_place_status_id');        
-            $fk_parking_price_type = $this->input->post('edit_fk_parking_price_type');              
+            $fk_parking_price_type = $this->input->post('edit_fk_parking_price_type');             
             $hour_price_slab_id = $this->input->post('hour_price_slab_id');
             $from_hours = $this->input->post('edit_from_hours');              
             $to_hours = $this->input->post('edit_to_hours');              
@@ -928,7 +915,7 @@ class Superadmin extends CI_Controller {
             redirect(base_url().'superadmin');
         }
     }
-     public function save_device_data()
+    public function save_device_data()
     {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');            
@@ -968,7 +955,7 @@ class Superadmin extends CI_Controller {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $id = $this->input->post('id'); 
             $status = $this->input->post('status'); 
-            if (empty($id )) {
+            if (empty($id)) {
                 $response['message'] = 'id is required.';
                 $response['status'] = 0;
             }else if($status=='') {
@@ -980,7 +967,6 @@ class Superadmin extends CI_Controller {
                   'status'=>$status,
                 );
                 $curl = $this->link->hits('update-device-status',$curl_data);
-
                 $curl = json_decode($curl, TRUE);
                 if($curl['message']=='success'){
                     $response['message']='Status Changed successfully';
@@ -1049,8 +1035,7 @@ class Superadmin extends CI_Controller {
             
             $edit_id = $this->input->post('edit_id');        
             $fk_machine_id = $this->input->post('fk_machine_id');        
-            $edit_slot_id = $this->input->post('edit_slot_id');        
-            
+            $edit_slot_id = $this->input->post('edit_slot_id');       
             $curl_data = array(
                 'edit_id'=>$edit_id,
                 'fk_machine_id'=>json_encode($fk_machine_id),
@@ -1075,7 +1060,7 @@ class Superadmin extends CI_Controller {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $id = $this->input->post('id'); 
             $status = $this->input->post('status'); 
-            if (empty($id )) {
+            if (empty($id)) {
                 $response['message'] = 'User id is required.';
                 $response['status'] = 0;
             }else if($status=='') {
@@ -1099,6 +1084,122 @@ class Superadmin extends CI_Controller {
         } else {
             $response['status'] = 'failure';
             $response['url'] = base_url() . "login";
+        }
+        echo json_encode($response);
+    }
+    // ======================== Duty Allocation ================================
+    public function duty_allocation()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+                $curl = $this->link->hits('get-allocation-data', array(), '', 0);
+                // echo '<pre>'; print_r($curl); exit;
+                $curl = json_decode($curl, true);
+                $response['place_list'] = $curl['place_list'];
+                $response['verifier_list'] = $curl['verifier_list'];
+               
+            $this->load->view('super_admin/duty_allocation',$response);
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function get_allocation_data()
+    {
+         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+                $curl = $this->link->hits('get-allocation-data', array(), '', 0);
+                $curl = json_decode($curl, true);
+                $response['place_list'] = $curl['place_list'];
+                $response['verifier_list'] = $curl['verifier_list'];
+               
+        }else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);      
+    }
+    public function save_duty_allocation()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            
+            $fk_place_id = $this->input->post('fk_place_id');        
+            $fk_verifier_id = $this->input->post('fk_verifier_id');        
+            $date = $this->input->post('date');       
+            $curl_data = array(
+                'fk_place_id'=>json_encode($fk_place_id),
+                'fk_verifier_id'=>json_encode($fk_verifier_id),
+                'date'=>json_encode($date),
+            );
+            $curl = $this->link->hits('save-duty-allocation', $curl_data);
+            $curl = json_decode($curl, true);
+            if ($curl['status']==1) {
+                $response['status']='success';
+            } else {
+                 $response['status'] = 'failure';
+                 $response['error'] = array("fk_verifier_id" => $curl['message']);
+            }
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+
+    public function display_all_duty_allocation_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-duty-allocation-data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['duty_allocation'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+  
+     public function get_duty_allocation_details_on_id() {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+                $id = $this->input->post('id');
+                $curl_data = array('id' => $id);
+                $curl = $this->link->hits('get-duty-allocation-details-on-id', $curl_data);
+                $curl = json_decode($curl, TRUE);
+                $data['duty_allocation'] = $curl['duty_allocation'];
+                
+                $response = $data;
+        }else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function delete_duty_allocation()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('delete_duty_allocation_id'); 
+            if (empty($id )) {
+                $response['message'] = 'Duty Allocation id is required.';
+                $response['status'] = 0;
+            } else {
+                $curl_data = array(   
+                  'id'=>$id,
+                );            
+                $curl = $this->link->hits('delete-duty-allocation',$curl_data);
+                // echo '<pre>'; print_r($curl); exit;
+                $curl = json_decode($curl, TRUE);
+            
+                if($curl['message']=='success'){
+                    $response['message']='Data Deleted successfully';
+                    $response['status'] = 1;
+                } else {
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "superadmin";
         }
         echo json_encode($response);
     }

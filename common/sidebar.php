@@ -87,7 +87,18 @@
               </ul>
             </div>
           </li>
-          
+          <li class="nav-item">
+            <a class="nav-link" href="<?=base_url()?>superadmin/duty_allocation" aria-controls="form-elements">
+             <i class="icon-book menu-icon"></i>
+              <span class="menu-title">Duty Allocation</span>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" href="<?=base_url()?>superadmin/role_and_permission" aria-controls="form-elements">
+             <i class="icon-book menu-icon"></i>
+              <span class="menu-title">Roles & Permission</span>
+            </a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="<?=base_url()?>superadmin/booking_history" aria-controls="form-elements">
              <i class="icon-book menu-icon"></i>

@@ -47,7 +47,13 @@ $(document).ready(function() {
                 "data": null
             },
             {
-                "data": "firstName"
+                "data": "firstName",
+                  "render": function ( data, type, row, meta ) {
+                  
+                    var html="";
+                     html= data+" "+row.lastName;
+                     return html;
+                  },
             },
             {
                 "data": "userName"
@@ -95,7 +101,7 @@ $(document).ready(function() {
 
     }).draw();
 });
-    $(document).on("click","#admin_data_table tbody tr, .edit_admin_details tbody tr td",function(){
+$(document).on("click","#admin_data_table tbody tr, .edit_admin_details tbody tr td",function(){
     var tr = $(this).closest('tr');
     var row = table.row(tr);
     var data1 = row.data();

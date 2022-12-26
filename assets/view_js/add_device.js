@@ -7,6 +7,7 @@ $('#addRows').click(function() {
     html2 += '<div class="row"><div class="col-md-4"><div class="form-group"> <label>Add Device</label> <input type="text" class="form-control input-text" name="device_id[]" id="device_id_' + new_count + '" placeholder="Add Device"> <span class="error_msg" id="from_hours_error"></span> </div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
 
     $('#device_data_append').append(html2);
+      $("#count").val(new_count);
 
 });
 $(document).on('click', '#removeRow', function() {
