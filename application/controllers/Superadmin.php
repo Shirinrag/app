@@ -788,7 +788,7 @@ class Superadmin extends CI_Controller {
             $row[] = $parking_place_data_row['firstName']." ".$parking_place_data_row['lastName'];      
             $row[] = $parking_place_data_row['slots'];
 
-            $row[] = '<select class="chosen-select-deselect update_order_status chosen_init " id="'.$parking_place_data_row['id'].'" name="status">'.$option.'
+            $row[] = '<select class="chosen-select-deselect update_parking_status chosen_init " id="'.$parking_place_data_row['id'].'" name="status">'.$option.'
                         </select>';
             $edit_html = '';
             $edit_html = '<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Edit Details" ><i class="ti-pencil edit_place_data" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_place_modal" id="'.$parking_place_data_row['id'].'"></i></a><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Delete Details" class="remove-row"><i class="ti-trash a_delete_user" href="#a_delete_user_modal" class="trigger-btn" data-bs-toggle="modal" data-bs-target="#delete_admin" aria-hidden="true"></i></a></span>';
@@ -897,7 +897,7 @@ class Superadmin extends CI_Controller {
                     $response['status']='success';
                 } else {
                     $response['status'] = 'failure';
-                     $response['error'] = array("bonus_amount" => $curl['message']);
+                     $response['error'] = array("edit_place_name" => $curl['message']);
                 }
             }
         } else {
@@ -906,6 +906,40 @@ class Superadmin extends CI_Controller {
         }
         echo json_encode($response);
     }
+    public function update_parking_status()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('id'); 
+            $status = $this->input->post('status'); 
+            if (empty($id)) {
+                $response['message'] = 'Place Status id is required.';
+                $response['status'] = 0;
+            }else if(empty($status)) {
+                $response['message'] = 'status is required.';
+                $response['status'] = 0;
+            }else{
+                $curl_data = array(   
+                  'id'=>$id,
+                  'status'=>$status,
+                );             
+                $curl = $this->link->hits('update-parking-place-status',$curl_data);
+                $curl = json_decode($curl, TRUE);
+                // echo '<pre>'; print_r($curl); exit;
+                if($curl['message']=='success'){
+                    $response['message']='Status Changed successfully';
+                    $response['status'] = 1;
+                }else{
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "login";
+        }
+        echo json_encode($response);
+    }
+    // =====================Add Dvice===============================================
     public function add_device()
     {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
@@ -1187,6 +1221,189 @@ class Superadmin extends CI_Controller {
                 );            
                 $curl = $this->link->hits('delete-duty-allocation',$curl_data);
                 // echo '<pre>'; print_r($curl); exit;
+                $curl = json_decode($curl, TRUE);
+            
+                if($curl['message']=='success'){
+                    $response['message']='Data Deleted successfully';
+                    $response['status'] = 1;
+                } else {
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "superadmin";
+        }
+        echo json_encode($response);
+    }
+    // ======================== Blogs ================================
+    public function add_blogs()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');               
+            $this->load->view('super_admin/add_blogs');
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function save_blogs_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $title = $this->input->post('title');
+            $description = $this->input->post('description');
+           
+            
+            $this->form_validation->set_rules('title', 'Title', 'required|trim', array('required' => 'You must provide a %s'));
+            
+            $this->form_validation->set_rules('description', 'Description', 'required|trim', array('required' => 'You must provide a %s'));
+            if ($this->form_validation->run() == FALSE) {
+                $response['status'] = 'failure';
+                $response['error'] = array('title' => strip_tags(form_error('title')), 
+                    'description' => strip_tags(form_error('description')),);
+            } else {
+                $sample_image = '';
+                $is_signature_file = true;
+                if (!empty($_FILES['image']['name'])) {
+                    $filename = $_FILES['image']['name'];
+                    $test_img = $filename;
+                    $test_img = preg_replace('/\s/', '_', $test_img);
+                    $test_image = mt_rand(100000, 999999) . '_' .$test_img;
+                    $setting['image_path'] = $_FILES['image']['tmp_name'];
+                    $setting['image_name'] = $test_image;
+                    $setting['compress_path'] = './uploads/blogs/';
+                    $setting['jpg_compress_level'] = 5;
+                    $setting['png_compress_level'] = 5;
+                    $setting['create_thumb'] = FALSE;
+                    $this->load->library('imgcompressor');
+                    $results = $this->imgcompressor->do_compress($setting);
+                    if (empty($results['data']['compressed']['name'])) {
+                        $is_signature_file = false;
+                        $response['status'] = 'failure';
+                        $response['error'] = array(
+                            'image' => $results['message'],
+                        );
+                    } else {
+                        $sample_image = 'uploads/blogs/'.$test_image;
+                    }
+                }else {
+                    $is_signature_file = false;
+                    $response['status'] = 'failure';
+                    $response['error'] = array('image' => "Image required",);
+                }
+               
+                if ($is_signature_file) {
+                    $curl_data = array(
+                        'title' => $title,
+                        'description' => $description, 
+                        'image' => $sample_image,
+                    );
+                    $curl = $this->link->hits('save-blogs', $curl_data);
+                    $curl = json_decode($curl, TRUE);
+                    if ($curl['status']) {
+                        $response['status'] = 'success';
+                        $response['msg'] = "Blogs Added successfully";
+                    } else {
+                        $response['status'] = 'failure';
+                        $response['error'] = array('title' => $curl['message'],);
+                    }
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "Admin";
+        }
+        echo json_encode($response);
+    }
+
+    public function display_all_blogs_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-blogs-data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['blogs_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function update_blogs_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('edit_id');
+            $title = $this->input->post('edit_title');
+            $description = $this->input->post('edit_description');
+            $is_file = true;
+            $edit_profile_img = $this->input->post('last_inserted_image');
+            // echo '<pre>'; print_r($edit_profile_img); exit;
+            $this->form_validation->set_rules('edit_title', 'Title', 'required|trim', array('required' => 'You must provide a %s'));
+            
+            $this->form_validation->set_rules('edit_description', 'Description', 'required|trim', array('required' => 'You must provide a %s'));
+            if ($this->form_validation->run() == FALSE) {
+                $response['status'] = 'failure';
+                $response['error'] = array('edit_title' => strip_tags(form_error('edit_title')), 
+                    'edit_description' => strip_tags(form_error('edit_description')),);
+            } else {
+               
+               if (!empty($_FILES['edit_image']['name'])) {
+                    $edit_profile_img = trim($_FILES['edit_image']['name']);
+                    $edit_profile_img = preg_replace('/\s/', '_', $edit_profile_img);
+                    $profile_image = mt_rand(100000, 999999) . '_' . $edit_profile_img;
+                    $config['upload_path'] = './uploads/blogs/';
+                    $config['file_name'] = $profile_image;
+                    $config['overwrite'] = TRUE;
+                    $config["allowed_types"] = 'jpg|jpeg|png|bmp';
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+                    if (!$this->upload->do_upload('edit_image')) {
+                        $is_file = false;
+                        $errors = $this->upload->display_errors();
+                        $response['status'] = 'failure';
+                        $response['error'] = array('edit_image' => $errors,);
+                    }
+                } 
+                if ($is_file) {
+                
+                    if (!empty($profile_image)) {
+                        $edit_profile_img = 'uploads/blogs/' . $profile_image;
+                    }
+                    $curl_data = array(
+                        'title' => $title,
+                        'description' => $description, 
+                        'image' => $edit_profile_img,
+                        'id' => $id
+                    );
+                    $curl = $this->link->hits('update-blogs', $curl_data);
+                    $curl = json_decode($curl, TRUE);
+                    if ($curl['status']) {
+                        $response['status'] = 'success';
+                        $response['msg'] = "Blogs Updated successfully";
+                    } else {
+                        $response['status'] = 'failure';
+                        $response['error'] = array('edit_title' => $curl['message'],);
+                    }
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "Admin";
+        }
+        echo json_encode($response);
+    }
+    public function delete_blogs()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('delete_blogs_id'); 
+            if (empty($id )) {
+                $response['message'] = 'id is required.';
+                $response['status'] = 0;
+            } else {
+                $curl_data = array(   
+                  'id'=>$id,
+                );            
+                $curl = $this->link->hits('delete-blogs',$curl_data);
                 $curl = json_decode($curl, TRUE);
             
                 if($curl['message']=='success'){

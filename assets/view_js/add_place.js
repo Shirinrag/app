@@ -9,12 +9,7 @@ $(document).ready(function() {
         },
         dataType: "json",
         cache: false,
-        // beforeSend: function() {
-        //     document.getElementById('loader').style.visibility = "visible";
-        //     // $("#loader").fadeIn("slow");
-        // },
         success: function(result) {
-            // document.getElementById('loader').style.visibility = "hidden";
             if (result["status"] == "success") {
                 var state_data = result.state_data;
                 var html = "";
@@ -45,12 +40,7 @@ $(document).on("change", "#fk_country_id", function() {
         },
         dataType: "json",
         cache: false,
-        // beforeSend: function() {
-        //     document.getElementById('loader').style.visibility = "visible";
-        //     // $("#loader").fadeIn("slow");
-        // },
         success: function(result) {
-            // document.getElementById('loader').style.visibility = "hidden";
             if (result["status"] == "success") {
                 var state_data = result.state_data;
                 var html = "";
@@ -81,12 +71,7 @@ $(document).on("change", "#fk_state_id", function() {
         },
         dataType: "json",
         cache: false,
-        // beforeSend: function() {
-        //     document.getElementById('loader').style.visibility = "visible";
-        //     // $("#loader").fadeIn("slow");
-        // },
         success: function(result) {
-            // document.getElementById('loader').style.visibility = "hidden";
             if (result["status"] == "success") {
                 var city_data = result.city_data;
                 var html = "";
@@ -368,10 +353,53 @@ $("#delete-form").on('submit', (function(e) {
         },
         success: function(data) {
             $('form#delete-form').trigger('reset');
-            table.ajax.reload();
-            success_msg(data['message']);
+            $('#parking_place_data_table').DataTable().ajax.reload(null, false);
+                swal({
+                    title: "success",
+                    text: data.message,
+                    icon: "success",
+                    dangerMode: true,
+                    timer: 1500
+                });
             $("#delete_admin").modal('hide');
             $('#admin_del_button').button('reset');
         }
     });
 }));
+
+$(document).on('change', '.update_parking_status', function () {
+    var id = $(this).attr("id");
+    var status = this.value;
+    $.ajax({
+        url: frontend_path + 'superadmin/update_parking_status',
+        method: "POST",
+        data: {
+            id: id,
+            status: status,
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status == 1) {
+                 swal({
+                    title: "success",
+                    text: data.message,
+                    icon: "success",
+                    dangerMode: true,
+                    timer: 1500
+                });
+                $('#parking_place_data_table').DataTable().ajax.reload(null, false);
+            } else if (data.status == 0) {
+                $('#parking_place_data_table').DataTable().ajax.reload(null, false);
+                swal({
+                    title: "success",
+                    text: data.message,
+                    icon: "success",
+                    dangerMode: true,
+                    timer: 1500
+                });
+            } else {
+                window.location.replace(response['url']);
+            }
+        }
+    });
+});
