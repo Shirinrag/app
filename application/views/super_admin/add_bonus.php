@@ -56,7 +56,7 @@
                                     <thead>
                                        <tr>
                                           <th>SR. No</th>
-                                          <th>Bonus Price</th>
+                                          <th >Bonus Price</th>
                                           <th>Status</th>
                                        </tr>
                                     </thead>

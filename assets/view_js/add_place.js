@@ -161,6 +161,11 @@ $(document).ready(function() {
 
 function load_parking_place_data() {
     var dataTable = $('#parking_place_data_table').DataTable({
+        "columnDefs": [
+      { "width": "10px", "targets": 0 },
+      { "width": "30px", "targets": 5 },
+      
+    ],
         // dom: 'lBfrtip',
         rowReorder: {
             selector: 'td:nth-child(2)'
@@ -403,3 +408,47 @@ $(document).on('change', '.update_parking_status', function () {
         }
     });
 });
+
+ $('#excel_import_pincode_form').submit(function(e) {
+       e.preventDefault();
+       var formData = new FormData($("#excel_import_pincode_form")[0]);
+       var InvoiceTypeForm = $(this);
+       jQuery.ajax({
+           dataType: 'json',
+           type: 'POST',
+           url: InvoiceTypeForm.attr('action'),
+           data: formData,
+           cache: false,
+           processData: false,
+           contentType: false,
+           mimeType: "multipart/form-data",
+            beforeSend: function() {
+                $('#add_excel_parking_place_button').button('loading');
+            },
+           success: function(response) {
+
+               if (response.status == 'success') {
+                    $('#add_excel_parking_place_button').button('reset');
+
+                   $('form#excel_import_pincode_form').trigger('reset');
+                   
+                   $('#parking_place_data_table').DataTable().ajax.reload(null,false);
+                    swal({
+                        title: "success",
+                        text: response.msg,
+                        icon: "success",
+                        dangerMode: true,
+                        timer: 1500
+                     });
+               } else if (response.status == 'failure') {
+                   error_msg(response.error)
+               } else {
+                   window.location.replace(response['url']);
+               }
+           },
+           error: function(error, message) {
+   
+           }
+       });
+       return false;
+   });

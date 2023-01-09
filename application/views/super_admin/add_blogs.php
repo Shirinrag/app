@@ -72,7 +72,7 @@
                                     <thead>
                                        <tr>
                                           <th>SR. No</th>
-                                          <th>Title</th>
+                                          <th >Title</th>
                                           <th>Description</th>
                                           <th>Action</th>
                                        </tr>

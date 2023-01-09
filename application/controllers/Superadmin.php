@@ -711,7 +711,7 @@ class Superadmin extends CI_Controller {
             $this->form_validation->set_rules('slots','Slots', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_place_status_id','Place Status', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_parking_price_type','Price Type', 'trim|required',array('required' => 'You must provide a %s',));
-            $this->form_validation->set_rules('ext_price','Extension Price', 'trim|required',array('required' => 'You must provide a %s',));
+            // $this->form_validation->set_rules('ext_price','Extension Price', 'trim|required',array('required' => 'You must provide a %s',));
             if ($this->form_validation->run() == false) {
                 $response['status'] = 'failure';
                 $response['error'] = array(
@@ -727,7 +727,7 @@ class Superadmin extends CI_Controller {
                     'slots' => strip_tags(form_error('slots')),
                     'fk_place_status_id' => strip_tags(form_error('fk_place_status_id')),
                     'fk_parking_price_type' => strip_tags(form_error('fk_parking_price_type')),
-                    'ext_price' => strip_tags(form_error('ext_price')),
+                    // 'ext_price' => strip_tags(form_error('ext_price')),
                 );
             } else {
                 $curl_data = array(
@@ -754,7 +754,7 @@ class Superadmin extends CI_Controller {
                     $response['status']='success';
                 } else {
                     $response['status'] = 'failure';
-                     $response['error'] = array("bonus_amount" => $curl['message']);
+                     $response['error'] = array("place_name" => $curl['message']);
                 }
             }
         } else {
@@ -1404,6 +1404,245 @@ class Superadmin extends CI_Controller {
                   'id'=>$id,
                 );            
                 $curl = $this->link->hits('delete-blogs',$curl_data);
+                $curl = json_decode($curl, TRUE);
+            
+                if($curl['message']=='success'){
+                    $response['message']='Data Deleted successfully';
+                    $response['status'] = 1;
+                } else {
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "superadmin";
+        }
+        echo json_encode($response);
+    }
+
+     public function excel_upload_place() {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+                error_reporting(0);
+                $this->load->library('excel');
+                if (!empty($_FILES["excel_upload"]["name"])) {
+                    $path = $_FILES["excel_upload"]["tmp_name"];
+                    $object = PHPExcel_IOFactory::load($path);
+                    foreach ($object->getWorksheetIterator() as $worksheet) {
+                        $highestRow = $worksheet->getHighestRow();
+                        $highestColumn = $worksheet->getHighestColumn();
+                        $img = 0;
+                        for ($row = 2;$row <= $highestRow; $row++) {
+                            if (!empty($worksheet->getCellByColumnAndRow(1, $row)->getValue()) && ($object->getIndex($worksheet) == '0')) {
+                                $fk_vendor_id = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                                $fk_country_id = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                                $fk_state_id = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                                $fk_city_id = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                                $place_name = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+                                $address = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+                                $pincode = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+                                $latitude = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+                                $longitude = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+                                $slots = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+                                $fk_place_status_id = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
+                                $fk_parking_price_type = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+                                $ext_price = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
+                                    
+                                $curl_data = array(
+                                    'fk_vendor_id' =>$fk_vendor_id,
+                                    'fk_country_id' =>$fk_country_id,
+                                    'fk_state_id' =>$fk_state_id,
+                                    'fk_city_id' =>$fk_city_id,
+                                    'place_name' => $place_name,
+                                    'address' =>$address,
+                                    'pincode' =>$pincode,
+                                    'latitude' =>$latitude,
+                                    'longitude' =>$longitude,
+                                    'slots' =>$slots,
+                                    'fk_place_status_id' =>$fk_place_status_id,
+                                    'fk_parking_price_type' =>$fk_parking_price_type,
+                                    'ext_price' =>$ext_price
+                                );
+                                // echo '<pre>'; print_r($curl_data); exit;
+                                $curl = $this->link->hits('add-place', $curl_data);
+                                // echo '<pre>'; print_r($curl); exit;
+                                $curl = json_decode($curl, TRUE);
+                                // array_push($a, $curl['last_inserted_id']);
+                                // array_push($b, $curl['product_id']);
+                            }
+                            // if (!empty($worksheet->getCellByColumnAndRow(1, $row)->getValue()) && ($object->getIndex($worksheet) == '1')) {
+                            //     $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+                            //     $att_value = [];
+                            //     $p_id = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                            //     $color = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                            //     $quantity = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                            //     $price = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                            //     //$meta_tag = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+                            //     for ($col = 5;$col < $highestColumnIndex;$col++) {
+                            //         $att_value[] = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+                            //     }
+                            //     $color = explode("_", $color);
+                            //     $curl_data2 = array('log_in_id' => $log_in_id, 'p_id' => $p_id, 'color' => $color[0], 'quantity' => $quantity, 'price' => $price, 'attribute_ids' => implode(',', $att_id), 'attribute_values' => implode(',', $att_value), 'upload_image' => $image_name[$img], 'last_inserted_id' => json_encode($a), 'product_ids' => json_encode($b),);
+                            //     $img++;
+                            //     $curl2 = $this->link->hits('excel-add-product1', $curl_data2);
+                            //     $curl2 = json_decode($curl2, TRUE);
+                            //     if ($curl['status']) {
+                            //         $response['status'] = 'success';
+                            //     } else {
+                            //         $response['status'] = 'failure';
+                            //         $response['error'] = array('product_name' => $curl['message'],);
+                            //     }
+                            // }
+                        }
+                        if ($curl['status']==1) {
+                            $response['status']='success';
+                            $response['msg'] = "Place Added successfully";
+                        } else {
+                            $response['status'] = 'failure';
+                             $response['error'] = array("place_name" => $curl['message']);
+                        }
+                    }
+                    
+                }
+        } else {
+             $response['status'] = 'failure';
+            $response['url'] = base_url() . "superadmin";
+        }
+        echo json_encode($response);
+    }
+    // ========================= Vehicle Type ============================
+    public function add_vehicle_type()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $this->load->view('super_admin/vehicle_type');
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function save_vehicle_type_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            
+            $vehicle_type = $this->input->post('vehicle_type');        
+            $this->form_validation->set_rules('vehicle_type','Vehicle Type', 'trim|required|callback_alpha_dash_space',array('required' => 'You must provide a %s',));
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'vehicle_type' => strip_tags(form_error('vehicle_type')),
+                );
+            } else {
+                $curl_data = array(
+                    'vehicle_type'=>$vehicle_type,
+                );
+                $curl = $this->link->hits('add-vehicle-type', $curl_data);
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                } else {
+                    $response['status'] = 'failure';
+                     $response['error'] = array("vehicle_type" => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function display_all_vehicle_type_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-vehicle-type-data', array(), '', 0);
+            // echo '<pre>'; print_r($curl); exit;
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['vehicle_type'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function update_vehicle_type_status()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('id'); 
+            $status = $this->input->post('status'); 
+            if (empty($id)) {
+                $response['message'] = 'Place Status id is required.';
+                $response['status'] = 0;
+            }else if($status=='') {
+                $response['message'] = 'status is required.';
+                $response['status'] = 0;
+            }else{
+                $curl_data = array(   
+                  'id'=>$id,
+                  'status'=>$status,
+                );                
+                $curl = $this->link->hits('update-vehicle-type-status',$curl_data);
+                $curl = json_decode($curl, TRUE);
+                if($curl['message']=='success'){
+                    $response['message']='Status Changed successfully';
+                    $response['status'] = 1;
+                }else{
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "login";
+        }
+        echo json_encode($response);
+    }
+    public function update_vehicle_type_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            
+            $edit_id = $this->input->post('edit_id');        
+            $edit_vehicle_type = $this->input->post('edit_vehicle_type');        
+            $this->form_validation->set_rules('edit_vehicle_type','Price Status', 'trim|required|callback_alpha_dash_space',array('required' => 'You must provide a %s',));
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'edit_vehicle_type' => strip_tags(form_error('edit_vehicle_type')),
+                );
+            } else {
+                $curl_data = array(
+                    'vehicle_type'=>$edit_vehicle_type,
+                    'id' =>$edit_id
+                );
+                $curl = $this->link->hits('update-vehicle-type-data', $curl_data);
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                } else {
+                    $response['status'] = 'failure';
+                    $response['error'] = array("edit_vehicle_type" => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+
+    public function delete_vehicle_type()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('delete_vehicle_id'); 
+            if (empty($id )) {
+                $response['message'] = 'id is required.';
+                $response['status'] = 0;
+            } else {
+                $curl_data = array(   
+                  'id'=>$id,
+                );            
+                $curl = $this->link->hits('delete-vehicle-type',$curl_data);
                 $curl = json_decode($curl, TRUE);
             
                 if($curl['message']=='success'){

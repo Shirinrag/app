@@ -57,6 +57,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="<?=base_url()?>superadmin/add_vehicle_type" aria-controls="form-elements">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Add Vehicle Type</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="<?=base_url()?>superadmin/parking_place" aria-controls="form-elements">
               <i class="icon-location menu-icon"></i>
               <span class="menu-title">Add Place</span>
@@ -82,8 +88,7 @@
                    <!-- <i class="icon-menu menu-icon"></i> -->
                     Parking List
                   </a>
-                </li>
-              
+                </li>              
               </ul>
             </div>
           </li>
