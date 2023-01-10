@@ -623,6 +623,8 @@ class Superadmin extends CI_Controller {
             $data['place_status'] = $curl['place_status'];
             $data['price_type'] = $curl['price_type'];
             $data['vendor'] = $curl['vendor'];
+            $data['vehicle_data'] = $curl['vehicle_data'];
+            
             $this->load->view('super_admin/parking_place',$data);
         } else {
             redirect(base_url().'superadmin');
@@ -698,6 +700,7 @@ class Superadmin extends CI_Controller {
             $to_hours = $this->input->post('to_hours');              
             $price = $this->input->post('price');              
             $ext_price = $this->input->post('ext_price');
+            $per_hour_charges = $this->input->post('per_hour_charges');
 
             $this->form_validation->set_rules('fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_country_id','Country', 'trim|required',array('required' => 'You must provide a %s',));
@@ -747,6 +750,7 @@ class Superadmin extends CI_Controller {
                     'from_hours'=>json_encode($from_hours),
                     'to_hours'=>json_encode($to_hours),
                     'price'=>json_encode($price),
+                    'per_hour_charges'=>$per_hour_charges
                 );
                 $curl = $this->link->hits('add-place', $curl_data);
                 $curl = json_decode($curl, true);

@@ -452,3 +452,25 @@ $(document).on('change', '.update_parking_status', function () {
        });
        return false;
    });
+
+ // $(document).on('select2:select','#fk_vehicle_type', function(e) {
+ //      var data = e.params.data;
+ //  });
+ // $("#fk_vehicle_type option:selected").each(function(){
+ //      var optionValue = $(this).val();
+ //      console.log(optionValue);
+ // });
+
+// $('#fk_vehicle_type').change(function(){
+//     var myValues = $('#fk_vehicle_type').val();
+// console.log(myValues);
+//     // then do stuff with the array
+//     ...
+// });
+
+var options = $("#fk_vehicle_type option:selected");
+// console.log(options);
+var values = $.map(options, function (option) {
+    console.log(option.text);
+    return option.text;
+});
