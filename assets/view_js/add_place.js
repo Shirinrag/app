@@ -92,23 +92,7 @@ $(document).on("change", "#fk_state_id", function() {
         },
     });
 });
-$('#addRows').click(function() {
 
-    var latest_count = $('#count').val();
-    var new_count = parseInt(latest_count) + 1;
-
-    var html2 = '';
-    html2 += '<div class="row"><div class="col-md-3"><div class="form-group"> <label>From Hours</label> <input type="text" class="form-control input-text" name="from_hours[]" id="from_hours_' + new_count + '" placeholder="From Hours"> <span class="error_msg" id="from_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>To Hours</label> <input type="text" class="form-control input-text" name="to_hours[]" id="to_hours_' + new_count + '" placeholder="To Hours"> <span class="error_msg" id="to_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="price[]" id="price_' + new_count + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="price_error"></span> </div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
-
-    $('#price_data_append').append(html2);
-
-});
-$(document).on('click', '#removeRow', function() {
-    var latest_count = $('#count').val();
-    var new_count = parseInt(latest_count) - 1;
-    $('#count').val(new_count);
-    $(this).closest("div").remove();
-});
 $('#add_parking_place_form').submit(function(e) {
     e.preventDefault();
     var formData = new FormData($("#add_parking_place_form")[0]);
@@ -453,24 +437,70 @@ $(document).on('change', '.update_parking_status', function () {
        return false;
    });
 
- // $(document).on('select2:select','#fk_vehicle_type', function(e) {
- //      var data = e.params.data;
- //  });
- // $("#fk_vehicle_type option:selected").each(function(){
- //      var optionValue = $(this).val();
- //      console.log(optionValue);
- // });
 
-// $('#fk_vehicle_type').change(function(){
-//     var myValues = $('#fk_vehicle_type').val();
-// console.log(myValues);
-//     // then do stuff with the array
-//     ...
+// $(function() {
+//     $('#fk_vehicle_type').change(function(e) {
+//         var selected = $(e.target).val();
+//         console.log(selected);
+//     }); 
 // });
 
-var options = $("#fk_vehicle_type option:selected");
-// console.log(options);
-var values = $.map(options, function (option) {
-    console.log(option.text);
-    return option.text;
+$('#fk_vehicle_type').on('change', function(evt, params) {
+    var vehicle_id = params.selected;
+    var vehicle_id_deselected = params.deselected;
+    if (vehicle_id) {
+        $.ajax({
+            url: frontend_path + 'superadmin/get_vehicle_details',
+            type: 'post',
+            dataType: "json",
+            data: {
+                vehicle_id: vehicle_id
+            },
+            success: function(response) {
+                console.log(response);
+                if (response["status"] == "success") {
+                    var html = "";
+                    var vehicle_id1 = response.vehicle_data.id;
+                    html += '<div class="container" id="new_price_data_append1_' + vehicle_id1 + '"><div class="row"> <h4 class="card-title">' + response.vehicle_data.vehicle_type + ' Price Slab</h4><div class="col-md-3"> <div class="form-group"> <label>From Hours</label> <input type="text" class="form-control input-text" name="from_hours_' + vehicle_id1 + '[]" id="from_hours_' + vehicle_id1 + '" placeholder="From Hours" onkeypress="return isNumber(event)"> <span class="error_msg" id="from_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>To Hours</label> <input type="text" class="form-control input-text" name="to_hours_' + vehicle_id1 + '[]" id="to_hours_' + vehicle_id1 + '" placeholder="To Hours" onkeypress="return isNumber(event)"> <span class="error_msg" id="to_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="price_' + vehicle_id1 + '[]" id="price_' + vehicle_id1 + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="price_error"></span> </div></div><div class="col-md-2"> <button id="addRows_' + vehicle_id1 + '" type="button" class="btn btn-info" style="margin-top: 22px; margin-left: -20px;"><i class="icon-plus"></i> </button> <input type="hidden" class="form-control" name="count" id="count_' + vehicle_id1 + '" value="0"> </div></div> </div><div id="new_price_data_append_' + vehicle_id1 + '"></div>';
+
+                    $('#price_data_append').append(html);
+
+                    $('#addRows_' + vehicle_id1 + '').click(function() {
+
+                        var latest_count = $('#count_' + vehicle_id1 + '').val();
+                        var new_count = parseInt(latest_count) + 1;
+
+                        var html2 = '';
+                        html2 += '<div class="row"><div class="col-md-3"><div class="form-group"> <label>From Hours</label> <input type="text" class="form-control input-text" name="from_hours_' + vehicle_id1 + '[]" id="from_hours_' + new_count + '" placeholder="From Hours"> <span class="error_msg" id="from_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>To Hours</label> <input type="text" class="form-control input-text" name="to_hours_' + vehicle_id1 + '[]" id="to_hours_' + new_count + '" placeholder="To Hours"> <span class="error_msg" id="to_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="price_' + vehicle_id1 + '[]" id="price_' + new_count + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="price_error"></span> </div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
+
+                        $('#new_price_data_append_' + vehicle_id1 + '').append(html2);
+
+                    });
+                    $(document).on('click', '#removeRow', function() {
+                        var latest_count = $('#count_' + vehicle_id1 + '').val();
+                        var new_count = parseInt(latest_count) - 1;
+                        $('#count_' + vehicle_id1 + '').val(new_count);
+                        $(this).closest("div").remove();
+                    });
+                }
+
+            },
+        });
+    } else if(vehicle_id_deselected){
+        console.log(vehicle_id_deselected);
+        $('#addRows_'+vehicle_id_deselected).remove();
+        $('#new_price_data_append_'+vehicle_id_deselected+'').remove();
+        $('#new_price_data_append1_'+vehicle_id_deselected+'').remove();
+        // $('#price_data_append').remove();
+    }
+
 });
+
+// $(document).on('change','#fk_vehicle_type', function(evt, params) {
+//                         var vehicle_id2 = params.deselected;
+//                         console.log('#addRows_'+vehicle_id2);
+//                         $('#addRows_'+vehicle_id2).remove();
+//                         $('#new_price_data_append_'+vehicle_id2+'').remove();
+//                         $('#price_data_append').remove();
+//                     });
+

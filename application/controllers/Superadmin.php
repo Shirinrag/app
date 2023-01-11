@@ -680,6 +680,31 @@ class Superadmin extends CI_Controller {
         }
         echo json_encode($response);
     }
+    public function get_vehicle_details()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $vehicle_id = $this->input->post('vehicle_id');
+            if (!empty($vehicle_id)) {
+                $curl_data = array('id' => $vehicle_id);
+                $curl = $this->link->hits('get-vehicle-details', $curl_data);
+                $curl = json_decode($curl, TRUE);          
+                 if (!empty($curl['vehicle_data'])) {
+                    $response['status'] = 'success';
+                    $response['vehicle_data'] = $curl['vehicle_data'];   
+                } else {
+                    $response['status'] = 'failure';
+                }
+            } else {
+                $response['status'] = 'failure';
+            }    
+        } else {
+            $url = base_url();
+            $response['status'] = 'login_failure';
+            $response['message'] = $url;
+        }
+        echo json_encode($response);
+    }
     public function save_parking_place()
     {
          if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
@@ -701,7 +726,7 @@ class Superadmin extends CI_Controller {
             $price = $this->input->post('price');              
             $ext_price = $this->input->post('ext_price');
             $per_hour_charges = $this->input->post('per_hour_charges');
-
+            // echo '<pre>'; print_r($_POST); exit;
             $this->form_validation->set_rules('fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_country_id','Country', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_state_id','State', 'trim|required',array('required' => 'You must provide a %s',));
@@ -752,6 +777,7 @@ class Superadmin extends CI_Controller {
                     'price'=>json_encode($price),
                     'per_hour_charges'=>$per_hour_charges
                 );
+                // echo '<pre>'; print_r($curl_data); exit;
                 $curl = $this->link->hits('add-place', $curl_data);
                 $curl = json_decode($curl, true);
                 if ($curl['status']==1) {

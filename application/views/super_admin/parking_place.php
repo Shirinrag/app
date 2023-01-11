@@ -181,37 +181,10 @@
                                     </div>
                                  </div>
                              
-                              <div class="row">
-                                 <h4 class="card-title">Daily Price Slab</h4>
-                                 <div class="col-md-3">
-                                    <div class="form-group">
-                                       <label>From Hours</label>
-                                       <input type="text" class="form-control input-text" name="from_hours[]" id="from_hours_0" placeholder="From Hours" onkeypress="return isNumber(event)">
-                                       <span class="error_msg" id="from_hours_error"></span>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-3">
-                                    <div class="form-group">
-                                       <label>To Hours</label>
-                                       <input type="text" class="form-control input-text" name="to_hours[]" id="to_hours_0" placeholder="To Hours" onkeypress="return isNumber(event)">
-                                       <span class="error_msg" id="to_hours_error"></span>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-3">
-                                    <div class="form-group">
-                                       <label>Price</label>
-                                       <input type="text" class="form-control input-text" name="price[]" id="price_0" placeholder="Price" onkeypress="return isNumber(event)">
-                                       <span class="error_msg" id="price_error"></span>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-2">
-                                    <button id="addRows" type="button" class="btn btn-info" style="margin-top: 22px; margin-left: -20px;"><i class="icon-plus"></i>
-                                    </button>
-                                    <input type="hidden" class="form-control"  name="count" id="count" value="0">
-                                 </div>
-                              </div>
-                              <hr>
+                              
+                              
                               <div id="price_data_append"></div>
+                              <hr>
                               <div class="row">
                                  <div class="float-right">
                                     <button  type="submit" class="btn btn-block btn-lg  button_color text_color" id="add_parking_place_button"data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading">Submit</button>
