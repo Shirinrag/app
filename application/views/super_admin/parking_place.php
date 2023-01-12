@@ -161,7 +161,7 @@
                                     <div class="col-md-4">
                                        <div class="form-group">
                                           <label>Per Hour Extra Charges</label>
-                                          <input type="text" class="form-control input-text" name="per_hour_charges" id="per_hour_charges" placeholder="Extension Price %" onkeypress="return isNumber(event)">
+                                          <input type="text" class="form-control input-text" name="per_hour_charges" id="per_hour_charges" placeholder="Per Hour Extra Charges" onkeypress="return isNumber(event)">
                                           <span class="error_msg" id="per_hour_charges_error"></span>
                                        </div>
                                     </div>
@@ -407,6 +407,27 @@
                                  <label>Extension Price %</label>
                                  <input type="text" class="form-control input-text" name="edit_ext_price" id="edit_ext_price" placeholder="Extension Price %" onkeypress="return isNumber(event)">
                                  <span class="error_msg" id="edit_ext_price_error"></span>
+                              </div>
+                           </div>
+                           <div class="col-md-4">
+                                 <div class="form-group">
+                                    <label>Per Hour Extra Charges</label>
+                                    <input type="text" class="form-control input-text" name="edit_per_hour_charges" id="edit_per_hour_charges" placeholder="Per Hour Extra Charges" onkeypress="return isNumber(event)">
+                                    <span class="error_msg" id="edit_per_hour_charges_error"></span>
+                                 </div>
+                           </div>
+                           <div class="col-md-4">
+                              <div class="form-group">
+                                 <label>Select Vehicle Type</label>
+                                 <select type="text" class="form-control chosen-select-deselect" multiple="multiple" name="edit_fk_vehicle_type[]" id="edit_fk_vehicle_type" placeholder="Select Price Type">
+                                    <option value=""></option>
+                                    <?php 
+                                       foreach ($vehicle_data as $vehicle_data_key => $vehicle_data_row) { ?>
+                                    <option value="<?=$vehicle_data_row['id']?>"><?=$vehicle_data_row['vehicle_type']?></option>
+                                    <?php }
+                                       ?>
+                                 </select>
+                                 <span class="error_msg" id="edit_fk_vehicle_type_error"></span>
                               </div>
                            </div>
                         </div>

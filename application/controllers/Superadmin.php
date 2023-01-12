@@ -721,9 +721,7 @@ class Superadmin extends CI_Controller {
             $slots = $this->input->post('slots');        
             $fk_place_status_id = $this->input->post('fk_place_status_id');        
             $fk_parking_price_type = $this->input->post('fk_parking_price_type');            
-            $from_hours = $this->input->post('from_hours');              
-            $to_hours = $this->input->post('to_hours');              
-            $price = $this->input->post('price');              
+            $fk_vehicle_type = $this->input->post('fk_vehicle_type');
             $ext_price = $this->input->post('ext_price');
             $per_hour_charges = $this->input->post('per_hour_charges');
             // echo '<pre>'; print_r($_POST); exit;
@@ -758,6 +756,15 @@ class Superadmin extends CI_Controller {
                     // 'ext_price' => strip_tags(form_error('ext_price')),
                 );
             } else {
+
+                foreach ($fk_vehicle_type as $fk_vehicle_type_key => $fk_vehicle_type_row) {
+                    
+                     $from_hours[$fk_vehicle_type_row] = $this->input->post('from_hours_'.$fk_vehicle_type_row);              
+                     $to_hours[$fk_vehicle_type_row] = $this->input->post('to_hours_'.$fk_vehicle_type_row);              
+                     $price[$fk_vehicle_type_row] = $this->input->post('price_'.$fk_vehicle_type_row);    
+                     // echo '<pre>'; print_r($from_hours);
+                }
+                     // exit;
                 $curl_data = array(
                     'fk_vendor_id'=>$fk_vendor_id,
                     'fk_country_id'=>$fk_country_id,
@@ -775,9 +782,9 @@ class Superadmin extends CI_Controller {
                     'from_hours'=>json_encode($from_hours),
                     'to_hours'=>json_encode($to_hours),
                     'price'=>json_encode($price),
-                    'per_hour_charges'=>$per_hour_charges
-                );
-                // echo '<pre>'; print_r($curl_data); exit;
+                    'per_hour_charges'=>$per_hour_charges,
+                    'fk_vehicle_type' =>json_encode($fk_vehicle_type)
+                );                
                 $curl = $this->link->hits('add-place', $curl_data);
                 $curl = json_decode($curl, true);
                 if ($curl['status']==1) {
@@ -833,6 +840,7 @@ class Superadmin extends CI_Controller {
                 $id = $this->input->post('id');
                 $curl_data = array('id' => $id);
                 $curl = $this->link->hits('get-parking-place-details-on-id', $curl_data);
+                // echo '<pre>'; print_r($curl); exit;
                 $curl = json_decode($curl, TRUE);
                 $data['parking_place_data'] = $curl['parking_place_data'];
                 $data['hour_price_slab'] = $curl['hour_price_slab'];
@@ -841,6 +849,7 @@ class Superadmin extends CI_Controller {
                 $data['city_details'] = $curl['city_details'];
                 $data['device_data'] = $curl['device_data'];
                 $response = $data;
+                // echo '<pre>'; print_r($data['hour_price_slab']); exit;
         }else {
             $resoponse['status']='login_failure';
             $resoponse['url']=base_url().'superadmin';

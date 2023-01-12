@@ -246,6 +246,12 @@ $(document).on("click", ".edit_place_data", function() {
                 $('#edit_price_data_append').append(html4);
 
             });
+            $(document).on('click', '#removeRow', function() {
+                        var latest_count = $('#count').val();
+                        var new_count = parseInt(latest_count) - 1;
+                        $('#count').val(new_count);
+                        $(this).closest("div").remove();
+                    });
         },
     });
 });
@@ -436,15 +442,6 @@ $(document).on('change', '.update_parking_status', function () {
        });
        return false;
    });
-
-
-// $(function() {
-//     $('#fk_vehicle_type').change(function(e) {
-//         var selected = $(e.target).val();
-//         console.log(selected);
-//     }); 
-// });
-
 $('#fk_vehicle_type').on('change', function(evt, params) {
     var vehicle_id = params.selected;
     var vehicle_id_deselected = params.deselected;
@@ -461,7 +458,7 @@ $('#fk_vehicle_type').on('change', function(evt, params) {
                 if (response["status"] == "success") {
                     var html = "";
                     var vehicle_id1 = response.vehicle_data.id;
-                    html += '<div class="container" id="new_price_data_append1_' + vehicle_id1 + '"><div class="row"> <h4 class="card-title">' + response.vehicle_data.vehicle_type + ' Price Slab</h4><div class="col-md-3"> <div class="form-group"> <label>From Hours</label> <input type="text" class="form-control input-text" name="from_hours_' + vehicle_id1 + '[]" id="from_hours_' + vehicle_id1 + '" placeholder="From Hours" onkeypress="return isNumber(event)"> <span class="error_msg" id="from_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>To Hours</label> <input type="text" class="form-control input-text" name="to_hours_' + vehicle_id1 + '[]" id="to_hours_' + vehicle_id1 + '" placeholder="To Hours" onkeypress="return isNumber(event)"> <span class="error_msg" id="to_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="price_' + vehicle_id1 + '[]" id="price_' + vehicle_id1 + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="price_error"></span> </div></div><div class="col-md-2"> <button id="addRows_' + vehicle_id1 + '" type="button" class="btn btn-info" style="margin-top: 22px; margin-left: -20px;"><i class="icon-plus"></i> </button> <input type="hidden" class="form-control" name="count" id="count_' + vehicle_id1 + '" value="0"> </div></div> </div><div id="new_price_data_append_' + vehicle_id1 + '"></div>';
+                    html += '<div id="new_price_data_append1_' + vehicle_id1 + '"><div class="row"> <h4 class="card-title">' + response.vehicle_data.vehicle_type + ' Price Slab</h4><div class="col-md-3"> <div class="form-group"> <label>From Hours</label> <input type="text" class="form-control input-text" name="from_hours_' + vehicle_id1 + '[]" id="from_hours_' + vehicle_id1 + '" placeholder="From Hours" onkeypress="return isNumber(event)"> <span class="error_msg" id="from_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>To Hours</label> <input type="text" class="form-control input-text" name="to_hours_' + vehicle_id1 + '[]" id="to_hours_' + vehicle_id1 + '" placeholder="To Hours" onkeypress="return isNumber(event)"> <span class="error_msg" id="to_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="price_' + vehicle_id1 + '[]" id="price_' + vehicle_id1 + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="price_error"></span> </div></div><div class="col-md-2"> <button id="addRows_' + vehicle_id1 + '" type="button" class="btn btn-info" style="margin-top: 22px; margin-left: -20px;"><i class="icon-plus"></i> </button> <input type="hidden" class="form-control" name="count" id="count_' + vehicle_id1 + '" value="0"> </div></div> </div><div id="new_price_data_append_' + vehicle_id1 + '"></div>';
 
                     $('#price_data_append').append(html);
 
@@ -487,20 +484,9 @@ $('#fk_vehicle_type').on('change', function(evt, params) {
             },
         });
     } else if(vehicle_id_deselected){
-        console.log(vehicle_id_deselected);
         $('#addRows_'+vehicle_id_deselected).remove();
         $('#new_price_data_append_'+vehicle_id_deselected+'').remove();
         $('#new_price_data_append1_'+vehicle_id_deselected+'').remove();
-        // $('#price_data_append').remove();
     }
-
 });
-
-// $(document).on('change','#fk_vehicle_type', function(evt, params) {
-//                         var vehicle_id2 = params.deselected;
-//                         console.log('#addRows_'+vehicle_id2);
-//                         $('#addRows_'+vehicle_id2).remove();
-//                         $('#new_price_data_append_'+vehicle_id2+'').remove();
-//                         $('#price_data_append').remove();
-//                     });
 
