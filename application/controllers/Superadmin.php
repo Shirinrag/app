@@ -848,8 +848,9 @@ class Superadmin extends CI_Controller {
                 $data['state_details'] = $curl['state_details'];
                 $data['city_details'] = $curl['city_details'];
                 $data['device_data'] = $curl['device_data'];
+                $data['parking_place_vehicle_type'] = $curl['parking_place_vehicle_type'];
                 $response = $data;
-                // echo '<pre>'; print_r($data['hour_price_slab']); exit;
+                echo '<pre>'; print_r($data); exit;
         }else {
             $resoponse['status']='login_failure';
             $resoponse['url']=base_url().'superadmin';
@@ -1697,5 +1698,18 @@ class Superadmin extends CI_Controller {
             $response['url'] = base_url() . "superadmin";
         }
         echo json_encode($response);
+    }
+    public function pos_device_map()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+              $curl = $this->link->hits('get-allocation-data', array(), '', 0);
+                // echo '<pre>'; print_r($curl); exit;
+                $curl = json_decode($curl, true);
+                $response['place_list'] = $curl['place_list'];
+            $this->load->view('super_admin/pos_device_map',$response);
+        } else {
+            redirect(base_url().'superadmin');
+        }
     }
 }

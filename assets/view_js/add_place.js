@@ -193,6 +193,7 @@ $(document).on("click", ".edit_place_data", function() {
             $('#edit_fk_parking_price_type').val(info['fk_parking_price_type']);
             $('#edit_fk_parking_price_type').trigger("chosen:updated");
             $('#edit_ext_price').val(info['ext_price']);
+            $('#edit_per_hour_charges').val(info['per_hour_charges']);
             var state_option = "";
             var option_data = "";
             $.each(state_details, function(state_details_index, state_details_row) {
