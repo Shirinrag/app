@@ -1712,4 +1712,40 @@ class Superadmin extends CI_Controller {
             redirect(base_url().'superadmin');
         }
     }
+
+    public function add_pos_device_map()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            
+            $fk_place_id = $this->input->post('fk_place_id');        
+            $device_id = $this->input->post('device_id');        
+            $this->form_validation->set_rules('fk_place_id','Place', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('device_id','Device Id', 'trim|required',array('required' => 'You must provide a %s',));
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'fk_place_id' => strip_tags(form_error('fk_place_id')),
+                    'device_id' => strip_tags(form_error('device_id')),
+                );
+            } else {
+                $curl_data = array(
+                    'fk_place_id' => $fk_place_id,
+                    'device_id' => $device_id,
+                );
+                $curl = $this->link->hits('add-pos-device-map', $curl_data);
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                } else {
+                    $response['status'] = 'failure';
+                    $response['error'] = array("device_id" => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
 }

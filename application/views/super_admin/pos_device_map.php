@@ -4,7 +4,7 @@
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Duty Allocation</title>
+      <title>POS Device Mapped</title>
       <!-- plugins:css -->
       <?php include 'common/cssfiles.php';?>
    </head>
@@ -26,11 +26,11 @@
                         <div class="col">
                            <div class="card">
                               <div class="card-body">
-                                 <h4 class="card-title">Add Duty Allocation</h4>
-                                 <?php echo form_open('superadmin/save_duty_allocation', array('id'=>'save_duty_allocation_form')) ?>
+                                 <h4 class="card-title">Add POS Device Mapped</h4>
+                                 <?php echo form_open('superadmin/save_duty_allocation', array('id'=>'save_pos_device_map_form')) ?>
                                 
                                  <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                        <div class="form-group">
                                           <label>Select Place</label>
                                           <select type="text" class="form-control chosen-select-deselect" name="fk_place_id[]" id="fk_place_id_0" data-placeholder="Select Place">
@@ -44,7 +44,7 @@
                                           <span class="error_msg" id="fk_place_id_error"></span>
                                        </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                        <div class="form-group">
                                           <label>Device Id</label>
                                           <input type="text" class="form-control input-text" name="device_id" id="device_id" placeholder="Device Id">
@@ -66,9 +66,9 @@
                      <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                            <div class="card-body">
-                              <h4 class="card-title">Duty Allocation List</h4>
+                              <h4 class="card-title">POS Device Mapped List</h4>
                               <div class="table-responsive">
-                                 <table class="table" id="duty_allocation_table">
+                                 <table class="table" id="pos_device_map_table">
                                     <thead>
                                        <tr>
                                           <th>SR. No</th>
@@ -280,7 +280,7 @@
       <!-- container-scroller -->
       <!-- plugins:js -->
       <?php include 'common/jsfiles.php';?>
-      <script type="text/javascript" src="<?=base_url()?>assets/view_js/add_duty_allocation.js"></script>
+      <script type="text/javascript" src="<?=base_url()?>assets/view_js/add_pos_device_map.js"></script>
       <!-- End custom js for this page-->
    </body>
 </html>
