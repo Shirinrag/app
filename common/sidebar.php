@@ -104,12 +104,12 @@
          </a>
       </li>
       <li class="nav-item">
-         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic">
          <i class="icon-layout menu-icon"></i>
          <span class="menu-title">POS</span>
          <i class="menu-arrow"></i>
          </a>
-         <div class="collapse" id="ui-basic">
+         <div class="collapse" id="ui-basic1">
             <ul class="nav flex-column sub-menu">
                <li class="nav-item">
                   <a class="nav-link" href="<?=base_url()?>superadmin/pos_device_map">
