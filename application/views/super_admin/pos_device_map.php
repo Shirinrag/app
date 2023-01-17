@@ -46,7 +46,15 @@
                                     <div class="col-md-4">
                                        <div class="form-group">
                                           <label>Device Id</label>
-                                          <input type="text" class="form-control input-text" name="device_id" id="device_id" placeholder="Device Id">
+                                         <select type="text" class="form-control chosen-select-deselect" name="device_id" id="device_id" data-placeholder="Select Place">
+                                             <option value=""></option>
+                                             <?php 
+                                                foreach ($device_id as $device_id_key => $device_id_row) { ?>
+                                             <option value="<?=$device_id_row['id']?>"><?=$device_id_row['pos_device_id']?></option>
+                                             <?php }
+                                                ?>
+                                          </select>
+                                        
                                           <span class="error_msg" id="device_id_error"></span>
                                        </div>
                                     </div>
@@ -137,7 +145,14 @@
                               <div class="col-md-4">
                                  <div class="form-group">
                                     <label>Device Id</label>
-                                    <input type="text" class="form-control input-text" name="edit_device_id" id="edit_device_id" placeholder="Device Id">
+                                   <select type="text" class="form-control chosen-select-deselect" name="edit_device_id" id="edit_device_id" data-placeholder="Select Place">
+                                             <option value=""></option>
+                                             <?php 
+                                                foreach ($device_id as $device_id_key => $device_id_row) { ?>
+                                             <option value="<?=$device_id_row['id']?>"><?=$device_id_row['pos_device_id']?></option>
+                                             <?php }
+                                                ?>
+                                          </select>
                                     <span class="error_msg" id="edit_device_id_error"></span>
                                  </div>
                               </div>

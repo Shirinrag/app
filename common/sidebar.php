@@ -112,6 +112,12 @@
          <div class="collapse" id="ui-basic1">
             <ul class="nav flex-column sub-menu">
                <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>superadmin/add_pos_device">
+                     <!-- <i class="icon-menu menu-icon"></i> -->
+                     Add POS Device
+                  </a>
+               </li>
+               <li class="nav-item">
                   <a class="nav-link" href="<?=base_url()?>superadmin/pos_device_map">
                      <!-- <i class="icon-menu menu-icon"></i> -->
                      POS Device Map

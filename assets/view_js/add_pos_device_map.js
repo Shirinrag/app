@@ -45,7 +45,7 @@ $(document).ready(function () {
             "data": null
          },
          {
-            "data": "device_id",
+            "data": "pos_device_id",
 
          },
          {
@@ -92,6 +92,7 @@ $(document).on("click", "#pos_device_map_table tbody tr, .edit_pos_map_device tb
    $('#edit_device_id').val(data1.device_id);
    $('#edit_place_id').val(data1.fk_place_id);
    $('#edit_place_id').trigger("chosen:updated");
+   $('#edit_device_id').trigger("chosen:updated");
 });
 
 $('#update_pos_device_map_details_form').submit(function (e) {
@@ -173,7 +174,7 @@ function change_status(status, id) {
     }
     var pos_id = id;
     $.ajax({
-        url: frontend_path + "superadmin/change_pos_device_status",
+        url: frontend_path + "superadmin/change_pos_device_map_status",
         type: "POST",
         data: {
             'id': pos_id,

@@ -1703,9 +1703,10 @@ class Superadmin extends CI_Controller {
     {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
-              $curl = $this->link->hits('get-allocation-data', array(), '', 0);
+              $curl = $this->link->hits('get-pos-map-data', array(), '', 0);
                 $curl = json_decode($curl, true);
                 $response['place_list'] = $curl['place_list'];
+                $response['device_id'] = $curl['device_id'];
             $this->load->view('super_admin/pos_device_map',$response);
         } else {
             redirect(base_url().'superadmin');
@@ -1826,7 +1827,7 @@ class Superadmin extends CI_Controller {
         }
         echo json_encode($response);
     }
-    public function change_pos_device_status()
+    public function change_pos_device_map_status()
     {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $id = $this->input->post('id'); 
@@ -1842,7 +1843,7 @@ class Superadmin extends CI_Controller {
                   'id'=>$id,
                   'status'=>$status,
                 );                
-                $curl = $this->link->hits('update-pos-device-status',$curl_data);
+                $curl = $this->link->hits('update-pos-device-map-status',$curl_data);
                 $curl = json_decode($curl, TRUE);
                 if($curl['message']=='success'){
                     $response['message']='Status Changed successfully';
@@ -1883,5 +1884,150 @@ class Superadmin extends CI_Controller {
             $response['url']=base_url().'superadmin';
         }
         echo json_encode($response);      
+    }
+    public function save_pos_vrifier_duty_allocation()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');            
+            $fk_place_id = $this->input->post('fk_place_id');        
+            $fk_pos_verifier_id = $this->input->post('fk_pos_verifier_id');
+            $date = $this->input->post('date');       
+            $curl_data = array(
+                'fk_place_id'=>json_encode($fk_place_id),
+                'fk_pos_verifier_id'=>json_encode($fk_pos_verifier_id),
+                'date'=>json_encode($date),
+            );
+            $curl = $this->link->hits('save-pos-verifier-duty-allocation', $curl_data);
+            $curl = json_decode($curl, true);
+            if ($curl['status']==1) {
+                $response['status']='success';
+            } else {
+                 $response['status'] = 'failure';
+                 $response['error'] = array("fk_pos_verifier_id" => $curl['message']);
+            }
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+
+    public function display_all_pos_duty_allocation_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-pos-duty-allocation-data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['pos_duty_allocation'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function delete_pos_duty_allocation()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('delete_pos_duty_allocation_id'); 
+            if (empty($id )) {
+                $response['message'] = 'Duty Allocation id is required.';
+                $response['status'] = 0;
+            } else {
+                $curl_data = array(   
+                  'id'=>$id,
+                );            
+                $curl = $this->link->hits('delete-pos-duty-allocation',$curl_data);
+                $curl = json_decode($curl, TRUE);
+            
+                if($curl['message']=='success'){
+                    $response['message']='Data Deleted successfully';
+                    $response['status'] = 1;
+                } else {
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "superadmin";
+        }
+        echo json_encode($response);
+    }
+
+    public function add_pos_device()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $this->load->view('super_admin/add_pos_device');
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function save_pos_device_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');            
+            $device_id = $this->input->post('device_id');         
+            $curl_data = array(
+                'device_id'=>json_encode($device_id),
+            );
+            $curl = $this->link->hits('add-pos-device', $curl_data);
+            $curl = json_decode($curl, true);
+            if ($curl['status']==1) {
+                $response['status']='success';
+            } else {
+                $response['status'] = 'failure';
+                $response['error'] = array("device_id" => $curl['message']);
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function display_all_pos_device_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-pos-device-data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['device_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function change_pos_device_status()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('id'); 
+            $status = $this->input->post('status'); 
+            if (empty($id)) {
+                $response['message'] = 'id is required.';
+                $response['status'] = 0;
+            }else if($status=='') {
+                $response['message'] = 'status is required.';
+                $response['status'] = 0;
+            }else{
+                $curl_data = array(   
+                  'id'=>$id,
+                  'status'=>$status,
+                );
+                $curl = $this->link->hits('update-pos-device-status',$curl_data);
+                $curl = json_decode($curl, TRUE);
+                if($curl['message']=='success'){
+                    $response['message']='Status Changed successfully';
+                    $response['status'] = 1;
+                }else{
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "login";
+        }
+        echo json_encode($response);
     }
 }
