@@ -837,22 +837,20 @@ class Superadmin extends CI_Controller {
     }
     public function get_parking_place_details_on_id() {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
-                $id = $this->input->post('id');
-                $curl_data = array('id' => $id);
-                $curl = $this->link->hits('get-parking-place-details-on-id', $curl_data);
-                // echo '<pre>'; print_r($curl); exit;
-                $curl = json_decode($curl, TRUE);
-                $data['parking_place_data'] = $curl['parking_place_data'];
-                $data['hour_price_slab'] = $curl['hour_price_slab'];
-                $data['slot_info'] = $curl['slot_info'];
-                $data['state_details'] = $curl['state_details'];
-                $data['city_details'] = $curl['city_details'];
-                $data['device_data'] = $curl['device_data'];
-                $data['parking_place_vehicle_type'] = $curl['parking_place_vehicle_type'];
-                $response = $data;
-                echo '<pre>'; print_r($data); exit;
+            $id = $this->input->post('id');
+            $curl_data = array('id' => $id);
+            $curl = $this->link->hits('get-parking-place-details-on-id', $curl_data);
+            $curl = json_decode($curl, TRUE);
+            $data['parking_place_data'] = $curl['parking_place_data'];
+            $data['hour_price_slab'] = $curl['hour_price_slab'];
+            $data['slot_info'] = $curl['slot_info'];
+            $data['state_details'] = $curl['state_details'];
+            $data['city_details'] = $curl['city_details'];
+            $data['device_data'] = $curl['device_data'];
+            $data['parking_place_vehicle_type'] = $curl['parking_place_vehicle_type'];
+            $response = $data;
         }else {
-            $resoponse['status']='login_failure';
+            $resoponse['status']='login_failure'; 
             $resoponse['url']=base_url().'superadmin';
         }
         echo json_encode($response);
