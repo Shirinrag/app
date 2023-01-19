@@ -849,6 +849,7 @@ class Superadmin extends CI_Controller {
             $data['device_data'] = $curl['device_data'];
             $data['parking_place_vehicle_type'] = $curl['parking_place_vehicle_type'];
             $response = $data;
+            // echo '<pre>'; print_r($response); exit;
         }else {
             $resoponse['status']='login_failure'; 
             $resoponse['url']=base_url().'superadmin';
