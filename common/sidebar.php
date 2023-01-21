@@ -131,6 +131,37 @@
                </li>
             </ul>
          </div>
+
+      </li>
+      <li class="nav-item">
+         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic">
+         <i class="icon-layout menu-icon"></i>
+         <span class="menu-title">About Us</span>
+         <i class="menu-arrow"></i>
+         </a>
+         <div class="collapse" id="ui-basic2">
+            <ul class="nav flex-column sub-menu">
+               <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>superadmin/user_terms_n_condition">
+                     <!-- <i class="icon-menu menu-icon"></i> -->
+                     User Terms & Condition
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>superadmin/verifier_terms_n_condition">
+                     <!-- <i class="icon-menu menu-icon"></i> -->
+                     Verifier Terms & Condition
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>superadmin/vendor_terms_n_condition">
+                     <!-- <i class="icon-menu menu-icon"></i> -->
+                     Vendor Terms & Condition
+                  </a>
+               </li>
+            </ul>
+         </div>
+         
       </li>
       <!--   <li class="nav-item">
          <a class="nav-link" href="<?=base_url()?>superadmin/role_and_permission" aria-controls="form-elements">

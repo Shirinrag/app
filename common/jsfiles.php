@@ -28,6 +28,8 @@
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+  <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
+
   <script src="<?=base_url()?>assets/js/button-inline-loader.js"></script>
   <script src="<?=base_url()?>assets/view_js/form.js"></script>
   
@@ -49,4 +51,13 @@
   }).datepicker('update', new Date());
   
     var frontend_path ="<?=base_url();?>";
+
+    ClassicEditor
+    .create( document.querySelector( '#terms_condition' ) )
+    .then( editor => {
+    console.log( editor );
+    } )
+    .catch( error => {
+    console.error( error );
+    } );
   </script>

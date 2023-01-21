@@ -2029,4 +2029,79 @@ class Superadmin extends CI_Controller {
         }
         echo json_encode($response);
     }
+    public function user_terms_n_condition()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $curl = $this->link->hits('user-terms-n-condition', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $data['user_terms_n_condition'] = $curl['user_terms_n_condition'];
+            $this->load->view('super_admin/user_terms_n_condition',$data);
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function verifier_terms_n_condition()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $curl = $this->link->hits('verifier-terms-n-condition', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $data['verifier_terms_n_condition'] = $curl['verifier_terms_n_condition'];
+
+            $this->load->view('super_admin/verifier_terms_n_condition',$data);
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function vendor_terms_n_condition()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $curl = $this->link->hits('vendor-terms-n-condition', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $data['vendor_terms_n_condition'] = $curl['vendor_terms_n_condition'];
+
+            $this->load->view('super_admin/vendor_terms_n_condition',$data);
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+
+    public function update_terms_n_condition()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            
+            $terms_condition = $this->input->post('terms_condition');        
+            $id = $this->input->post('id');        
+            $this->form_validation->set_rules('id','Place', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('terms_condition','Terms & Condition', 'trim|required',array('required' => 'You must provide a %s',));
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'id' => strip_tags(form_error('id')),
+                    'terms_condition' => strip_tags(form_error('terms_condition')),
+                );
+            } else {
+                $curl_data = array(
+                    'id' => $id,
+                    'terms_condition' => $terms_condition,
+                );
+                $curl = $this->link->hits('update-terms-n-condition', $curl_data);
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                    $response['message']=$curl['message'];
+                } else {
+                    $response['status'] = 'failure';
+                    $response['error'] = array("terms_condition" => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
 }
