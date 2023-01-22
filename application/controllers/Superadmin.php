@@ -848,8 +848,10 @@ class Superadmin extends CI_Controller {
             $data['city_details'] = $curl['city_details'];
             $data['device_data'] = $curl['device_data'];
             $data['parking_place_vehicle_type'] = $curl['parking_place_vehicle_type'];
+            $data['selected_parking_place_vehicle_type'] = $curl['selected_parking_place_vehicle_type'];
+            $data['vehicle_type'] = $curl['vehicle_type'];
             $response = $data;
-            // echo '<pre>'; print_r($response); exit;
+            // echo '<pre>'; print_r($data['hour_price_slab']); exit;
         }else {
             $resoponse['status']='login_failure'; 
             $resoponse['url']=base_url().'superadmin';

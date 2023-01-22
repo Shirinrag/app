@@ -434,6 +434,7 @@
                         <div class="row">
                            <h4 class="card-title">Daily Price Slab</h4>
                            <div id="hour_price_details"></div>
+                           <div id="edit_hour_price_details"></div>
                         </div>
                         <hr>
                         <div class="row">

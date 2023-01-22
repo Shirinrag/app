@@ -177,6 +177,9 @@ $(document).on("click", ".edit_place_data", function() {
             var hour_price_slab = data['hour_price_slab'];
             var state_details = data['state_details'];
             var city_details = data['city_details'];
+            var vehicle_type = data['vehicle_type'];
+            var parking_place_vehicle_type = data['parking_place_vehicle_type'];
+            var selected_parking_place_vehicle_type = data['selected_parking_place_vehicle_type']['parking_place_vehicle_type_id'];
             $("#edit_id").val(info['id']);
             $('#edit_fk_vendor_id').val(info['fk_vendor_id']);
             $('#edit_fk_vendor_id').trigger("chosen:updated");
@@ -220,6 +223,18 @@ $(document).on("click", ".edit_place_data", function() {
             $('#edit_fk_city_id').trigger("chosen:updated");
             var html = "";
             var machine_id = "";
+            var vehicle_type_option_data = "";
+            var selected="";
+
+            $.each(vehicle_type, function(vehicle_type_index, vehicle_type_row) {
+                if(jQuery.inArray(vehicle_type_row['id'],selected_parking_place_vehicle_type) !== -1){
+                    vehicle_type_option_data +=  '<option value="' + vehicle_type_row['id'] + '" selected >' + vehicle_type_row['vehicle_type'] + '</option>';
+                }else{
+                    vehicle_type_option_data +=  '<option value="' + vehicle_type_row['id'] + '">' + vehicle_type_row['vehicle_type'] + '</option>';
+                }
+            });
+            $('#edit_fk_vehicle_type').html(vehicle_type_option_data);
+              $('#edit_fk_vehicle_type').trigger("chosen:updated");
             $.each(slot_info, function(slot_info_index, slot_info_row) {
                 if (slot_info_row['fk_machine_id'] == null) {
                     machine_id = "";
@@ -231,31 +246,51 @@ $(document).on("click", ".edit_place_data", function() {
             $('#machine_details').html(html);
             var html3 = "";
             $.each(hour_price_slab, function(hour_price_slab_index, hour_price_slab_row) {
-                html3 += "<div class='row'><input type='hidden' name='hour_price_slab_id[]' id='hour_price_slab_id_" + hour_price_slab_index + "' value='" + hour_price_slab_row['hour_price_slab_id'] + "'><div class='col-md-3'><div class='form-group'><label>From Hour</label><input class='form-control input-text' type='text' name='edit_from_hours[]' id='edit_from_hours_" + hour_price_slab_index + "' value='" + hour_price_slab_row['from_hours'] + "'></div></div><div class='col-md-3'><div class='form-group'><label>To Hour</label><input class='form-control input-text' type='text' name='edit_to_hours[]' id='edit_to_hours_" + hour_price_slab_index + "' value='" + hour_price_slab_row['to_hours'] + "'></div></div><div class='col-md-3'><div class='form-group'><label>Price</label><input class='form-control input-text' type='text' name='edit_price[]' id='edit_price_" + hour_price_slab_index + "' value='" + hour_price_slab_row['cost'] + "'></div></div></div>";
+                var hour_id = hour_price_slab_row.id;
+                var from_hours = hour_price_slab_row.from_hours;
+                var to_hours = hour_price_slab_row.to_hours;
+                var cost = hour_price_slab_row.cost;
+
+                var hour_id_1 = hour_id.split(",");
+                var from_hours_1 = from_hours.split(',');
+                var to_hours_1 = to_hours.split(',');
+                var cost_1 = cost.split(',');
+                html3+=hour_price_slab_row['vehicle_type']+' slabs';
+                $.each(hour_id_1, function(hour_id_1_index, hour_id_1_row) {
+                    html3 += "<div class='row'><input type='hidden' name='hour_price_slab_id[]' id='hour_price_slab_id_" + hour_id_1_index + "' value='" + hour_id_1_row + "'><div class='col-md-3'><div class='form-group'><label>From Hour</label><input class='form-control input-text' type='text' name='edit_from_hours[]' id='edit_from_hours_" + hour_id_1_index + "' value='" + from_hours_1[hour_id_1_index] + "'></div></div><div class='col-md-3'><div class='form-group'><label>To Hour</label><input class='form-control input-text' type='text' name='edit_to_hours[]' id='edit_to_hours_" + hour_id_1_index + "' value='" + to_hours_1[hour_id_1_index] + "'></div></div><div class='col-md-3'><div class='form-group'><label>Price</label><input class='form-control input-text' type='text' name='edit_price[]' id='edit_price_" + hour_id_1_index + "' value='" + cost_1[hour_id_1_index] + "'></div></div></div>";
+                });
+                var custom_class = '';
+                custom_class += hour_price_slab_row['vehicle_type'].replace(" ", "_");
+                custom_class += '_'+hour_price_slab_row['fk_vehicle_type_id'];
+
+                
+                html3 += '<div class="row"><div class="col-md-12"> <button class="addRows_edit" id="'+custom_class+'" type="button" class="btn btn-info" style="margin-top: 22px; margin-left: 860px;"><i class="icon-plus"></i> </button> <input type="hidden" class="form-control" name="edit_count_'+custom_class+'" id="edit_count_'+custom_class+'" value="0"> </div><div><div class ="edit_slab_add_more" id="edit_price_data_append_'+custom_class+'"></div> <hr>';
+
             });
-            html3 += "<div class='row'><div class='col-md-12'> <button id='addRows_edit' type='button' class='btn btn-info' style='margin-top: 22px; margin-left: 860px;'><i class='icon-plus'></i> </button> <input type='hidden' class='form-control' name='edit_count' id='edit_count' value='0'> </div><div> <hr><div id='edit_price_data_append'></div>";
-            $('#hour_price_details').html(html3);
+            $('#hour_price_details').html(html3);           
+            
+        },
+    });
+});
 
-            $('#addRows_edit').click(function() {
 
-                var edit_latest_count = $('#edit_count').val();
-                var edit_new_count = parseInt(edit_latest_count) + 1;
+$(document).on('click','.addRows_edit',function() {
+    var custom_id = $(this).attr('id');
+    var edit_latest_count = $('#edit_count_'+custom_id).val();
+    var edit_new_count = parseInt(edit_latest_count) + 1;
+    $('#edit_count_'+custom_id).val(edit_new_count);
+    var html4 = '';
+    html4 += '<div class="row"><div class="col-md-3"><div class="form-group"> <label>From Hours</label> <input type="text" class="form-control input-text" name="edit_from_hours[]" id="edit_from_hours_' + edit_new_count + '" placeholder="From Hours"> <span class="error_msg" id="edit_from_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>To Hours</label> <input type="text" class="form-control input-text" name="edit_to_hours[]" id="edit_to_hours_' + edit_new_count + '" placeholder="To Hours"> <span class="error_msg" id="to_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="edit_price[]" id="edit_price_' + edit_new_count + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="edit_price_error"></span> </div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
 
-                var html4 = '';
-                html4 += '<div class="row"><div class="col-md-3"><div class="form-group"> <label>From Hours</label> <input type="text" class="form-control input-text" name="edit_from_hours[]" id="edit_from_hours_' + edit_new_count + '" placeholder="From Hours"> <span class="error_msg" id="edit_from_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>To Hours</label> <input type="text" class="form-control input-text" name="edit_to_hours[]" id="edit_to_hours_' + edit_new_count + '" placeholder="To Hours"> <span class="error_msg" id="to_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="edit_price[]" id="edit_price_' + edit_new_count + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="edit_price_error"></span> </div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
+    $('#edit_price_data_append_'+custom_id).append(html4);
 
-                $('#edit_price_data_append').append(html4);
-
-            });
-            $(document).on('click', '#removeRow', function() {
+});
+$(document).on('click', '#removeRow', function() {
                         var latest_count = $('#count').val();
                         var new_count = parseInt(latest_count) - 1;
                         $('#count').val(new_count);
                         $(this).closest("div").remove();
                     });
-        },
-    });
-});
 
 function change_status(status, id) {
     var status = status;
@@ -480,6 +515,54 @@ $('#fk_vehicle_type').on('change', function(evt, params) {
                         $('#count_' + vehicle_id1 + '').val(new_count);
                         $(this).closest("div").remove();
                     });
+                }
+
+            },
+        });
+    } else if(vehicle_id_deselected){
+        $('#addRows_'+vehicle_id_deselected).remove();
+        $('#new_price_data_append_'+vehicle_id_deselected+'').remove();
+        $('#new_price_data_append1_'+vehicle_id_deselected+'').remove();
+    }
+});
+
+$('#edit_fk_vehicle_type').on('change', function(evt, params) {
+    var vehicle_id = params.selected;
+    var vehicle_id_deselected = params.deselected;
+    if (vehicle_id) {
+        $.ajax({
+            url: frontend_path + 'superadmin/get_vehicle_details',
+            type: 'post',
+            dataType: "json",
+            data: {
+                vehicle_id: vehicle_id
+            },
+            success: function(response) {
+                console.log(response);
+                if (response["status"] == "success") {
+                    var html = "";
+                    var vehicle_id1 = response.vehicle_data.id;
+                    html += '<div id="new_price_data_append1_' + vehicle_id1 + '"><div class="row"> <h4 class="card-title">' + response.vehicle_data.vehicle_type + ' Price Slab</h4><div class="col-md-3"> <div class="form-group"> <label>From Hours</label> <input type="text" class="form-control input-text" name="edit_from_hours_' + vehicle_id1 + '[]" id="edit_from_hours_' + vehicle_id1 + '" placeholder="From Hours" onkeypress="return isNumber(event)"> <span class="error_msg" id="from_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>To Hours</label> <input type="text" class="form-control input-text" name="edit_to_hours_' + vehicle_id1 + '[]" id="edit_to_hours_' + vehicle_id1 + '" placeholder="To Hours" onkeypress="return isNumber(event)"> <span class="error_msg" id="to_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="edit_price_' + vehicle_id1 + '[]" id="edit_price_' + vehicle_id1 + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="edit_price_error"></span> </div></div><div class="col-md-2"> <button id="addRows_' + vehicle_id1 + '" type="button" class="btn btn-info" style="margin-top: 22px; margin-left: -20px;"><i class="icon-plus"></i> </button> <input type="hidden" class="form-control" name="count" id="count_' + vehicle_id1 + '" value="0"> </div></div> </div><div id="new_price_data_append_' + vehicle_id1 + '"></div>';
+
+                    $('#edit_hour_price_details').append(html);
+
+                    $('#addRows_' + vehicle_id1 + '').click(function() {
+
+                        var latest_count = $('#count_' + vehicle_id1 + '').val();
+                        var new_count = parseInt(latest_count) + 1;
+
+                        var html2 = '';
+                        html2 += '<div class="row"><div class="col-md-3"><div class="form-group"> <label>From Hours</label> <input type="text" class="form-control input-text" name="edit_from_hours_' + vehicle_id1 + '[]" id="edit_from_hours_' + new_count + '" placeholder="From Hours"> <span class="error_msg" id="edit_from_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>To Hours</label> <input type="text" class="form-control input-text" name="edit_to_hours_' + vehicle_id1 + '[]" id="edit_to_hours_' + new_count + '" placeholder="To Hours"> <span class="error_msg" id="to_hours_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="edit_price_' + vehicle_id1 + '[]" id="edit_price_' + new_count + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="price_error"></span> </div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
+
+                        $('#new_price_data_append_' + vehicle_id1 + '').append(html2);
+
+                    });
+                    // $(document).on('click', '#removeRow', function() {
+                    //     var latest_count = $('#count_' + vehicle_id1 + '').val();
+                    //     var new_count = parseInt(latest_count) - 1;
+                    //     $('#count_' + vehicle_id1 + '').val(new_count);
+                    //     $(this).closest("div").remove();
+                    // });
                 }
 
             },
