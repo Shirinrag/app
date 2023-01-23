@@ -851,7 +851,7 @@ class Superadmin extends CI_Controller {
             $data['selected_parking_place_vehicle_type'] = $curl['selected_parking_place_vehicle_type'];
             $data['vehicle_type'] = $curl['vehicle_type'];
             $response = $data;
-            // echo '<pre>'; print_r($data['hour_price_slab']); exit;
+            // echo '<pre>'; print_r($response); exit;
         }else {
             $resoponse['status']='login_failure'; 
             $resoponse['url']=base_url().'superadmin';
@@ -862,6 +862,7 @@ class Superadmin extends CI_Controller {
     {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');            
+            
             $id = $this->input->post('edit_id');        
             $fk_vendor_id = $this->input->post('edit_fk_vendor_id');        
             $fk_country_id = $this->input->post('edit_fk_country_id');       
@@ -874,12 +875,10 @@ class Superadmin extends CI_Controller {
             $longitude = $this->input->post('edit_longitude');        
             $slots = $this->input->post('edit_slots');        
             $fk_place_status_id = $this->input->post('edit_fk_place_status_id');        
-            $fk_parking_price_type = $this->input->post('edit_fk_parking_price_type');             
-            $hour_price_slab_id = $this->input->post('hour_price_slab_id');
-            $from_hours = $this->input->post('edit_from_hours');              
-            $to_hours = $this->input->post('edit_to_hours');              
-            $price = $this->input->post('edit_price');              
+            $fk_parking_price_type = $this->input->post('edit_fk_parking_price_type');    
             $ext_price = $this->input->post('edit_ext_price');
+            $fk_vehicle_type = $this->input->post('edit_fk_vehicle_type');
+            $per_hour_charges = $this->input->post('edit_per_hour_charges');
 
             $this->form_validation->set_rules('edit_fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_fk_country_id','Country', 'trim|required',array('required' => 'You must provide a %s',));
@@ -912,6 +911,12 @@ class Superadmin extends CI_Controller {
                     'edit_ext_price' => strip_tags(form_error('edit_ext_price')),
                 );
             } else {
+                foreach ($fk_vehicle_type as $fk_vehicle_type_key => $fk_vehicle_type_row) {
+                    $hour_price_slab_id[$fk_vehicle_type_row] = $this->input->post('hour_price_slab_id_'.$fk_vehicle_type_row);                    
+                    $from_hours[$fk_vehicle_type_row] = $this->input->post('edit_from_hours_'.$fk_vehicle_type_row);              
+                    $to_hours[$fk_vehicle_type_row] = $this->input->post('edit_to_hours_'.$fk_vehicle_type_row);              
+                    $price[$fk_vehicle_type_row] = $this->input->post('edit_price_'.$fk_vehicle_type_row);      
+                }
                 $curl_data = array(
                     'fk_vendor_id'=>$fk_vendor_id,
                     'fk_country_id'=>$fk_country_id,
@@ -930,7 +935,8 @@ class Superadmin extends CI_Controller {
                     'from_hours'=>json_encode($from_hours),
                     'to_hours'=>json_encode($to_hours),
                     'price'=>json_encode($price),
-                    'id'=>$id
+                    'id'=>$id,
+                    'fk_vehicle_type'=>json_encode($fk_vehicle_type),
                 );
                 $curl = $this->link->hits('update-place', $curl_data);
                 $curl = json_decode($curl, true);
