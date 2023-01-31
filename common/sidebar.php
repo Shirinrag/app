@@ -129,6 +129,12 @@
                      POS Verifier Duty Allocation
                   </a>
                </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>superadmin/pos_booking">
+                     <!-- <i class="icon-menu menu-icon"></i> -->
+                     POS Booking History
+                  </a>
+               </li>
             </ul>
          </div>
 

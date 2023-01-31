@@ -38,3 +38,12 @@ $('#update_terms_n_condition_form').submit(function(e) {
     });
     return false;
 });
+
+ ClassicEditor
+    .create( document.querySelector( '#terms_condition' ) )
+    .then( editor => {
+    console.log( editor );
+    } )
+    .catch( error => {
+    console.error( error );
+    } );

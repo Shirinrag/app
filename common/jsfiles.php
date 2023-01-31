@@ -52,12 +52,6 @@
   
     var frontend_path ="<?=base_url();?>";
 
-    ClassicEditor
-    .create( document.querySelector( '#terms_condition' ) )
-    .then( editor => {
-    console.log( editor );
-    } )
-    .catch( error => {
-    console.error( error );
-    } );
+    
+ 
   </script>

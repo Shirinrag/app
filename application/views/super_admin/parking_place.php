@@ -428,6 +428,7 @@
                                        ?>
                                  </select>
                                  <span class="error_msg" id="edit_fk_vehicle_type_error"></span>
+                                 
                               </div>
                            </div>
                         </div>

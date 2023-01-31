@@ -28,7 +28,7 @@ $(document).on("click", ".edit_place_data", function() {
             var info = data['parking_place_data'];
             var slot_info = data['slot_info'];
             var device_data = data['device_data'];
-            // console.log(slot_info);
+            console.log(slot_info);
            
             $("#edit_id").val(info['id']);
             $('#edit_fk_vendor_id').text(info['firstName']+" "+info['lastName']);
@@ -58,8 +58,11 @@ $(document).on("click", ".edit_place_data", function() {
                 var selected = "";
                 var option_html="";
                 var change_status="";
+                var change_status1="";
                 $.each(device_data, function(device_data_index, device_data_row) {
+                     option_html +='<option value=""></option>';
                             if(device_data_row['id']==machine_id){
+
                                     selected = "selected";
                             }else{
                                 selected = "";
@@ -71,7 +74,13 @@ $(document).on("click", ".edit_place_data", function() {
                 }else{
                     change_status +='<label class="toggle"><input class="toggle-checkbox" type="checkbox" id="switch' + slot_info_row['fk_machine_status'] + '" onclick="machine_status(' + slot_info_row['slot_info_id'] + ',' + slot_info_row['fk_machine_status'] + ');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
                 }
-                html += "<div class='row'><input type='hidden' name='edit_slot_id[]' id='edit_slot_id_" + slot_info_index +"' value='"+slot_info_row['slot_info_id']+"' ><div class='col-md-3'><div class='form-group'><label>Slot Name</label><br><span class='data_fetch'>" + slot_info_row['slot_name'] + "</span></div></div><div class='col-md-3'><div class='form-group'><label>Display Id</label><br><span class='data_fetch'>" + slot_info_row['display_id'] + "</span></div></div><div class='col-md-3'><div class='form-group'><label>Machine Id</label><br><select name='fk_machine_id[]' id='fk_machine_id_"+slot_info_row['slot_info_id']+"' class='form-control chosen-select-deselect select_data'>'"+option_html+"'</select></div></div><div class='col-md-3'><div class='form-group'><label> Device Status</label><div>"+change_status+"</div></div></div></div>";
+
+                if(slot_info_row['del_status']==1){
+                    change_status1 +='<label class="toggle"><input class="toggle-checkbox" type="checkbox" checked id="switch' + slot_info_row['del_status'] + '" onclick="del_status(' + slot_info_row['slot_info_id'] + ',' + slot_info_row['del_status'] + ',' + slot_info_row['fk_place_id'] + ');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
+                }else{
+                    change_status1 +='<label class="toggle"><input class="toggle-checkbox" type="checkbox" id="switch' + slot_info_row['del_status'] + '" onclick="del_status(' + slot_info_row['slot_info_id'] + ',' + slot_info_row['del_status'] + ',' + slot_info_row['fk_place_id'] +  ');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
+                }
+                html += "<div class='row'><input type='hidden' name='edit_slot_id[]' id='edit_slot_id_" + slot_info_index +"' value='"+slot_info_row['slot_info_id']+"' ><div class='col-md-2'><div class='form-group'><label>Slot Name</label><br><span class='data_fetch'>" + slot_info_row['slot_name'] + "</span></div></div><div class='col-md-2'><div class='form-group'><label>Display Id</label><br><span class='data_fetch'>" + slot_info_row['display_id'] + "</span></div></div><div class='col-md-2'><div class='form-group'><label>Machine Id</label><br><select name='fk_machine_id[]' id='fk_machine_id_"+slot_info_row['slot_info_id']+"' class='form-control chosen-select-deselect select_data'>'"+option_html+"'</select></div></div><div class='col-md-2'><div class='form-group'><label> Device Status</label><div>"+change_status+"</div></div></div><div class='col-md-2'><div class='form-group'><label> Delete Device</label><div>"+change_status1+"</div></div></div></div>";
                 // <input type='text' name='fk_machine_id[]' id='fk_machine_id_"+slot_info_row['slot_info_id']+"' class='form-control input-text' placeholder='Machine Id'>
             });
             $('#machine_details').html(html);
@@ -143,19 +152,50 @@ function machine_status(id, status) {
             'status': user_status
         },
         dataType: 'json',
-        // beforeSend:function(){
-        //     document.getElementById('header_loader').style.visibility = "visible";
-        // },
+       
         success: function(data) {
-            // document.getElementById('header_loader').style.visibility = "hidden";
-            // $('#parking_place_data_table').DataTable().ajax.reload(null, false);
-
             swal({
                 title: "success",
                 text: data.message,
                 icon: "success",
                 dangerMode: true,
                 timer: 1500
+            });
+        }
+    });
+}
+
+function del_status(id, status, place_id) {
+    var status = status;
+    if (status == 1) {
+        var user_status = 0;
+    } else {
+        var user_status = 1;
+    }
+    var user_id = id;
+    var place_id = place_id;
+    //console.log(domain_id);
+    $.ajax({
+        url: frontend_path + "superadmin/update_delete_device_status",
+        type: "POST",
+        data: {
+            'id': user_id,
+            'status': user_status,
+            'place_id': place_id
+        },
+        dataType: 'json',
+       
+        success: function(data) {
+            swal({
+                title: "success",
+                text: data.message,
+                icon: "success",
+                dangerMode: true,
+                timer: 1500
+            });
+
+            $("#edit_place_modal .modal-body").load(target, function() { 
+                 $("#edit_place_modal").modal("show"); 
             });
         }
     });

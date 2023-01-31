@@ -784,7 +784,7 @@ class Superadmin extends CI_Controller {
                     'price'=>json_encode($price),
                     'per_hour_charges'=>$per_hour_charges,
                     'fk_vehicle_type' =>json_encode($fk_vehicle_type)
-                );                
+                );               
                 $curl = $this->link->hits('add-place', $curl_data);
                 $curl = json_decode($curl, true);
                 if ($curl['status']==1) {
@@ -803,6 +803,7 @@ class Superadmin extends CI_Controller {
     public function display_all_parking_place()
     {
         $parking_place_data = $this->link->hits('display-all-parking-place-data', array());
+        // echo '<pre>'; print_r($parking_place_data); exit;
         $parking_place_data = json_decode($parking_place_data, true);
         $place_status = $parking_place_data['place_status'];
         $data = array();
@@ -937,8 +938,10 @@ class Superadmin extends CI_Controller {
                     'price'=>json_encode($price),
                     'id'=>$id,
                     'fk_vehicle_type'=>json_encode($fk_vehicle_type),
+                    'per_hour_charges'=>$per_hour_charges
                 );
                 $curl = $this->link->hits('update-place', $curl_data);
+                
                 $curl = json_decode($curl, true);
                 if ($curl['status']==1) {
                     $response['status']='success';
@@ -1156,6 +1159,43 @@ class Superadmin extends CI_Controller {
                 $curl = json_decode($curl, TRUE);
                 if($curl['message']=='success'){
                     $response['message']='Status Changed successfully';
+                    $response['status'] = 1;
+                }else{
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "login";
+        }
+        echo json_encode($response);
+    }
+    public function update_delete_device_status()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('id'); 
+            $status = $this->input->post('status'); 
+            $place_id = $this->input->post('place_id'); 
+            // echo '<pre>'; print_r($_POST); exit;
+            if (empty($id)) {
+                $response['message'] = 'User id is required.';
+                $response['status'] = 0;
+            }else if($status=='') {
+                $response['message'] = 'status is required.';
+                $response['status'] = 0;
+            }else{
+                $curl_data = array(   
+                  'id'=>$id,
+                  'status'=>$status,
+                  'place_id'=>$place_id
+                );
+                $curl = $this->link->hits('delete-slots-device-status',$curl_data);
+                $curl = json_decode($curl, TRUE);
+                                // echo '<pre>'; print_r($curl); exit;
+
+                if($curl['status']==1){
+                    $response['message']='Slot Deleted Changed successfully';
                     $response['status'] = 1;
                 }else{
                     $response['message'] = $curl['message'];
@@ -2037,6 +2077,29 @@ class Superadmin extends CI_Controller {
         }
         echo json_encode($response);
     }
+    public function pos_booking()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $this->load->view('super_admin/pos_booking');
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+
+    public function display_all_pos_booking_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-pos-booking-data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['pos_booking_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
     public function user_terms_n_condition()
     {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
@@ -2044,6 +2107,7 @@ class Superadmin extends CI_Controller {
             $curl = $this->link->hits('user-terms-n-condition', array(), '', 0);
             $curl = json_decode($curl, true);
             $data['user_terms_n_condition'] = $curl['user_terms_n_condition'];
+            // echo '<pre>'; print_r($data); exit;
             $this->load->view('super_admin/user_terms_n_condition',$data);
         } else {
             redirect(base_url().'superadmin');

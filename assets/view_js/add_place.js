@@ -179,6 +179,7 @@ $(document).on("click", ".edit_place_data", function() {
             var city_details = data['city_details'];
             var vehicle_type = data['vehicle_type'];
             var parking_place_vehicle_type = data['parking_place_vehicle_type'];
+            console.log(parking_place_vehicle_type);
             var selected_parking_place_vehicle_type = data['selected_parking_place_vehicle_type']['fk_vehicle_type_id'];
             $("#edit_id").val(info['id']);
             $('#edit_fk_vendor_id').val(info['fk_vendor_id']);
