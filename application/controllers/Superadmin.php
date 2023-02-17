@@ -1230,8 +1230,7 @@ class Superadmin extends CI_Controller {
                 $curl = $this->link->hits('get-allocation-data', array(), '', 0);
                 $curl = json_decode($curl, true);
                 $response['place_list'] = $curl['place_list'];
-                $response['verifier_list'] = $curl['verifier_list'];
-               
+                $response['verifier_list'] = $curl['verifier_list'];               
         }else {
             $response['status']='login_failure';
             $response['url']=base_url().'superadmin';
@@ -1307,7 +1306,6 @@ class Superadmin extends CI_Controller {
                   'id'=>$id,
                 );            
                 $curl = $this->link->hits('delete-duty-allocation',$curl_data);
-                // echo '<pre>'; print_r($curl); exit;
                 $curl = json_decode($curl, TRUE);
             
                 if($curl['message']=='success'){
@@ -1338,11 +1336,8 @@ class Superadmin extends CI_Controller {
     {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $title = $this->input->post('title');
-            $description = $this->input->post('description');
-           
-            
-            $this->form_validation->set_rules('title', 'Title', 'required|trim', array('required' => 'You must provide a %s'));
-            
+            $description = $this->input->post('description');         
+            $this->form_validation->set_rules('title', 'Title', 'required|trim', array('required' => 'You must provide a %s'));            
             $this->form_validation->set_rules('description', 'Description', 'required|trim', array('required' => 'You must provide a %s'));
             if ($this->form_validation->run() == FALSE) {
                 $response['status'] = 'failure';
@@ -2173,6 +2168,29 @@ class Superadmin extends CI_Controller {
         } else {
             $resoponse['status']='login_failure';
             $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+
+    public function suggested_parking_place()
+    {
+       if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $this->load->view('super_admin/suggested_parking_place');
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function display_all_suggested_parking_place_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-suggested-parking-place_data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['suggested_place'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
         }
         echo json_encode($response);
     }
