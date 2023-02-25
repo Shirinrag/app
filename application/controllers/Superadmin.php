@@ -2138,8 +2138,7 @@ class Superadmin extends CI_Controller {
     public function update_terms_n_condition()
     {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
-            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
-            
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');            
             $terms_condition = $this->input->post('terms_condition');        
             $id = $this->input->post('id');        
             $this->form_validation->set_rules('id','Place', 'trim|required',array('required' => 'You must provide a %s',));
@@ -2193,5 +2192,80 @@ class Superadmin extends CI_Controller {
             $response['url']=base_url().'superadmin';
         }
         echo json_encode($response);
+    }
+    public function customer_support()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $curl = $this->link->hits('get-customer-support-details', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $data['issue_type'] = $curl['issue_type'];
+            $data['user_list'] = $curl['user_list'];
+            $data['booking_id_list'] = $curl['booking_id_list'];
+            $this->load->view('super_admin/customer_support',$data);
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function add_complaint()
+    {
+           if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $id = $session_data['id'];
+            $username = $this->input->post('username');
+            $email = $this->input->post('email');
+            $contact_no = $this->input->post('contact_no');
+            $password = $this->input->post('password');
+            $user_type = $this->input->post('user_type');
+
+            $this->form_validation->set_rules('username','username', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('first_name','First Name', 'trim|required|alpha',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('last_name','Last Name', 'trim|required|alpha',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('email','Last Name', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('contact_no','Contact No', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('password','Password', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('user_type','Admin Role', 'trim|required',array('required' => 'You must provide a %s',));
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'username' => strip_tags(form_error('username')),
+                    'first_name' => strip_tags(form_error('first_name')),
+                    'last_name' => strip_tags(form_error('last_name')),
+                    'email' => strip_tags(form_error('email')),
+                    'contact_no' => strip_tags(form_error('contact_no')),
+                    'password' => strip_tags(form_error('password')),
+                    'user_type' => strip_tags(form_error('user_type')),
+                );
+            } else {
+                $curl_data = array(
+                    'username'=>$username,
+                    'first_name'=>$first_name,
+                    'last_name'=>$last_name,
+                    'email'=>$email,
+                    'mobile_no'=>$contact_no,
+                    'password'=>$password,
+                    'user_type'=>$user_type,
+                );
+                $curl = $this->link->hits('add-admin', $curl_data);
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                } else {
+                    if ($curl['error_status'] == 'email') {
+                            $error = 'email';
+                        } else if ($curl['error_status'] == 'contact_no') {
+                            $error = 'contact_no';
+                        }else{
+                            $error = 'username';
+                        }
+                    $response['status'] = 'failure';
+                     $response['error'] = array($error => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            // $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response); 
     }
 }

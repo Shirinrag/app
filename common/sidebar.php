@@ -187,5 +187,11 @@
          <span class="menu-title">Suggested Parking Place</span>
          </a>
       </li>
+      <li class="nav-item">
+         <a class="nav-link" href="<?=base_url()?>superadmin/customer_support" aria-controls="form-elements">
+         <i class="icon-contract menu-icon"></i>
+         <span class="menu-title">Customer Support</span>
+         </a>
+      </li>
    </ul>
 </nav>
