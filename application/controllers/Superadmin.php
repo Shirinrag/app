@@ -2267,4 +2267,31 @@ class Superadmin extends CI_Controller {
         }
         echo json_encode($response); 
     }
+
+    public function display_all_register_user_complaint_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-register-user-complaint-data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['register_user_complaint_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function display_all_unregister_user_complaint_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-unregister-user-complaint-data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['unregister_user_complaint_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
 }
