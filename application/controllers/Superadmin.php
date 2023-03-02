@@ -287,6 +287,32 @@ class Superadmin extends CI_Controller {
             redirect(base_url().'superadmin');
         }
 	}
+    public function display_all_booking_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('booking-history-data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['booking_history_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function display_all_extend_booking_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('extend-booking-history-data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['extend_booking_history_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
     // ========================= Place Status ============================
     public function add_place_status()
     {
@@ -2293,5 +2319,95 @@ class Superadmin extends CI_Controller {
             $response['url']=base_url().'superadmin';
         }
         echo json_encode($response);
+    }
+
+    public function update_register_user_complaint()
+    {
+         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+                 
+            $action_type = $this->input->post('action_type');
+            $customer_care_remark = $this->input->post('customer_care_remark');
+            $edit_id = $this->input->post('edit_id');
+            $complaint_status = $this->input->post('complaint_status');
+     
+            $this->form_validation->set_rules('action_type','Action Type', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('customer_care_remark','Customer Care Remark', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('complaint_status','Complaint Status', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_id','Id ', 'trim|required',array('required' => 'You must provide a %s',));
+            
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'action_type' => strip_tags(form_error('action_type')),
+                    'customer_care_remark' => strip_tags(form_error('customer_care_remark')),
+                    'complaint_status' => strip_tags(form_error('complaint_status')),
+                    'edit_id' => strip_tags(form_error('edit_id')),
+                );
+            } else {
+                $curl_data = array(
+                    'edit_id'=>$edit_id,
+                    'action_type'=>$action_type,
+                    'customer_care_remark'=>$customer_care_remark,
+                    'complaint_status'=>$complaint_status,
+                );
+                $curl = $this->link->hits('update-register-user-complaint-details', $curl_data);
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                } else {
+                    $response['status'] = 'failure';
+                    $response['error'] = array("fk_user_id" => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+        }
+        echo json_encode($response); 
+    }
+
+     public function update_unregister_user_complaint()
+    {
+         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+                 
+            $action_type = $this->input->post('unr_action_type');
+            $customer_care_remark = $this->input->post('unr_customer_care_remark');
+            $edit_id = $this->input->post('unr_edit_id');
+            $complaint_status = $this->input->post('unr_complaint_status');
+     
+            $this->form_validation->set_rules('unr_action_type','Action Type', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('unr_customer_care_remark','Customer Care Remark', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('unr_complaint_status','Complaint Status', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('unr_edit_id','Id ', 'trim|required',array('required' => 'You must provide a %s',));
+            
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'unr_action_type' => strip_tags(form_error('unr_action_type')),
+                    'unr_customer_care_remark' => strip_tags(form_error('unr_customer_care_remark')),
+                    'unr_complaint_status' => strip_tags(form_error('unr_complaint_status')),
+                    'unr_edit_id' => strip_tags(form_error('unr_edit_id')),
+                );
+            } else {
+                $curl_data = array(
+                    'edit_id'=>$edit_id,
+                    'action_type'=>$action_type,
+                    'customer_care_remark'=>$customer_care_remark,
+                    'complaint_status'=>$complaint_status,
+                );
+                $curl = $this->link->hits('update-un-register-user-complaint-details', $curl_data);
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                } else {
+                    $response['status'] = 'failure';
+                    $response['error'] = array("fk_user_id" => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+        }
+        echo json_encode($response); 
     }
 }

@@ -29,8 +29,48 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Booking History</h4>
-                  
-                  <div class="table-responsive">
+                  <nav>
+                                 <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Booking</button>
+                                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Extend Booking</button>
+                                 </div>
+                              </nav>
+                              <div class="tab-content p-3 border bg-light" id="nav-tabContent">
+                                 <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <div class="table-responsive">
+                                       <table class="table" id="booking_table">
+                                          <thead>
+                                             <tr>
+                                                <th>SR. No</th>
+                                                <th>Booking Id</th>
+                                                <th>User Name</th>
+                                                <th>Place Name</th>          
+                                                <th>Booking From Date & Time</th>
+                                                <th>Booking To Date & Time</th>
+                                                <th>Booking Status</th>
+                                                <th>Cost</th>
+                                             </tr>
+                                          </thead>
+                                       </table>
+                                    </div>
+                                 </div>
+                                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    <div class="table-responsive">
+                                       <table class="table" id="extend_booking_table">
+                                          <thead>
+                                             <tr>
+                                                <th>SR. No</th>
+                                                <th>Booking Id</th>        
+                                                <th>Booking From Date & Time</th>
+                                                <th>Booking To Date & Time</th>
+                                                <th>Cost</th>
+                                             </tr>
+                                          </thead>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+                  <!-- <div class="table-responsive">
                     <table class="table" id="user_data_table">
                       <thead>
                         <tr>
@@ -127,7 +167,7 @@
                         </tr>
                       </tbody>
                     </table>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -149,7 +189,7 @@
   <!-- container-scroller -->
   <!-- plugins:js -->
     <?php include 'common/jsfiles.php';?>
-    <script type="text/javascript" src="<?=base_url()?>assets/view_js/add_users.js"></script>
+    <script type="text/javascript" src="<?=base_url()?>assets/view_js/booking_history.js"></script>
   <!-- End custom js for this page-->
 </body>
 

@@ -118,7 +118,8 @@ $(document).ready(function() {
             {
                 "data": null,
                 "className": "edit_register_user",
-                "defaultContent": '<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Edit Details" ><i class="ti-pencil" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_register_user_modal"></i></a></span><span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Delete Details" class="remove-row"><i class="ti-trash a_delete_user" href="#delete_complaint" class="trigger-btn" data-bs-toggle="modal" data-bs-target="#delete_complaint" aria-hidden="true"></i></a></span>'
+                "defaultContent": '<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Edit Details" ><i class="ti-pencil" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_register_user_modal"></i></a></span>'
+                // <span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Delete Details" class="remove-row"><i class="ti-trash a_delete_user" href="#delete_complaint" class="trigger-btn" data-bs-toggle="modal" data-bs-target="#delete_complaint" aria-hidden="true"></i></a></span>
             },
         ],
         "order": [
@@ -136,7 +137,7 @@ $(document).ready(function() {
     }).draw();
 });
 
-$(document).on("click","#Complaint_register_table tbody tr, .edit_admin_details tbody tr td",function(){
+$(document).on("click","#Complaint_register_table tbody tr, .edit_register_user tbody tr td",function(){
     var tr = $(this).closest('tr');
     var row = register_user.row(tr);
     var data1 = row.data();
@@ -151,16 +152,14 @@ $(document).on("click","#Complaint_register_table tbody tr, .edit_admin_details 
     $('#description').text(data1.description);
     $('#car_no').text(data1.car_number);
     $('#slot_no').text(data1.display_id);
+    $('#edit_id').val(data1.id);
+    $('#action_type').val(data1.action_type);
+    $('#action_type').trigger('chosen:updated');
+    $('#customer_care_remark').val(data1.customer_care_remark);
+    $('#complaint_status').val(data1.status);
+    $('#complaint_status').trigger('chosen:updated');
   
-    // $('#edit_username').val(data1.userName);
-    // $('#edit_first_name').val(data1.firstName);
-    // $('#edit_last_name').val(data1.lastName);
-    // $('#edit_email').val(data1.email);
-    // $('#edit_contact_no').val(data1.phoneNo);
-    // $('#edit_user_type').val(data1.user_type);
-    // $('#edit_user_type').trigger("chosen:updated");
-    // $('#delete_admin_id').val(data1.id);
-    // $('#edit_id').val(data1.id);
+   
 });
 $(document).ready(function() {
     table = $('#Complaint_un_register_table').DataTable({
@@ -207,7 +206,7 @@ $(document).ready(function() {
             {
                 "data": null,
                 "className": "edit_register_user",
-                "defaultContent": '<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Edit Details" ><i class="ti-pencil" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_price_type_modal"></i></a></span><span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Delete Details" class="remove-row"><i class="ti-trash a_delete_user" href="#delete_duty_allocation" class="trigger-btn" data-bs-toggle="modal" data-bs-target="#delete_duty_allocation" aria-hidden="true"></i></a></span>'
+                "defaultContent": '<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Edit Details" ><i class="ti-pencil" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_unregister_user_modal"></i></a></span>'
             },
         ],
         "order": [
@@ -221,6 +220,102 @@ $(document).ready(function() {
         }).nodes().each(function(cell, i) {
             cell.innerHTML = i + 1;
         });
-
     }).draw();
+});
+$(document).on("click","#Complaint_un_register_table tbody tr, .edit_register_user tbody tr td",function(){
+    var tr_1 = $(this).closest('tr');
+    var row_1 = table.row(tr_1);
+    var data1_1 = row_1.data();
+    // console.log(data1_1);
+    $('#unr_user_name').text(data1_1.user_name);
+    $('#unr_contact_no').text(data1_1.contact_no);    
+    $('#unr_issue_type').text(data1_1.issue_type);
+    $('#unr_description').text(data1_1.description);
+    $('#unr_edit_id').val(data1_1.id);
+    $('#unr_action_type').val(data1_1.action_type);
+    $('#unr_action_type').trigger('chosen:updated');
+    $('#unr_customer_care_remark').val(data1_1.customer_care_remark);
+    $('#unr_complaint_status').val(data1_1.status);
+    $('#unr_complaint_status').trigger('chosen:updated');
+});
+
+$('#update_register_user_complaint_form').submit(function(e) {
+    e.preventDefault();
+    var formData = new FormData($("#update_register_user_complaint_form")[0]);
+    var InvoiceTypeForm = $(this);
+    jQuery.ajax({
+        dataType: 'json',
+        type: 'POST',
+        url: InvoiceTypeForm.attr('action'),
+        data: formData,
+        cache: false,
+        processData: false,
+        contentType: false,
+        mimeType: "multipart/form-data",
+        beforeSend: function() {
+            $('#update_register_user_complaint_button').button('loading');
+        },
+        success: function(response) {
+            $('#update_register_user_complaint_button').button('reset');
+            if (response.status == 'success') {
+                $('#Complaint_register_table').DataTable().ajax.reload(null, false);
+                $('#edit_register_user_modal').modal('hide');
+                swal({
+                    title: "success",
+                    text: response.msg,
+                    icon: "success",
+                    dangerMode: true,
+                    timer: 1500
+                });
+            } else if (response.status == 'failure') {
+                error_msg(response.error)
+            } else {
+                window.location.replace(response['url']);
+            }
+        },
+        error: function(error, message) {
+
+        }
+    });
+    return false;
+});
+$('#update_unregister_user_complaint_form').submit(function(e) {
+    e.preventDefault();
+    var formData = new FormData($("#update_unregister_user_complaint_form")[0]);
+    var InvoiceTypeForm = $(this);
+    jQuery.ajax({
+        dataType: 'json',
+        type: 'POST',
+        url: InvoiceTypeForm.attr('action'),
+        data: formData,
+        cache: false,
+        processData: false,
+        contentType: false,
+        mimeType: "multipart/form-data",
+        beforeSend: function() {
+            $('#update_unregister_user_complaint_button').button('loading');
+        },
+        success: function(response) {
+            $('#update_register_user_complaint_button').button('reset');
+            if (response.status == 'success') {
+                $('#Complaint_un_register_table').DataTable().ajax.reload(null, false);
+                $('#edit_unregister_user_modal').modal('hide');
+                swal({
+                    title: "success",
+                    text: response.msg,
+                    icon: "success",
+                    dangerMode: true,
+                    timer: 1500
+                });
+            } else if (response.status == 'failure') {
+                error_msg(response.error)
+            } else {
+                window.location.replace(response['url']);
+            }
+        },
+        error: function(error, message) {
+
+        }
+    });
+    return false;
 });
