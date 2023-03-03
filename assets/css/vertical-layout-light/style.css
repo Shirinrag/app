@@ -16586,7 +16586,9 @@ fieldset:disabled .wizard > .actions a,
 }
 
 .mb-4 {
-  margin-bottom: 1.5rem !important;
+/*  margin-bottom: 1.5rem !important;*/
+font-size: 18px;
+font-weight: bold;
 }
 
 .mb-5 {

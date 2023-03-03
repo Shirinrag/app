@@ -167,6 +167,13 @@
                                     </div>
                                     <div class="col-md-4">
                                        <div class="form-group">
+                                          <label>Total Place Count</label>
+                                          <input type="text" class="form-control input-text" name="total_place_count" id="total_place_count" placeholder="Total Place Count" onkeypress="return isNumber(event)">
+                                          <span class="error_msg" id="total_place_count_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
                                           <label>Select Vehicle Type</label>
                                           <select type="text" class="form-control chosen-select-deselect" multiple="multiple" name="fk_vehicle_type[]" id="fk_vehicle_type" placeholder="Select Price Type">
                                              <option value=""></option>
@@ -415,6 +422,13 @@
                                     <input type="text" class="form-control input-text" name="edit_per_hour_charges" id="edit_per_hour_charges" placeholder="Per Hour Extra Charges" onkeypress="return isNumber(event)">
                                     <span class="error_msg" id="edit_per_hour_charges_error"></span>
                                  </div>
+                           </div>
+                           <div class="col-md-4">
+                              <div class="form-group">
+                                 <label>Total Place Count</label>
+                                 <input type="text" class="form-control input-text" name="edit_total_place_count" id="edit_total_place_count" placeholder="Total Place Count" onkeypress="return isNumber(event)">
+                                 <span class="error_msg" id="edit_total_place_count_error"></span>
+                              </div>
                            </div>
                            <div class="col-md-4">
                               <div class="form-group">

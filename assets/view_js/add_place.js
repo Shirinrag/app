@@ -179,7 +179,7 @@ $(document).on("click", ".edit_place_data", function() {
             var city_details = data['city_details'];
             var vehicle_type = data['vehicle_type'];
             var parking_place_vehicle_type = data['parking_place_vehicle_type'];
-            console.log(parking_place_vehicle_type);
+            // console.log(info);
             var selected_parking_place_vehicle_type = data['selected_parking_place_vehicle_type']['fk_vehicle_type_id'];
             $("#edit_id").val(info['id']);
             $('#edit_fk_vendor_id').val(info['fk_vendor_id']);
@@ -198,6 +198,7 @@ $(document).on("click", ".edit_place_data", function() {
             $('#edit_fk_parking_price_type').trigger("chosen:updated");
             $('#edit_ext_price').val(info['ext_price']);
             $('#edit_per_hour_charges').val(info['per_hour_charges']);
+            $('#edit_total_place_count').val(info['total_place_count']);
             var state_option = "";
             var option_data = "";
             $.each(state_details, function(state_details_index, state_details_row) {
