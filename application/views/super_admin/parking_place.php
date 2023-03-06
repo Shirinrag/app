@@ -174,6 +174,13 @@
                                     </div>
                                     <div class="col-md-4">
                                        <div class="form-group">
+                                          <label>Referral Code</label>
+                                          <input type="text" class="form-control input-text" name="referral_code" placeholder="Referral Code">
+                                          <span class="error_msg" id="referral_code_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
                                           <label>Select Vehicle Type</label>
                                           <select type="text" class="form-control chosen-select-deselect" multiple="multiple" name="fk_vehicle_type[]" id="fk_vehicle_type" placeholder="Select Price Type">
                                              <option value=""></option>
@@ -186,6 +193,7 @@
                                           <span class="error_msg" id="fk_vehicle_type_error"></span>
                                        </div>
                                     </div>
+                                    
                                  </div>
                              
                               
@@ -430,6 +438,13 @@
                                  <span class="error_msg" id="edit_total_place_count_error"></span>
                               </div>
                            </div>
+                           <div class="col-md-4">
+                                 <div class="form-group">
+                                    <label>Referral Code</label>
+                                    <input type="text" class="form-control input-text" name="edit_referral_code" id="edit_referral_code" placeholder="Referral Code">
+                                    <span class="error_msg" id="edit_referral_code_error"></span>
+                                 </div>
+                              </div>
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Select Vehicle Type</label>

@@ -755,6 +755,7 @@ class Superadmin extends CI_Controller {
             $ext_price = $this->input->post('ext_price');
             $per_hour_charges = $this->input->post('per_hour_charges');
             $total_place_count = $this->input->post('total_place_count');
+            $referral_code = $this->input->post('referral_code');
             // echo '<pre>'; print_r($_POST); exit;
             $this->form_validation->set_rules('fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_country_id','Country', 'trim|required',array('required' => 'You must provide a %s',));
@@ -768,7 +769,7 @@ class Superadmin extends CI_Controller {
             $this->form_validation->set_rules('slots','Slots', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_place_status_id','Place Status', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_parking_price_type','Price Type', 'trim|required',array('required' => 'You must provide a %s',));
-            // $this->form_validation->set_rules('ext_price','Extension Price', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('referral_code','Referral Code', 'trim|required',array('required' => 'You must provide a %s',));
             if ($this->form_validation->run() == false) {
                 $response['status'] = 'failure';
                 $response['error'] = array(
@@ -784,7 +785,7 @@ class Superadmin extends CI_Controller {
                     'slots' => strip_tags(form_error('slots')),
                     'fk_place_status_id' => strip_tags(form_error('fk_place_status_id')),
                     'fk_parking_price_type' => strip_tags(form_error('fk_parking_price_type')),
-                    // 'ext_price' => strip_tags(form_error('ext_price')),
+                    'referral_code' => strip_tags(form_error('referral_code')),
                 );
             } else {
 
@@ -815,7 +816,8 @@ class Superadmin extends CI_Controller {
                     'price'=>json_encode($price),
                     'per_hour_charges'=>$per_hour_charges,
                     'fk_vehicle_type' =>json_encode($fk_vehicle_type),
-                    'total_place_count'=>$total_place_count
+                    'total_place_count'=>$total_place_count,
+                    'referral_code'=>$referral_code,
                 );               
                 $curl = $this->link->hits('add-place', $curl_data);
                 $curl = json_decode($curl, true);
@@ -913,6 +915,7 @@ class Superadmin extends CI_Controller {
             $fk_vehicle_type = $this->input->post('edit_fk_vehicle_type');
             $per_hour_charges = $this->input->post('edit_per_hour_charges');
             $total_place_count = $this->input->post('edit_total_place_count');
+            $edit_referral_code = $this->input->post('edit_referral_code');  
             $this->form_validation->set_rules('edit_fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_fk_country_id','Country', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_fk_state_id','State', 'trim|required',array('required' => 'You must provide a %s',));
@@ -926,6 +929,7 @@ class Superadmin extends CI_Controller {
             $this->form_validation->set_rules('edit_fk_place_status_id','Place Status', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_fk_parking_price_type','Price Type', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_ext_price','Extension Price', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('edit_referral_code','Referral Code', 'trim|required',array('required' => 'You must provide a %s',));
             if ($this->form_validation->run() == false) {
                 $response['status'] = 'failure';
                 $response['error'] = array(
@@ -942,6 +946,7 @@ class Superadmin extends CI_Controller {
                     'edit_fk_place_status_id' => strip_tags(form_error('edit_fk_place_status_id')),
                     'edit_fk_parking_price_type' => strip_tags(form_error('edit_fk_parking_price_type')),
                     'edit_ext_price' => strip_tags(form_error('edit_ext_price')),
+                    'edit_referral_code' => strip_tags(form_error('edit_referral_code')),
                 );
             } else {
                 foreach ($fk_vehicle_type as $fk_vehicle_type_key => $fk_vehicle_type_row) {
@@ -972,6 +977,7 @@ class Superadmin extends CI_Controller {
                     'fk_vehicle_type'=>json_encode($fk_vehicle_type),
                     'per_hour_charges'=>$per_hour_charges,
                     'total_place_count'=>$total_place_count,
+                    'referral_code'=>$edit_referral_code,
                 );
                 $curl = $this->link->hits('update-place', $curl_data);
                 
@@ -1133,9 +1139,6 @@ class Superadmin extends CI_Controller {
             $row[] = $parking_place_data_row['address'];
             $row[] = $parking_place_data_row['firstName']." ".$parking_place_data_row['lastName'];      
             $row[] = $parking_place_data_row['slots'];
-
-            // $row[] = '<select class="chosen-select-deselect update_order_status chosen_init " id="'.$parking_place_data_row['id'].'" name="status">'.$option.'
-            //             </select>';
             $edit_html = '';
             $edit_html = '<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Edit Details" ><i class="ti-pencil edit_place_data" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_place_modal" id="'.$parking_place_data_row['id'].'"></i></a></span>';
             $row[] = $edit_html;
@@ -2239,7 +2242,7 @@ class Superadmin extends CI_Controller {
     }
     public function add_complaint()
     {
-           if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
             // echo '<pre>'; print_r($_POST); exit;
             $id = $session_data['id'];         
@@ -2374,7 +2377,7 @@ class Superadmin extends CI_Controller {
         echo json_encode($response); 
     }
 
-     public function update_unregister_user_complaint()
+    public function update_unregister_user_complaint()
     {
          if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
@@ -2411,6 +2414,261 @@ class Superadmin extends CI_Controller {
                 } else {
                     $response['status'] = 'failure';
                     $response['error'] = array("fk_user_id" => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+        }
+        echo json_encode($response); 
+    }
+    // ======================== Referral Code =================================
+    public function referral_code()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $this->load->view('super_admin/referral_code');
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function save_referral_code()
+    {
+       if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            
+            $referral_code = $this->input->post('referral_code');        
+            $this->form_validation->set_rules('referral_code','Price Status', 'trim|required',array('required' => 'You must provide a %s',));
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'referral_code' => strip_tags(form_error('referral_code')),
+                );
+            } else {
+                $curl_data = array(
+                    'referral_code'=>$referral_code,
+                );
+                $curl = $this->link->hits('add-referral-code', $curl_data);
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                } else {
+                    $response['status'] = 'failure';
+                     $response['error'] = array("referral_code" => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function display_all_referral_code_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-referral-code', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['referral_code_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function update_referral_code_status()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('id'); 
+            $status = $this->input->post('status'); 
+            if (empty($id)) {
+                $response['message'] = 'Place Status id is required.';
+                $response['status'] = 0;
+            }else if($status=='') {
+                $response['message'] = 'status is required.';
+                $response['status'] = 0;
+            }else{
+                $curl_data = array(   
+                  'id'=>$id,
+                  'status'=>$status,
+                );                
+                $curl = $this->link->hits('update-referral-code-status',$curl_data);
+                $curl = json_decode($curl, TRUE);
+                if($curl['message']=='success'){
+                    $response['message']='Status Changed successfully';
+                    $response['status'] = 1;
+                }else{
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "login";
+        }
+        echo json_encode($response);
+    }
+    public function update_referral_code_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            
+            $edit_id = $this->input->post('edit_id');        
+            $edit_referral_code = $this->input->post('edit_referral_code');        
+            $this->form_validation->set_rules('edit_referral_code','Referral Code', 'trim|required',array('required' => 'You must provide a %s',));
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'edit_referral_code' => strip_tags(form_error('edit_referral_code')),
+                );
+            } else {
+                $curl_data = array(
+                    'referral_code'=>$edit_referral_code,
+                    'id' =>$edit_id
+                );
+                $curl = $this->link->hits('update-referral-code-data', $curl_data);
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                } else {
+                    $response['status'] = 'failure';
+                    $response['error'] = array("edit_place_status" => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function delete_referral_code()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('delete_referral_code_id'); 
+            if (empty($id)) {
+                $response['message'] = 'Referral Code Id is required.';
+                $response['status'] = 0;
+            } else {
+                $curl_data = array(   
+                  'id'=>$id,
+                );            
+                $curl = $this->link->hits('delete-referral-code',$curl_data);
+                $curl = json_decode($curl, TRUE);            
+                if($curl['message']=='success'){
+                    $response['message']=$curl['message'];
+                    $response['status'] = 1;
+                } else {
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "superadmin";
+        }
+        echo json_encode($response);
+    }
+    // ======================= Map Referal Code ================================
+    public function map_referral_code()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $this->load->view('super_admin/map_referral_code');
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    // ============================ Privacy Policy===================================
+
+    public function privacy_n_policy()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $curl = $this->link->hits('user-privacy-n-policy', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $data['user_privacy_n_policy'] = $curl['user_privacy_n_policy'];
+            $this->load->view('super_admin/privacy_policy',$data);
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+     public function update_privacy_n_policy()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');            
+            $privacy_n_policy = $this->input->post('privacy_n_policy');        
+            $id = $this->input->post('id');        
+            $this->form_validation->set_rules('id','Place', 'trim|required',array('required' => 'You must provide a %s',));
+            $this->form_validation->set_rules('privacy_n_policy','Terms & Condition', 'trim|required',array('required' => 'You must provide a %s',));
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'id' => strip_tags(form_error('id')),
+                    'privacy_n_policy' => strip_tags(form_error('privacy_n_policy')),
+                );
+            } else {
+                $curl_data = array(
+                    'id' => $id,
+                    'privacy_policy' => $privacy_n_policy,
+                );
+                $curl = $this->link->hits('update-privacy-n-policy', $curl_data);
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                    $response['message']=$curl['message'];
+                } else {
+                    $response['status'] = 'failure';
+                    $response['error'] = array("privacy_n_policy" => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+
+    public function vendor_map_place()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+             $curl = $this->link->hits('get-vendor-map-place-data', array(), '', 0);
+                $curl = json_decode($curl, true);
+                $response['place_list'] = $curl['place_list'];
+                $response['vendor_list'] = $curl['vendor_list'];
+            $this->load->view('super_admin/vendor_map_place',$response);
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+
+    public function save_vendr_map_place()
+    {
+         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+                
+            $fk_vendor_id = $this->input->post('fk_vendor_id');
+            $fk_place_id = $this->input->post('fk_place_id');
+            $this->form_validation->set_rules('fk_place_id[]','Place', 'trim|required',array('required' => 'You must provide a %s',));            
+            $this->form_validation->set_rules('fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'fk_vendor_id' => strip_tags(form_error('fk_vendor_id')),
+                    'fk_place_id' => strip_tags(form_error('fk_place_id[]')),
+                );
+            } else {
+                $curl_data = array(
+                    'fk_vendor_id'=>$fk_vendor_id,
+                    'fk_place_id'=>json_encode($fk_place_id),
+                );
+                $curl = $this->link->hits('add-vendor-mapped-place', $curl_data);
+                echo '<pre>'; print_r($curl); exit;
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                } else {
+                    $response['status'] = 'failure';
+                    $response['error'] = array("fk_vendor_id" => $curl['message']);
                 }
             }
         } else {
