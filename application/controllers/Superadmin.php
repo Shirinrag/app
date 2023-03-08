@@ -754,6 +754,8 @@ class Superadmin extends CI_Controller {
             $fk_vehicle_type = $this->input->post('fk_vehicle_type');
             $ext_price = $this->input->post('ext_price');
             $per_hour_charges = $this->input->post('per_hour_charges');
+            $place_count = $this->input->post('place_count');
+            $reserved_place_count = $this->input->post('reserved_place_count');
             $total_place_count = $this->input->post('total_place_count');
             $referral_code = $this->input->post('referral_code');
             // echo '<pre>'; print_r($_POST); exit;
@@ -816,6 +818,8 @@ class Superadmin extends CI_Controller {
                     'price'=>json_encode($price),
                     'per_hour_charges'=>$per_hour_charges,
                     'fk_vehicle_type' =>json_encode($fk_vehicle_type),
+                    'place_count'=>$place_count,
+                    'reserved_place_count'=>$reserved_place_count,
                     'total_place_count'=>$total_place_count,
                     'referral_code'=>$referral_code,
                 );               
@@ -914,6 +918,8 @@ class Superadmin extends CI_Controller {
             $ext_price = $this->input->post('edit_ext_price');
             $fk_vehicle_type = $this->input->post('edit_fk_vehicle_type');
             $per_hour_charges = $this->input->post('edit_per_hour_charges');
+            $place_count = $this->input->post('edit_place_count');
+            $reserved_place_count = $this->input->post('edit_reserved_place_count');
             $total_place_count = $this->input->post('edit_total_place_count');
             $edit_referral_code = $this->input->post('edit_referral_code');  
             $this->form_validation->set_rules('edit_fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
@@ -976,6 +982,8 @@ class Superadmin extends CI_Controller {
                     'id'=>$id,
                     'fk_vehicle_type'=>json_encode($fk_vehicle_type),
                     'per_hour_charges'=>$per_hour_charges,
+                    'place_count'=>$place_count,
+                    'reserved_place_count'=>$reserved_place_count,
                     'total_place_count'=>$total_place_count,
                     'referral_code'=>$edit_referral_code,
                 );
@@ -2641,7 +2649,7 @@ class Superadmin extends CI_Controller {
         }
     }
 
-    public function save_vendr_map_place()
+    public function save_vendor_map_place()
     {
          if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
@@ -2662,7 +2670,6 @@ class Superadmin extends CI_Controller {
                     'fk_place_id'=>json_encode($fk_place_id),
                 );
                 $curl = $this->link->hits('add-vendor-mapped-place', $curl_data);
-                echo '<pre>'; print_r($curl); exit;
                 $curl = json_decode($curl, true);
                 if ($curl['status']==1) {
                     $response['status']='success';
@@ -2676,4 +2683,37 @@ class Superadmin extends CI_Controller {
         }
         echo json_encode($response); 
     }
+
+    public function display_all_vendor_map_place_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-vendor-map-place-data', array(), '', 0);
+            // echo '<pre>'; print_r($curl); exit;
+
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['vendor_map_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function get_vendor_map_place_data_on_id()
+    {
+       if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $id = $this->input->post('id');
+            $curl_data = array('id'=>$id);
+            $curl = $this->link->hits('get-vendor-map-place-data-on-id',$curl_data);
+            $curl = json_decode($curl, true);
+            // echo '<pre>'; print_r($curl); exit;
+            $response['vendor_map_data'] = $curl['vendor_map_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    
 }

@@ -167,18 +167,40 @@
                                     </div>
                                     <div class="col-md-4">
                                        <div class="form-group">
-                                          <label>Total Place Count</label>
-                                          <input type="text" class="form-control input-text" name="total_place_count" id="total_place_count" placeholder="Total Place Count" onkeypress="return isNumber(event)">
-                                          <span class="error_msg" id="total_place_count_error"></span>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                       <div class="form-group">
                                           <label>Referral Code</label>
                                           <input type="text" class="form-control input-text" name="referral_code" placeholder="Referral Code">
                                           <span class="error_msg" id="referral_code_error"></span>
                                        </div>
+                                    </div>          
+                                 </div>    
+                                 <div class="row">                      
+                                       <div class="col-md-3">
+                                          <div class="form-group">
+                                             <label>Place Count</label>
+                                             <input type="text" class="form-control input-text" name="place_count" id="place_count" placeholder="Place Count" onkeypress="return isNumber(event)">
+                                             <span class="error_msg" id="place_count_error"></span>
+                                           
+                                          </div>
+                                       </div>
+                                        <div class="col-md-1"><h3 style="margin-top: 35px;"><strong> (-) </strong> </h3></div>
+                                       <div class="col-md-3">
+                                             <div class="form-group">
+                                                <label>Reserved Place Count</label>
+                                                <input type="text" class="form-control input-text" name="reserved_place_count" id="reserved_place_count" placeholder="Reserved Place Count" onkeypress="return isNumber(event)">
+                                                <span class="error_msg" id="reserved_place_count_error"></span>
+                                             </div>
+                                       </div>
+                                       <div class="col-md-1"><h3 style="margin-top: 35px;"> <strong> = </strong></h3></div>
+                                    <div class="col-md-3">
+                                       <div class="form-group">
+                                          <label>Total Place Count</label>
+                                          <input type="text" class="form-control input-text" name="total_place_count" readonly id="total_place_count" placeholder="Total Place Count" onkeypress="return isNumber(event)">
+                                          <span class="error_msg" id="total_place_count_error"></span>
+                                       </div>
                                     </div>
+                                 </div>
+                            
+                                     <div class="row">     
                                     <div class="col-md-4">
                                        <div class="form-group">
                                           <label>Select Vehicle Type</label>
@@ -432,19 +454,41 @@
                                  </div>
                            </div>
                            <div class="col-md-4">
-                              <div class="form-group">
-                                 <label>Total Place Count</label>
-                                 <input type="text" class="form-control input-text" name="edit_total_place_count" id="edit_total_place_count" placeholder="Total Place Count" onkeypress="return isNumber(event)">
-                                 <span class="error_msg" id="edit_total_place_count_error"></span>
-                              </div>
-                           </div>
-                           <div class="col-md-4">
                                  <div class="form-group">
                                     <label>Referral Code</label>
                                     <input type="text" class="form-control input-text" name="edit_referral_code" id="edit_referral_code" placeholder="Referral Code">
                                     <span class="error_msg" id="edit_referral_code_error"></span>
                                  </div>
                               </div>
+                        </div>
+                           <div class="row">                      
+                                       <div class="col-md-3">
+                                          <div class="form-group">
+                                             <label>Place Count</label>
+                                             <input type="text" class="form-control input-text" name="edit_place_count" id="edit_place_count" placeholder="Place Count" onkeypress="return isNumber(event)">
+                                             <span class="error_msg" id="edit_place_count_error"></span>
+                                           
+                                          </div>
+                                       </div>
+                                        <div class="col-md-1"><h3 style="margin-top: 35px;"><strong> (-) </strong> </h3></div>
+                                       <div class="col-md-3">
+                                             <div class="form-group">
+                                                <label>Reserved Place Count</label>
+                                                <input type="text" class="form-control input-text" name="edit_reserved_place_count" id="edit_reserved_place_count" placeholder="Reserved Place Count" onkeypress="return isNumber(event)">
+                                                <span class="error_msg" id="edit_reserved_place_count_error"></span>
+                                             </div>
+                                       </div>
+                                       <div class="col-md-1"><h3 style="margin-top: 35px;"> <strong> = </strong></h3></div>
+                                    <div class="col-md-3">
+                                       <div class="form-group">
+                                          <label>Total Place Count</label>
+                                          <input type="text" class="form-control input-text" name="edit_total_place_count" readonly id="edit_total_place_count" placeholder="Total Place Count" onkeypress="return isNumber(event)">
+                                          <span class="error_msg" id="edit_total_place_count_error"></span>
+                                       </div>
+                                    </div>
+                                 </div>
+                           
+                          <div class="row">
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Select Vehicle Type</label>

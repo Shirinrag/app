@@ -40,82 +40,130 @@ $('#vendor_mapped_place_form').submit(function(e) {
     });
     return false;
 });
-$(document).ready(function() {
-    table = $('#vendor_mapped_place_datatable').DataTable({
-        "ajax": frontend_path + "superadmin/display_all_admin_data",
-        "columns": [{
-                "data": null
-            },
-            {
-                "data": "firstName",
+    function format(d) {
+        var html = '';       
+        var place_name = d.place_name;
+        if (place_name) {
+            if (place_name.indexOf(';') > -1) {
+                var place_name_1 = place_name.split(";");
+            } else {
+                var place_name_1 = [place_name];
+            }
+        } else {
+            var place_name_1 = [0];
+        }
+
+        // var id = d.id;
+        // if (id) {
+        //     if (id.indexOf(',') > -1) {
+        //         var id_1 = id.split(",");
+        //     } else {
+        //         var id_1 = [id];
+        //     }
+        // } else {
+        //     var id_1 = ['NA'];
+        // }
+
+
+        html +=
+            '<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-striped table-hover">' +
+            '<tr>' + '<th>Place Name</th>' +'</tr>';
+        $.each(place_name_1, function(place_name_1key, place_name_1_val) {
+            html += '<tr>' +
+                '<td>' + place_name_1_val + '</td>' +
+                '</tr>';
+        });
+        html += '</table>';
+        return html;
+
+    }
+
+    $(document).ready(function() {
+        var table = $('#vendor_mapped_place_datatable').DataTable({
+            "ajax": frontend_path+"superadmin/display_all_vendor_map_place_data",
+            "columns": [{
+                    "className": 'details-control',
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": ''
+                },
+                {
+                    "data": "firstName",
                   "render": function ( data, type, row, meta ) {
                   
                     var html="";
                      html= data+" "+row.lastName;
                      return html;
                   },
-            },
-            {
-                "data": "userName"
-            },
-            {
-                "data": "email"
-            },
-            // { "data": "phoneNo"},
-            {
-                "data": "user_type_name",
-                render: function(data) {
-                    var data_info = data;
-                    return '<label class="badge badge-success">' + data_info + '</label>';
                 },
-            },
-            {
-                "data": "statusdata",
-                "className": "change_status",
-                render: function(data) {
-                    var change_status = data.split(",");
-                    if (change_status[0] == 1) {
-                        return '<label class="toggle"><input class="toggle-checkbox" type="checkbox" checked id="switch' + change_status[1] + '" onclick="change_status(' + change_status[0] + ',' + change_status[1] + ');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
-                    } else {
-                        return '<label class="toggle"><input class="toggle-checkbox" type="checkbox" id="switch' + change_status[1] + '" onclick="change_status(' + change_status[0] + ',' + change_status[1] + ');"><div class="toggle-switch"></div><span class="toggle-label"></span></label>';
-                    }
-                },
-            },
-            {
+                 {
                 "data": null,
-                "className": "edit_admin_details",
-                "defaultContent": '<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Edit Details" ><i class="ti-pencil" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_user_modal"></i></a><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Delete Details" class="remove-row"><i class="ti-trash a_delete_user" href="#a_delete_user_modal" class="trigger-btn" data-bs-toggle="modal" data-bs-target="#delete_admin" aria-hidden="true"></i></a></span>'
+                // "className": "edit_admin_details",
+                // "defaultContent": '<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1" title="Edit Details" ><i class="ti-pencil" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_vendor_map_model"></i></a></span>'
+                 "render": function ( data, type, row, meta ) {
+                  
+                    var html ='<span><a href="javascript:void(0);" data-toggle="tooltip" class="mr-1 ml-1 edit_vendor_map_place" title="Edit Details" id="'+row.tbl_vendor_id+'" ><i class="ti-pencil" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#edit_vendor_map_model"></i></a></span>';  
+                    return html;
+                  },
             },
-        ],
-        "order": [
-            [0, 'desc']
-        ]
-    });
-    table.on('order.dt search.dt', function() {
-        table.column(0, {
-            search: 'applied',
-            order: 'applied'
-        }).nodes().each(function(cell, i) {
-            cell.innerHTML = i + 1;
+
+            ],
+            "order": [
+                [1, 'DESC']
+            ]
         });
 
-    }).draw();
+        // Add event listener for opening and closing details
+        $('#vendor_mapped_place_datatable tbody').on('click', 'td.details-control', function() {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            } else {
+                // Open this row
+                row.child(format(row.data())).show();
+                tr.addClass('shown');
+            }
+        });
+
+        // $(document).on("click","#vendor_mapped_place_datatable tbody tr, .edit_admin_details tbody tr td",function(){
+        //     var tr = $(this).closest('tr');
+        //     var row = table.row(tr);
+        //     var data1 = row.data();
+            
+        //     $('#edit_fk_place_id').val(data1.fk_place_id);
+        //     $('#edit_fk_place_id').trigger("chosen:updated");
+        //     $('#edit_fk_vendor_id').val(data1.fk_vendor_id);
+        //     $('#edit_fk_vendor_id').trigger("chosen:updated");
+        //     $('#delete_admin_id').val(data1.tbl_vendor_id);
+        //     $('#edit_id').val(data1.tbl_vendor_id);
+        // });
+    });
+$(document).on('click', '.edit_vendor_map_place', function () {
+    var id = $(this).attr("id");   
+    $.ajax({
+        url: frontend_path + 'superadmin/get_vendor_map_place_data_on_id',
+        method: "POST",
+        data: {
+            id: id
+        },
+        dataType: "json",        
+        success: function (data) {
+                var info = data.vendor_map_data;
+
+                // $('#edit_fk_place_id').val(info.fk_place_id);
+                // $('#edit_fk_place_id').trigger("chosen:updated");
+                $('#edit_fk_vendor_id').val(info.vendor_id);
+                $('#edit_fk_vendor_id').trigger("chosen:updated");
+                // $('#delete_admin_id').val(info.tbl_vendor_id);
+                $('#edit_id').val(info.tbl_vendor_id);
+            },
+    });
 });
-$(document).on("click","#vendor_mapped_place_datatable tbody tr, .edit_admin_details tbody tr td",function(){
-    var tr = $(this).closest('tr');
-    var row = table.row(tr);
-    var data1 = row.data();
-    
-    $('#edit_username').val(data1.userName);
-    $('#edit_first_name').val(data1.firstName);
-    $('#edit_last_name').val(data1.lastName);
-    $('#edit_email').val(data1.email);
-    $('#edit_contact_no').val(data1.phoneNo);
-    $('#edit_user_type').val(data1.user_type);
-    $('#edit_user_type').trigger("chosen:updated");
-    $('#delete_admin_id').val(data1.id);
-    $('#edit_id').val(data1.id);
-});
+   
 
 function change_status(status, id) {
     var status = status;

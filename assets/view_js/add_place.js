@@ -92,7 +92,17 @@ $(document).on("change", "#fk_state_id", function() {
         },
     });
 });
+$('#place_count, #reserved_place_count').on('input',function() {
+    var place_count = parseInt($('#place_count').val());
+    var reserved_place_count = parseFloat($('#reserved_place_count').val());
+    $('#total_place_count').val((place_count - reserved_place_count ? place_count - reserved_place_count : 0));
+});
 
+$('#edit_place_count, #edit_reserved_place_count').on('input',function() {
+    var edit_place_count = parseInt($('#edit_place_count').val());
+    var edit_reserved_place_count = parseFloat($('#edit_reserved_place_count').val());
+    $('#edit_total_place_count').val((edit_place_count - edit_reserved_place_count ? edit_place_count - edit_reserved_place_count : 0));
+});
 $('#add_parking_place_form').submit(function(e) {
     e.preventDefault();
     var formData = new FormData($("#add_parking_place_form")[0]);
@@ -198,7 +208,10 @@ $(document).on("click", ".edit_place_data", function() {
             $('#edit_fk_parking_price_type').trigger("chosen:updated");
             $('#edit_ext_price').val(info['ext_price']);
             $('#edit_per_hour_charges').val(info['per_hour_charges']);
+            $('#edit_place_count').val(info['place_count']);
+            $('#edit_reserved_place_count').val(info['reserved_place_count']);
             $('#edit_total_place_count').val(info['total_place_count']);
+            $('#edit_referral_code').val(info['referral_code']);
             var state_option = "";
             var option_data = "";
             $.each(state_details, function(state_details_index, state_details_row) {
