@@ -2689,8 +2689,6 @@ class Superadmin extends CI_Controller {
         if ($this->session->userdata('parking_adda_superadmin_logged_in'))
         {
             $curl = $this->link->hits('display-all-vendor-map-place-data', array(), '', 0);
-            // echo '<pre>'; print_r($curl); exit;
-
             $curl = json_decode($curl, true);
             $response['data'] = $curl['vendor_map_data'];
         } else {
@@ -2707,13 +2705,52 @@ class Superadmin extends CI_Controller {
             $curl_data = array('id'=>$id);
             $curl = $this->link->hits('get-vendor-map-place-data-on-id',$curl_data);
             $curl = json_decode($curl, true);
-            // echo '<pre>'; print_r($curl); exit;
             $response['vendor_map_data'] = $curl['vendor_map_data'];
+            $response['place_list'] = $curl['place_list'];
+            $response['selected_parking_place_id'] = $curl['selected_parking_place_id'];
+
         } else {
             $response['status']='login_failure';
             $response['url']=base_url().'superadmin';
         }
         echo json_encode($response);
+    }
+    public function update_vendor_map_with_image()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+                
+            $id = $this->input->post('edit_id');
+            $fk_vendor_id = $this->input->post('edit_fk_vendor_id');
+            $fk_place_id = $this->input->post('edit_fk_place_id');
+            $this->form_validation->set_rules('edit_fk_place_id[]','Place', 'trim|required',array('required' => 'You must provide a %s',));            
+            $this->form_validation->set_rules('edit_fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
+            if ($this->form_validation->run() == false) {
+                $response['status'] = 'failure';
+                $response['error'] = array(
+                    'edit_fk_vendor_id' => strip_tags(form_error('edit_fk_vendor_id')),
+                    'edit_fk_place_id' => strip_tags(form_error('edit_fk_place_id[]')),
+                );
+            } else {
+                $curl_data = array(
+                    'id'=>$id,
+                    'fk_vendor_id'=>$fk_vendor_id,
+                    'fk_place_id'=>json_encode($fk_place_id),
+                );
+                $curl = $this->link->hits('update-vendor-mapped-place', $curl_data);
+                // echo '<pre>'; print_r($curl); exit;
+                $curl = json_decode($curl, true);
+                if ($curl['status']==1) {
+                    $response['status']='success';
+                } else {
+                    $response['status'] = 'failure';
+                    $response['error'] = array("edit_fk_vendor_id" => $curl['message']);
+                }
+            }
+        } else {
+            $resoponse['status']='login_failure';
+        }
+        echo json_encode($response); 
     }
     
 }

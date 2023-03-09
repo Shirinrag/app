@@ -126,10 +126,11 @@
                            <span aria-hidden="true">&times;</span>
                            </button>
                         </div>
-                        <?php echo form_open('superadmin/update_place_details', array('id'=>'update_place_details_form')) ?>
+                        <?php echo form_open('superadmin/update_vendor_map_with_image', array('id'=>'update_vendor_map_place_data_form')) ?>
                         <div class="modal-body">
                            <div class="row">
-                              <input type="text" name="edit_id" id="edit_id">
+                              <input type="hidden" name="edit_id" id="edit_id">
+                              <input type="hidden" name="tbl_vendor_map_place_id" id="tbl_vendor_map_place_id">
                               <div class="col-md-4">
                                  <div class="form-group">
                                     <label>Select Vendor</label>
@@ -147,13 +148,9 @@
                                <div class="col-md-4">
                                        <div class="form-group">
                                           <label>Select Place</label>
-                                          <select type="text" class="form-control chosen-select-deselect" name="edit_fk_place_id" id="edit_fk_place_id" data-placeholder="Select Place">
+                                          <select type="text" class="form-control chosen-select-deselect" name="edit_fk_place_id[]" id="edit_fk_place_id" data-placeholder="Select Place" multiple="multiple">
                                              <option value=""></option>
-                                             <?php 
-                                                foreach ($place_list as $place_list_key => $place_list_row) { ?>
-                                             <option value="<?=$place_list_row['id']?>"><?=$place_list_row['place_name']?></option>
-                                             <?php }
-                                                ?>
+                                             
                                           </select>
                                           <span class="error_msg" id="fk_place_id_error"></span>
                                        </div>

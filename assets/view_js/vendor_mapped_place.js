@@ -152,14 +152,24 @@ $(document).on('click', '.edit_vendor_map_place', function () {
         },
         dataType: "json",        
         success: function (data) {
-                var info = data.vendor_map_data;
-
-                // $('#edit_fk_place_id').val(info.fk_place_id);
-                // $('#edit_fk_place_id').trigger("chosen:updated");
+                var info = data.vendor_map_data;         
+                var place_list = data.place_list;
+                var selected_parking_place_id = data.selected_parking_place_id;
+                var place_list_option_data ="";
                 $('#edit_fk_vendor_id').val(info.vendor_id);
                 $('#edit_fk_vendor_id').trigger("chosen:updated");
+                $('#tbl_vendor_map_place_id').val(info.tbl_vendor_map_place_id);
                 // $('#delete_admin_id').val(info.tbl_vendor_id);
                 $('#edit_id').val(info.tbl_vendor_id);
+                $.each(place_list, function(place_list_index, place_list_row) {
+                    if(jQuery.inArray(place_list_row['id'],selected_parking_place_id['fk_place_id']) !== -1){
+                        place_list_option_data +='<option value="' + place_list_row['id'] + '" selected >' + place_list_row['place_name'] + '</option>';
+                    }else{
+                        place_list_option_data +='<option value="' + place_list_row['id'] + '">' + place_list_row['place_name'] + '</option>';
+                    }
+                });
+                $('#edit_fk_place_id').html(place_list_option_data);
+                $('#edit_fk_place_id').trigger("chosen:updated");
             },
     });
 });
@@ -182,13 +192,8 @@ function change_status(status, id) {
             'status': user_status
         },
         dataType: 'json',
-        // beforeSend:function(){
-        //     document.getElementById('header_loader').style.visibility = "visible";
-        // },
         success: function(data) {
-            // document.getElementById('header_loader').style.visibility = "hidden";
             $('#vendor_mapped_place_datatable').DataTable().ajax.reload(null, false);
-
             swal({
                 title: "success",
                 text: data.message,
@@ -200,9 +205,9 @@ function change_status(status, id) {
     });
 }
 
-$('#update_admin_form').submit(function(e) {
+$('#update_vendor_map_place_data_form').submit(function(e) {
     e.preventDefault();
-    var formData = new FormData($("#update_admin_form")[0]);
+    var formData = new FormData($("#update_vendor_map_place_data_form")[0]);
     var InvoiceTypeForm = $(this);
     jQuery.ajax({
         dataType: 'json',
@@ -219,11 +224,11 @@ $('#update_admin_form').submit(function(e) {
         success: function(response) {
             $('#update_admin_button').button('reset');
             if (response.status == 'success') {
-                $('form#update_admin_form').trigger('reset');
+                $('form#update_vendor_map_place_data_form').trigger('reset');
                 $(".chosen-select-deselect").val('');
                 $('.chosen-select-deselect').trigger("chosen:updated");
                 $('#vendor_mapped_place_datatable').DataTable().ajax.reload(null, false);
-                $('#edit_user_modal').modal('hide');
+                $('#edit_vendor_map_model').modal('hide');
                 swal({
                     title: "success",
                     text: response.msg,

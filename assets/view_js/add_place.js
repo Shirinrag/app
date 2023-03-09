@@ -287,8 +287,6 @@ $(document).on("click", ".edit_place_data", function() {
         },
     });
 });
-
-
 $(document).on('click','.addRows_edit',function() {
     var custom_id = $(this).attr('id');
     var custom_id_1 = custom_id.split('_');
