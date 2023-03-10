@@ -31246,7 +31246,10 @@ div.tagsinput span.tag a {
   position: relative;
   top: 2px;
 }
-.datepicker{width:180px; margin: 0 20px 20px 20px;}
+.datepicker{
+  width:180px; 
+/*  margin: 0 20px 20px 20px;*/
+}
 /*.table_data {
   border:1px solid black;
 }*/

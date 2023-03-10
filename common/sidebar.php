@@ -226,5 +226,26 @@
          <span class="menu-title">Vendor Mapped With Place</span>
          </a>
       </li>
+      <li class="nav-item">
+         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic3" aria-expanded="false" aria-controls="ui-basic">
+         <i class="icon-layout menu-icon"></i>
+         <span class="menu-title">Reports</span>
+         <i class="menu-arrow"></i>
+         </a>
+         <div class="collapse" id="ui-basic3">
+            <ul class="nav flex-column sub-menu">
+               <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>reports/user_reports">
+                     User Reports
+                  </a>
+               </li>
+               <!-- <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>superadmin/map_referral_code">
+                     Map Referral Code
+                  </a>
+               </li> -->
+            </ul>
+         </div>
+      </li>
    </ul>
 </nav>
