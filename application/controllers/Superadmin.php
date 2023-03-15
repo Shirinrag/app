@@ -1285,14 +1285,17 @@ class Superadmin extends CI_Controller {
     {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
-            
+             
             $fk_place_id = $this->input->post('fk_place_id');        
             $fk_verifier_id = $this->input->post('fk_verifier_id');        
             $date = $this->input->post('date');       
+            $duty_time = $this->input->post('duty_time');       
+
             $curl_data = array(
                 'fk_place_id'=>json_encode($fk_place_id),
                 'fk_verifier_id'=>json_encode($fk_verifier_id),
                 'date'=>json_encode($date),
+                'duty_time'=>json_encode($duty_time),
             );
             $curl = $this->link->hits('save-duty-allocation', $curl_data);
             $curl = json_decode($curl, true);
@@ -2428,6 +2431,29 @@ class Superadmin extends CI_Controller {
             $resoponse['status']='login_failure';
         }
         echo json_encode($response); 
+    }
+    public function slot_complaint()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');           
+            $this->load->view('super_admin/slot_issue');
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function display_all_slot_complaint_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-slot-complaint-data', array(), '', 0);
+            
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['slot_complaint_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
     }
     // ======================== Referral Code =================================
     public function referral_code()

@@ -26,7 +26,7 @@ $('#addRows').click(function() {
                 });
 
             var html2 = '';
-            html2 += '<div class="row"><div class="col-md-3"> <div class="form-group"> <label>Select Place</label> <select type="text" class="form-control chosen-select-deselect" name="fk_place_id[]" id="fk_place_id_'+new_count+'" data-placeholder="Select Place">'+place_option+' </select> <span class="error_msg" id="fk_place_id_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Select Verifier</label> <select type="text" class="form-control chosen-select-deselect" name="fk_verifier_id[]" id="fk_verifier_id_'+new_count+'" data-placeholder="Select Verifier">'+verifier_option+' </select> <span class="error_msg" id="fk_vendor_id_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Date</label> <input type="text" class="form-control input-text datepicker_'+new_count+'" name="date[]" id="date_'+new_count+'" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="price_error"></span> </div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
+            html2 += '<div class="row"><div class="col-md-4"> <div class="form-group"> <label>Select Place</label> <select type="text" class="form-control chosen-select-deselect" name="fk_place_id[]" id="fk_place_id_'+new_count+'" data-placeholder="Select Place">'+place_option+' </select> <span class="error_msg" id="fk_place_id_error"></span> </div></div><div class="col-md-4"> <div class="form-group"> <label>Select Verifier</label> <select type="text" class="form-control chosen-select-deselect" name="fk_verifier_id[]" id="fk_verifier_id_'+new_count+'" data-placeholder="Select Verifier">'+verifier_option+' </select> <span class="error_msg" id="fk_vendor_id_error"></span> </div></div><div class="col-md-4"> <div class="form-group"> <label>Date</label> <input type="text" class="form-control input-text datepicker_'+new_count+'" name="date[]" id="date_'+new_count+'" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="price_error"></span> </div></div> <div class="col-md-4"><div class="form-group"><label>Select Time</label><select type="text" class="form-control chosen-select-deselect" name="duty_time[]" id="duty_time_'+new_count+'" data-placeholder="Select Time"><option value=""></option><option value="8:00 am"> 8:00 am</option><option value="8:30 am"> 8:30 am</option><option value="9:00 am"> 9:00 am</option><option value="9:30 am"> 9:30 am</option><option value="10:00 am"> 10:00 am</option><option value="10:30 am"> 10:30 am</option><option value="11:00 am"> 11:00 am</option><option value="11:30 am"> 11:30 am</option></select><span class="error_msg" id="duty_time_error"></span></div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
 
             $('#price_data_append').append(html2);
             $("#count_details").val(new_count);
@@ -121,6 +121,9 @@ $(document).ready(function() {
             },
             {
                 "data": "date"
+            },
+            {
+                "data": "duty_time"
             },
             {
                 "data": null,

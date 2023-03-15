@@ -44,10 +44,10 @@
         });
     }
      $(".datepicker").datepicker({ 
-       format: 'dd/mm/yyyy',
+       format: 'yyyy-m-d',
         autoclose: true, 
         todayHighlight: true
-  }).datepicker('update', new Date());
+  });
   
     var frontend_path ="<?=base_url();?>";
 

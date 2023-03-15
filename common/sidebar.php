@@ -193,33 +193,24 @@
          <span class="menu-title">Suggested Parking Place</span>
          </a>
       </li>
-      <li class="nav-item">
-         <a class="nav-link" href="<?=base_url()?>superadmin/customer_support" aria-controls="form-elements">
+       <li class="nav-item">
+         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic4" aria-expanded="false" aria-controls="ui-basic">
          <i class="icon-grid menu-icon"></i>
          <span class="menu-title">Customer Support</span>
-         </a>
-      </li>
-       <!-- <li class="nav-item">
-         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic3" aria-expanded="false" aria-controls="ui-basic">
-         <i class="icon-layout menu-icon"></i>
-         <span class="menu-title">Referral Code</span>
          <i class="menu-arrow"></i>
          </a>
-         <div class="collapse" id="ui-basic3">
+         <div class="collapse" id="ui-basic4">
             <ul class="nav flex-column sub-menu">
                <li class="nav-item">
-                  <a class="nav-link" href="<?=base_url()?>superadmin/referral_code">
-                     Add Referral Code
-                  </a>
+                  <a class="nav-link" href="<?=base_url()?>superadmin/customer_support"> User Complaint </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="<?=base_url()?>superadmin/map_referral_code">
-                     Map Referral Code
+                  <a class="nav-link" href="<?=base_url()?>superadmin/slot_complaint">Slot Complaint    
                   </a>
                </li>
             </ul>
          </div>
-      </li> -->
+      </li>
       <li class="nav-item">
          <a class="nav-link" href="<?=base_url()?>superadmin/vendor_map_place" aria-controls="form-elements">
          <i class="icon-grid menu-icon"></i>
@@ -239,11 +230,7 @@
                      User Reports
                   </a>
                </li>
-               <!-- <li class="nav-item">
-                  <a class="nav-link" href="<?=base_url()?>superadmin/map_referral_code">
-                     Map Referral Code
-                  </a>
-               </li> -->
+              
             </ul>
          </div>
       </li>

@@ -20312,6 +20312,7 @@ address p {
 body,
 html {
   overflow-x: hidden;
+  overflow-y: hidden;
   padding-right: 0 !important;
   background: #F4F5F7;
 }
@@ -29005,6 +29006,8 @@ div.tagsinput span.tag a {
   width: 100%;
   -webkit-flex-grow: 1;
   flex-grow: 1;
+  overflow-y: scroll;
+    height: 100px !important ;
 }
 
 @media (max-width: 767px) {
@@ -29015,17 +29018,20 @@ div.tagsinput span.tag a {
 
 /* Sidebar */
 .sidebar {
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 40px);
+/*  min-height: 300px;*/
   background: #fff;
   font-family: "Nunito", sans-serif;
   font-weight: 500;
   padding: 0;
   /*width: 235px;*/
   z-index: 11;
-  transition: width 0.25s ease, background 0.25s ease;
+ /* transition: width 0.25s ease, background 0.25s ease;
   -webkit-transition: width 0.25s ease, background 0.25s ease;
   -moz-transition: width 0.25s ease, background 0.25s ease;
-  -ms-transition: width 0.25s ease, background 0.25s ease;
+  -ms-transition: width 0.25s ease, background 0.25s ease;*/
+  overflow-y: scroll;
+    height: 300px;
 }
 
 .sidebar .nav {
@@ -31247,6 +31253,7 @@ div.tagsinput span.tag a {
   top: 2px;
 }
 .datepicker{
+  padding: 8px;
   width:180px; 
 /*  margin: 0 20px 20px 20px;*/
 }
@@ -31266,3 +31273,6 @@ td.details-control {
       }
 
 /*# sourceMappingURL=../maps/vertical-layout-light/style.css.map */
+.dt-buttons {
+  text-align: center;
+}

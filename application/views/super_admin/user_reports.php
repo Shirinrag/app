@@ -39,15 +39,15 @@
                                     <div class="col-md-4">
                                        <div class="form-group">
                                           <label>To Date</label>
-                                           <input type="text" class="form-control datepicker" name="date" id="date" placeholder="Price" onkeypress="return isNumber(event)">
-                                          <span class="error_msg" id="date_error"></span>
+                                           <input type="text" class="form-control datepicker" name="to_date" id="to_date" placeholder="To Date" onkeypress="return isNumber(event)">
+                                          <span class="error_msg" id="to_date_error"></span>
                                        </div>
                                     </div>
                                     
                                  </div>
                                  <div class="row">
                                     <div class="float-right">
-                                       <button type="button" class="btn btn-block btn-lg  button_color text_color" id=" btn-search-by-date"data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading">Submit</button>
+                                       <button type="button" class="btn btn-block btn-lg  button_color text_color" id=" btn-search-by-date">Submit</button>
                                     </div>
                                  </div>
                                 
@@ -69,8 +69,8 @@
                                       <th>Email</th>
                                       <th>Contact No</th>
                                       <th>Car No.</th>
-                                      <th>OTP Verified</th>
-                                      <th>Status</th>
+                                      <!-- <th>OTP Verified</th>
+                                      <th>Status</th> -->
                                     </tr>
                                   </thead>                                 
                                 </table>

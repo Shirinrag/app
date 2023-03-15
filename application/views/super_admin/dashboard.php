@@ -9,7 +9,7 @@
       <?php include 'common/cssfiles.php';?>
    </head>
    <body>
-      <div class="container-scroller">
+      <!-- <div class="container-scroller"> -->
          <!-- partial:partials/_navbar.html -->
          <?php include 'common/header.php';?>
          <!-- partial -->
@@ -74,7 +74,7 @@
             <!-- main-panel ends -->
          </div>
          <!-- page-body-wrapper ends -->
-      </div>
+      <!-- </div> -->
       <!-- container-scroller -->
       <!-- plugins:js -->
       <?php include 'common/jsfiles.php';?>
