@@ -4,7 +4,7 @@
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>User Reports</title>
+      <title>Bonus Reports</title>
       <!-- plugins:css -->
       <?php include 'common/cssfiles.php';?>
    </head>
@@ -26,7 +26,7 @@
                         <div class="col">
                            <div class="card">
                               <div class="card-body">
-                                 <h4 class="card-title">User Reports</h4>
+                                 <h4 class="card-title">Bonus Reports</h4>
                                  
                                  <div class="row">
                                     <div class="col-md-4">
@@ -58,18 +58,15 @@
                      <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                            <div class="card-body">
-                              <h4 class="card-title">User Data</h4>
+                              <h4 class="card-title">Bonus Report List</h4>
                               <div class="table-responsive">
-                                <table class="table" id="user_data_report_table">
+                                <table class="table" id="bonus_data_report_table">
                                   <thead>
                                     <tr>
                                       <th>SR. No</th>
-                                      <th>Name</th>
-                                      <th>Username</th>
-                                      <th>Email</th>
-                                      <th>Contact No</th>
-                                      <th>Car No.</th>
-                                      <th>Registration Date</th>
+                                      <th>Customer Name</th>
+                                      <th>Amount</th>
+                                      <th>Date</th>
                                     </tr>
                                   </thead>                                 
                                 </table>
@@ -91,7 +88,7 @@
       <!-- container-scroller -->
       <!-- plugins:js -->
       <?php include 'common/jsfiles.php';?>
-      <script type="text/javascript" src="<?=base_url()?>assets/view_js/user_report.js"></script>
+      <script type="text/javascript" src="<?=base_url()?>assets/view_js/bonus_reports.js"></script>
       <!-- End custom js for this page-->
    </body>
 </html>

@@ -230,6 +230,16 @@
                      User Reports
                   </a>
                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>reports/bonus_reports">
+                     Bonus Reports
+                  </a>
+               </li>
+                 <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>reports/user_wallet_reports">
+                     User Wallet Reports
+                  </a>
+               </li>
               
             </ul>
          </div>

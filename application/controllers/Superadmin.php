@@ -129,6 +129,8 @@ class Superadmin extends CI_Controller {
             $contact_no = $this->input->post('contact_no');
             $password = $this->input->post('password');
             $user_type = $this->input->post('user_type');
+            $company_name = $this->input->post('company_name');
+            $vendor_type = $this->input->post('vendor_type');
 
             $this->form_validation->set_rules('username','username', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('first_name','First Name', 'trim|required|alpha',array('required' => 'You must provide a %s',));
@@ -137,6 +139,10 @@ class Superadmin extends CI_Controller {
             $this->form_validation->set_rules('contact_no','Contact No', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('password','Password', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('user_type','Admin Role', 'trim|required',array('required' => 'You must provide a %s',));
+            if($user_type==5){
+                $this->form_validation->set_rules('company_name','Company Name', 'trim|required',array('required' => 'You must provide a %s',));
+                $this->form_validation->set_rules('vendor_type','Vendor Type', 'trim|required',array('required' => 'You must provide a %s',));
+            }
             if ($this->form_validation->run() == false) {
                 $response['status'] = 'failure';
                 $response['error'] = array(
@@ -147,6 +153,8 @@ class Superadmin extends CI_Controller {
                     'contact_no' => strip_tags(form_error('contact_no')),
                     'password' => strip_tags(form_error('password')),
                     'user_type' => strip_tags(form_error('user_type')),
+                    'company_name' => strip_tags(form_error('company_name')),
+                    'vendor_type' => strip_tags(form_error('vendor_type')),
                 );
             } else {
                 $curl_data = array(
@@ -157,6 +165,8 @@ class Superadmin extends CI_Controller {
                     'mobile_no'=>$contact_no,
                     'password'=>$password,
                     'user_type'=>$user_type,
+                    'company_name'=>$company_name,
+                    'vendor_type'=>$vendor_type,
                 );
                 $curl = $this->link->hits('add-admin', $curl_data);
                 $curl = json_decode($curl, true);
@@ -204,6 +214,8 @@ class Superadmin extends CI_Controller {
             $contact_no = $this->input->post('edit_contact_no');
             // $password = $this->input->post('password');
             $user_type = $this->input->post('edit_user_type');
+            $company_name = $this->input->post('edit_company_name');
+            $vendor_type = $this->input->post('edit_vendor_type');
 
             $this->form_validation->set_rules('edit_username','Username', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_first_name','First Name', 'trim|required|alpha',array('required' => 'You must provide a %s',));
@@ -212,6 +224,11 @@ class Superadmin extends CI_Controller {
             $this->form_validation->set_rules('edit_contact_no','Contact No', 'trim|required',array('required' => 'You must provide a %s',));
             // $this->form_validation->set_rules('password','Password', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_user_type','Admin Role', 'trim|required',array('required' => 'You must provide a %s',));
+            if($user_type==5){
+                $this->form_validation->set_rules('edit_company_name','Company Name', 'trim|required',array('required' => 'You must provide a %s',));
+                $this->form_validation->set_rules('edit_vendor_type','Vendor Type', 'trim|required',array('required' => 'You must provide a %s',));
+
+            }
             if ($this->form_validation->run() == false) {
                 $response['status'] = 'failure';
                 $response['error'] = array(
@@ -222,6 +239,8 @@ class Superadmin extends CI_Controller {
                     'edit_contact_no' => strip_tags(form_error('edit_contact_no')),
                     // 'password' => strip_tags(form_error('password')),
                     'edit_user_type' => strip_tags(form_error('edit_user_type')),
+                    'edit_company_name' => strip_tags(form_error('edit_company_name')),
+                    'edit_vendor_type' => strip_tags(form_error('edit_vendor_type')),
                 );
             } else {
                 $curl_data = array(
@@ -232,6 +251,8 @@ class Superadmin extends CI_Controller {
                     'mobile_no'=>$contact_no,
                     // 'password'=>$password,
                     'user_type'=>$user_type,
+                    'company_name'=>$company_name,
+                    'vendor_type'=>$vendor_type,
                     'id' =>$id
                 );
                 $curl = $this->link->hits('update-admin', $curl_data);

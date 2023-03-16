@@ -31,6 +31,27 @@
                                  <div class="row">
                                     <div class="col-md-4">
                                        <div class="form-group">
+                                          <label>Select Admin Role</label>
+                                          <select type="text" class="form-control chosen-select-deselect" name="user_type" id="user_type" placeholder="Select Admin Role">
+                                             <option value=""></option>
+                                             <?php 
+                                                foreach ($user_type_data as $user_type_data_key => $user_type_data_row) { ?>
+                                             <option value="<?=$user_type_data_row['id']?>"><?=$user_type_data_row['user_type']?></option>
+                                             <?php }
+                                                ?>
+                                          </select>
+                                          <span class="error_msg" id="user_type_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4" id="company_name">
+                                       <div class="form-group">
+                                          <label>Company Name</label>
+                                          <input type="text" class="form-control input-text" name="company_name" placeholder="Company Name">
+                                          <span class="error_msg" id="company_name_error"></span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="form-group">
                                           <label>Username</label>
                                           <input type="text" class="form-control input-text" name="username" placeholder="Username">
                                           <span class="error_msg" id="username_error"></span>
@@ -71,20 +92,18 @@
                                           <span class="error_msg" id="password_error"></span>
                                        </div>
                                     </div>
-                                    <div class="col-md-4">
-                                       <div class="form-group">
-                                          <label>Select Admin Role</label>
-                                          <select type="text" class="form-control chosen-select-deselect" name="user_type" id="user_type" placeholder="Select Admin Role">
-                                             <option value=""></option>
-                                             <?php 
-                                                foreach ($user_type_data as $user_type_data_key => $user_type_data_row) { ?>
-                                             <option value="<?=$user_type_data_row['id']?>"><?=$user_type_data_row['user_type']?></option>
-                                             <?php }
-                                                ?>
-                                          </select>
-                                          <span class="error_msg" id="user_type_error"></span>
-                                       </div>
-                                    </div>
+                                    <div class="col-md-4" id="hide_vendor_type_div">
+                                 <div class="form-group">
+                                    <label>Select Vendor Type</label>
+                                    <select type="text" class="form-control chosen-select-deselect" name="vendor_type" id="vendor_type" placeholder="Select Vendor Type">
+                                       <option value=""></option>
+                                       <option value="1">Normal Vendor</option>
+                                       <option value="2">POS Vendor</option>
+                                       <option value="3">Both</option>
+                                    </select>
+                                    <span class="error_msg" id="vendor_type_error"></span>
+                                 </div>
+                              </div> 
                                  </div>
                                  <div class="row">
                                     <div class="float-right">
@@ -156,7 +175,28 @@
                         <?php echo form_open('superadmin/update_admin_data', array('id'=>'update_admin_form')) ?>
                         <div class="modal-body">
                            <div class="row">
-                              <input type="hidden" name="edit_id" id="edit_id">                   
+                              <input type="hidden" name="edit_id" id="edit_id">
+                              <div class="col-md-4">
+                                 <div class="form-group">
+                                    <label>Select Admin Role</label>
+                                    <select type="text" class="form-control chosen-select-deselect" name="edit_user_type" id="edit_user_type" placeholder="Select Admin Role">
+                                       <option value=""></option>
+                                       <?php 
+                                          foreach ($user_type_data as $user_type_data_key => $user_type_data_row) { ?>
+                                       <option value="<?=$user_type_data_row['id']?>"><?=$user_type_data_row['user_type']?></option>
+                                       <?php }
+                                          ?>
+                                    </select>
+                                    <span class="error_msg" id="edit_user_type_error"></span>
+                                 </div>
+                              </div>  
+                              <div class="col-md-4" id="edit_company_name_div">
+                                 <div class="form-group">
+                                   <label>Company Name</label>
+                                   <input type="text" class="form-control input-text" name="edit_company_name" id="edit_company_name" placeholder="Company Name">
+                                   <span class="error_msg" id="edit_company_name_error"></span>
+                                 </div>                         
+                              </div>               
                               <div class="col-md-4">
                                  <div class="form-group">
                                     <label>Username</label>
@@ -192,27 +232,19 @@
                                     <span class="error_msg" id="edit_contact_no_error"></span>
                                  </div>
                               </div>
-                              <!-- <div class="col-md-4">
+                             <div class="col-md-4" id="edit_hide_vendor_type_div">
                                  <div class="form-group">
-                                   <label>Password</label>
-                                   <input type="text" class="form-control input-text" name="edit_password" placeholder="Password">
-                                   <span class="error_msg" id="password_error"></span>
-                                 </div>                         
-                                 </div> -->
-                              <div class="col-md-4">
-                                 <div class="form-group">
-                                    <label>Select Admin Role</label>
-                                    <select type="text" class="form-control chosen-select-deselect" name="edit_user_type" id="edit_user_type" placeholder="Select Admin Role">
+                                    <label>Select Vendor Type</label>
+                                    <select type="text" class="form-control chosen-select-deselect" name="edit_vendor_type" id="edit_vendor_type" placeholder="Select Vendor Type">
                                        <option value=""></option>
-                                       <?php 
-                                          foreach ($user_type_data as $user_type_data_key => $user_type_data_row) { ?>
-                                       <option value="<?=$user_type_data_row['id']?>"><?=$user_type_data_row['user_type']?></option>
-                                       <?php }
-                                          ?>
+                                       <option value="1">Normal Vendor</option>
+                                       <option value="2">POS Vendor</option>
+                                       <option value="3">Both</option>
                                     </select>
-                                    <span class="error_msg" id="edit_user_type_error"></span>
+                                    <span class="error_msg" id="edit_vendor_type_error"></span>
                                  </div>
-                              </div>
+                              </div>  
+                              
                            </div>
                         </div>
                         <div class="modal-footer">

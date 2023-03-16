@@ -1,8 +1,8 @@
 let simpletable = '';
 $(document).ready(function() {
-    simpletable = $('#user_data_report_table').DataTable( {
+    simpletable = $('#user_wallet_data_report_table').DataTable( {
         'ajax': {
-            'url': frontend_path + 'reports/display_all_user_report_data',
+            'url': frontend_path + 'reports/display_all_user_wallet_report_data',
             'type': 'POST',
             "data": function (data) {
                 data.from_date = $('#from_date').val();
@@ -22,11 +22,15 @@ $(document).ready(function() {
         // "ajax": frontend_path+"reports/display_all_user_report_data",
         "columns": [
             { "data": null},
-            { "data": "firstName"},
-            { "data": "userName"},                  
-            { "data": "email"},
-            { "data": "phoneNo"},
-            { "data": "car_number"},      
+           {
+                "data": "firstName",
+                  "render": function ( data, type, row, meta ) {                  
+                    var html="";
+                     html= data+" "+row.lastName;
+                     return html;
+                  },
+            },     
+            { "data": "amount"},      
             { "data": "created_at"},      
         ],
         "order": [[ 0, 'desc' ]]       

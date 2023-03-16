@@ -1,3 +1,49 @@
+$(document).ready(function(){
+    $("#user_type").change(function(){
+        var user_type = $('#user_type').val();
+        $("#user_type option:selected").each(function(){
+            if($(this).attr("value")==5){
+               
+                $("#company_name").show();
+                $("#hide_vendor_type_div").show();
+            }
+            if($(this).attr("value")!=5){
+               
+                $("#company_name").hide();
+                $("#hide_vendor_type_div").hide();
+            }
+            
+            if(user_type == ""){
+                $("#company_name").hide();
+                $("#hide_vendor_type_div").hide();
+            }                
+        });
+    }).change();
+});
+$(document).ready(function(){
+    $("#edit_user_type").change(function(){
+        var edit_user_type = $('#edit_user_type').val();
+        $("#edit_user_type option:selected").each(function(){
+            if($(this).attr("value")==5){
+               
+                $("#edit_company_name_div").show();
+                $("#hide_vendor_type_div").show();
+            }
+
+            if($(this).attr("value")!=5){
+               
+                $("#edit_company_name_div").hide();
+                $("#hide_vendor_type_div").hide();
+            }
+            
+            if(edit_user_type == ""){
+                $("#edit_company_name_div").hide();
+                $("#hide_vendor_type_div").hide();
+            }                
+        });
+    }).change();
+});
+
 $('#add_admin_form').submit(function(e) {
     e.preventDefault();
     var formData = new FormData($("#add_admin_form")[0]);
@@ -43,6 +89,7 @@ $('#add_admin_form').submit(function(e) {
 $(document).ready(function() {
     table = $('#admin_data_table').DataTable({
         "ajax": frontend_path + "superadmin/display_all_admin_data",
+        
         "columns": [{
                 "data": null
             },
@@ -111,10 +158,28 @@ $(document).on("click","#admin_data_table tbody tr, .edit_admin_details tbody tr
     $('#edit_last_name').val(data1.lastName);
     $('#edit_email').val(data1.email);
     $('#edit_contact_no').val(data1.phoneNo);
+    $('#edit_company_name').val(data1.company_name);
     $('#edit_user_type').val(data1.user_type);
     $('#edit_user_type').trigger("chosen:updated");
+     $('#edit_vendor_type').val(data1.vendor_type);
+    $('#edit_vendor_type').trigger("chosen:updated");
     $('#delete_admin_id').val(data1.id);
     $('#edit_id').val(data1.id);
+     var edit_user_type = $('#edit_user_type').val();
+        $("#edit_user_type option:selected").each(function(){
+           if($(this).attr("value")==5){               
+                $("#edit_company_name_div").show();
+                $("#edit_hide_vendor_type_div").show();
+            }
+            if($(this).attr("value")!=5){               
+                $("#edit_company_name_div").hide();
+                $("#edit_hide_vendor_type_div").hide();
+            }            
+            if(edit_user_type == ""){
+                $("#edit_company_name_div").hide();
+                $("#edit_hide_vendor_type_div").hide();
+            }                
+        });
 });
 
 function change_status(status, id) {
