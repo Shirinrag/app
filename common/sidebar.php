@@ -240,6 +240,11 @@
                      User Wallet Reports
                   </a>
                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>reports/verifier_attendance_reports">
+                     Verifier Attendance Reports
+                  </a>
+               </li>
               
             </ul>
          </div>

@@ -78,5 +78,37 @@ class Reports extends CI_Controller {
 	    }
 	    echo json_encode($response);
 	}
+	public function verifier_attendance_reports()
+	{
+		if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $curl = $this->link->hits('get-all-data-report', array(), '', 0);
+            $curl = json_decode($curl, true); 
+	        $response['place_details'] = $curl['place_details'];
+	        $response['verifier_details'] = $curl['verifier_details'];
+	        $this->load->view('super_admin/verifier_attendance_reports',$response);
+    	} else {
+            redirect(base_url().'superadmin');
+        }
+	}
+	public function display_all_verifier_attendance_report_data()
+	{
+		if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+		{
+	        $from_date = @$this->input->post('from_date');
+	        $to_date = @$this->input->post('to_date');     
+	        $fk_place_id = @$this->input->post('fk_place_id');     
+	        $fk_verifier_id = @$this->input->post('fk_verifier_id');     
+	        $curl_data = array('from_date'=>$from_date,'to_date'=>$to_date,'fk_place_id'=>$fk_place_id,'fk_verifier_id'=>$fk_verifier_id);
+	      	$curl = $this->link->hits('verifier-attendance-report-data', $curl_data);
+	      	// echo '<pre>'; print_r($curl); exit;
+            $curl = json_decode($curl, true); 
+            $response['data'] = $curl['verifier_attendance_details'];
+	    }else{
+	    	 $response['status']='login_failure';
+             $response['url']=base_url().'superadmin';
+	    }
+	    echo json_encode($response);
+	}
 
 }
