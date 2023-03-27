@@ -171,7 +171,19 @@
                                           <input type="text" class="form-control input-text" name="referral_code" placeholder="Referral Code">
                                           <span class="error_msg" id="referral_code_error"></span>
                                        </div>
-                                    </div>          
+                                    </div>    
+                                    <div class="col-md-4" id="hide_vendor_type_div">
+                                       <div class="form-group">
+                                          <label>Select Place Type</label>
+                                          <select type="text" class="form-control chosen-select-deselect" name="place_type" id="place_type" placeholder="Select Place Type">
+                                             <option value=""></option>
+                                             <option value="1">Normal Place</option>
+                                             <option value="2">POS Place</option>
+                                             <option value="3">Both</option>
+                                          </select>
+                                          <span class="error_msg" id="place_type_error"></span>
+                                       </div>
+                                    </div>       
                                  </div>    
                                  <div class="row">                      
                                        <div class="col-md-3">
@@ -214,10 +226,8 @@
                                           </select>
                                           <span class="error_msg" id="fk_vehicle_type_error"></span>
                                        </div>
-                                    </div>
-                                    
-                                 </div>
-                             
+                                    </div>                                    
+                                 </div>                           
                               
                               
                               <div id="price_data_append"></div>
@@ -269,6 +279,7 @@
                                     <tr>
                                        <th>SR. No</th>
                                        <th>Place Name</th>
+                                       <th>Place Type</th>
                                        <th>Country</th>
                                        <th>Vendor</th>
                                        <!-- <th>Book Type</th> -->
@@ -460,6 +471,18 @@
                                     <span class="error_msg" id="edit_referral_code_error"></span>
                                  </div>
                               </div>
+                              <div class="col-md-4" id="edit_hide_vendor_type_div">
+                                 <div class="form-group">
+                                    <label>Select Place Type</label>
+                                    <select type="text" class="form-control chosen-select-deselect" name="edit_place_type" id="edit_place_type" placeholder="Select Place Type">
+                                       <option value=""></option>
+                                       <option value="1">Normal Place</option>
+                                       <option value="2">POS Place</option>
+                                       <option value="3">Both</option>
+                                    </select>
+                                    <span class="error_msg" id="edit_place_type_error"></span>
+                                 </div>
+                              </div> 
                         </div>
                            <div class="row">                      
                                        <div class="col-md-3">

@@ -130,7 +130,7 @@ class Superadmin extends CI_Controller {
             $password = $this->input->post('password');
             $user_type = $this->input->post('user_type');
             $company_name = $this->input->post('company_name');
-            $vendor_type = $this->input->post('vendor_type');
+            // $vendor_type = $this->input->post('vendor_type');
 
             $this->form_validation->set_rules('username','username', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('first_name','First Name', 'trim|required|alpha',array('required' => 'You must provide a %s',));
@@ -141,7 +141,7 @@ class Superadmin extends CI_Controller {
             $this->form_validation->set_rules('user_type','Admin Role', 'trim|required',array('required' => 'You must provide a %s',));
             if($user_type==5){
                 $this->form_validation->set_rules('company_name','Company Name', 'trim|required',array('required' => 'You must provide a %s',));
-                $this->form_validation->set_rules('vendor_type','Vendor Type', 'trim|required',array('required' => 'You must provide a %s',));
+                // $this->form_validation->set_rules('vendor_type','Vendor Type', 'trim|required',array('required' => 'You must provide a %s',));
             }
             if ($this->form_validation->run() == false) {
                 $response['status'] = 'failure';
@@ -154,7 +154,7 @@ class Superadmin extends CI_Controller {
                     'password' => strip_tags(form_error('password')),
                     'user_type' => strip_tags(form_error('user_type')),
                     'company_name' => strip_tags(form_error('company_name')),
-                    'vendor_type' => strip_tags(form_error('vendor_type')),
+                    // 'vendor_type' => strip_tags(form_error('vendor_type')),
                 );
             } else {
                 $curl_data = array(
@@ -166,7 +166,7 @@ class Superadmin extends CI_Controller {
                     'password'=>$password,
                     'user_type'=>$user_type,
                     'company_name'=>$company_name,
-                    'vendor_type'=>$vendor_type,
+                    // 'vendor_type'=>$vendor_type,
                 );
                 $curl = $this->link->hits('add-admin', $curl_data);
                 $curl = json_decode($curl, true);
@@ -215,7 +215,7 @@ class Superadmin extends CI_Controller {
             // $password = $this->input->post('password');
             $user_type = $this->input->post('edit_user_type');
             $company_name = $this->input->post('edit_company_name');
-            $vendor_type = $this->input->post('edit_vendor_type');
+            // $vendor_type = $this->input->post('edit_vendor_type');
 
             $this->form_validation->set_rules('edit_username','Username', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_first_name','First Name', 'trim|required|alpha',array('required' => 'You must provide a %s',));
@@ -226,7 +226,7 @@ class Superadmin extends CI_Controller {
             $this->form_validation->set_rules('edit_user_type','Admin Role', 'trim|required',array('required' => 'You must provide a %s',));
             if($user_type==5){
                 $this->form_validation->set_rules('edit_company_name','Company Name', 'trim|required',array('required' => 'You must provide a %s',));
-                $this->form_validation->set_rules('edit_vendor_type','Vendor Type', 'trim|required',array('required' => 'You must provide a %s',));
+                // $this->form_validation->set_rules('edit_vendor_type','Vendor Type', 'trim|required',array('required' => 'You must provide a %s',));
 
             }
             if ($this->form_validation->run() == false) {
@@ -240,11 +240,11 @@ class Superadmin extends CI_Controller {
                     // 'password' => strip_tags(form_error('password')),
                     'edit_user_type' => strip_tags(form_error('edit_user_type')),
                     'edit_company_name' => strip_tags(form_error('edit_company_name')),
-                    'edit_vendor_type' => strip_tags(form_error('edit_vendor_type')),
+                    // 'edit_vendor_type' => strip_tags(form_error('edit_vendor_type')),
                 );
             } else {
                 $curl_data = array(
-                    'username'=>$username,
+                    // 'username'=>$username,
                     'first_name'=>$first_name,
                     'last_name'=>$last_name,
                     'email'=>$email,
@@ -252,7 +252,7 @@ class Superadmin extends CI_Controller {
                     // 'password'=>$password,
                     'user_type'=>$user_type,
                     'company_name'=>$company_name,
-                    'vendor_type'=>$vendor_type,
+                    // 'vendor_type'=>$vendor_type,
                     'id' =>$id
                 );
                 $curl = $this->link->hits('update-admin', $curl_data);
@@ -779,6 +779,8 @@ class Superadmin extends CI_Controller {
             $reserved_place_count = $this->input->post('reserved_place_count');
             $total_place_count = $this->input->post('total_place_count');
             $referral_code = $this->input->post('referral_code');
+            $place_type = $this->input->post('place_type');
+
             // echo '<pre>'; print_r($_POST); exit;
             $this->form_validation->set_rules('fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_country_id','Country', 'trim|required',array('required' => 'You must provide a %s',));
@@ -843,6 +845,7 @@ class Superadmin extends CI_Controller {
                     'reserved_place_count'=>$reserved_place_count,
                     'total_place_count'=>$total_place_count,
                     'referral_code'=>$referral_code,
+                    'place_type'=>$place_type,
                 );               
                 $curl = $this->link->hits('add-place', $curl_data);
                 $curl = json_decode($curl, true);
@@ -868,7 +871,7 @@ class Superadmin extends CI_Controller {
         $data = array();
         $no = @$_POST['start'];
         foreach ($parking_place_data['parking_place_data'] as $parking_place_data_key => $parking_place_data_row) {
-            $status1 ='';  $option='';
+            $status1 ='';  $option='';$place_type='';
             foreach ($place_status as $place_status_key => $place_status_row) {
                 if ($parking_place_data_row['fk_place_status_id'] == $place_status_row['id']) {
                     $selected = "selected";
@@ -877,10 +880,18 @@ class Superadmin extends CI_Controller {
                 }
                 $option .= '<option value="'.$place_status_row['id'].'" '.$selected.'>'.$place_status_row['place_status'].'</option>';
             }            
+            if($parking_place_data_row['parking_place_type']==1){
+                $place_type = "Slot Place";
+            }else if($parking_place_data_row['parking_place_type']==2){
+                $place_type = "POS Place";
+            }else if($parking_place_data_row['parking_place_type']==3){
+                $place_type = "Both";
+            }
             $no++;
             $row = array();
             $row[] = $no;
             $row[] = $parking_place_data_row['place_name'];
+            $row[] = $place_type;
             $row[] = $parking_place_data_row['country_name'];
             $row[] = $parking_place_data_row['firstName']." ".$parking_place_data_row['lastName'];      
             $row[] = $parking_place_data_row['slots'];
@@ -943,6 +954,7 @@ class Superadmin extends CI_Controller {
             $reserved_place_count = $this->input->post('edit_reserved_place_count');
             $total_place_count = $this->input->post('edit_total_place_count');
             $edit_referral_code = $this->input->post('edit_referral_code');  
+            $edit_place_type = $this->input->post('edit_place_type');  
             $this->form_validation->set_rules('edit_fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_fk_country_id','Country', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_fk_state_id','State', 'trim|required',array('required' => 'You must provide a %s',));
@@ -1007,6 +1019,7 @@ class Superadmin extends CI_Controller {
                     'reserved_place_count'=>$reserved_place_count,
                     'total_place_count'=>$total_place_count,
                     'referral_code'=>$edit_referral_code,
+                     'place_type'=>$edit_place_type,
                 );
                 $curl = $this->link->hits('update-place', $curl_data);
                 
@@ -1318,6 +1331,7 @@ class Superadmin extends CI_Controller {
                 'date'=>json_encode($date),
                 'duty_time'=>json_encode($duty_time),
             );
+            // echo '<pre>'; print_r($curl_data); exit;
             $curl = $this->link->hits('save-duty-allocation', $curl_data);
             $curl = json_decode($curl, true);
             if ($curl['status']==1) {

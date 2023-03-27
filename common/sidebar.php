@@ -245,6 +245,16 @@
                      Verifier Attendance Reports
                   </a>
                </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>reports/transcation_reports">
+                     Transcation Report
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="<?=base_url()?>reports/booking_reports">
+                     Booking Report
+                  </a>
+               </li>
               
             </ul>
          </div>

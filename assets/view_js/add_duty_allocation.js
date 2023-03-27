@@ -34,7 +34,7 @@ $('#addRows').click(function() {
                 width: "100%",
             });
             $(".datepicker_"+new_count).datepicker({ 
-               format: 'dd/mm/yyyy',
+               format: 'yyyy-mm-dd',
                 autoclose: true, 
                 todayHighlight: true
           }).datepicker('update', new Date());

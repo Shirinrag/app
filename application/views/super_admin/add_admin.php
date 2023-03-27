@@ -92,18 +92,7 @@
                                           <span class="error_msg" id="password_error"></span>
                                        </div>
                                     </div>
-                                    <div class="col-md-4" id="hide_vendor_type_div">
-                                 <div class="form-group">
-                                    <label>Select Vendor Type</label>
-                                    <select type="text" class="form-control chosen-select-deselect" name="vendor_type" id="vendor_type" placeholder="Select Vendor Type">
-                                       <option value=""></option>
-                                       <option value="1">Normal Vendor</option>
-                                       <option value="2">POS Vendor</option>
-                                       <option value="3">Both</option>
-                                    </select>
-                                    <span class="error_msg" id="vendor_type_error"></span>
-                                 </div>
-                              </div> 
+                                    
                                  </div>
                                  <div class="row">
                                     <div class="float-right">
@@ -232,18 +221,7 @@
                                     <span class="error_msg" id="edit_contact_no_error"></span>
                                  </div>
                               </div>
-                             <div class="col-md-4" id="edit_hide_vendor_type_div">
-                                 <div class="form-group">
-                                    <label>Select Vendor Type</label>
-                                    <select type="text" class="form-control chosen-select-deselect" name="edit_vendor_type" id="edit_vendor_type" placeholder="Select Vendor Type">
-                                       <option value=""></option>
-                                       <option value="1">Normal Vendor</option>
-                                       <option value="2">POS Vendor</option>
-                                       <option value="3">Both</option>
-                                    </select>
-                                    <span class="error_msg" id="edit_vendor_type_error"></span>
-                                 </div>
-                              </div>  
+                              
                               
                            </div>
                         </div>

@@ -110,5 +110,55 @@ class Reports extends CI_Controller {
 	    }
 	    echo json_encode($response);
 	}
-
+	public function transcation_reports()
+	{
+		if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+	        $this->load->view('super_admin/transcation_reports');
+    	} else {
+            redirect(base_url().'superadmin');
+        }
+	}
+	public function display_all_user_transcation_report_data()
+	{
+		if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+		{
+	        $from_date = @$this->input->post('from_date');
+	        $to_date = @$this->input->post('to_date');     
+	        $curl_data = array('from_date'=>$from_date,'to_date'=>$to_date);
+	      	$curl = $this->link->hits('user-transcation-report-data', $curl_data);
+            $curl = json_decode($curl, true); 
+            $response['data'] = $curl['user_transcation_details'];
+	    }else{
+	    	 $response['status']='login_failure';
+             $response['url']=base_url().'superadmin';
+	    }
+	    echo json_encode($response);
+	}
+	public function booking_reports()
+	{
+		if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+	        $this->load->view('super_admin/booking_reports');
+    	} else {
+            redirect(base_url().'superadmin');
+        }
+	}
+	public function display_all_booking_report_data()
+	{
+		if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+		{
+	        $from_date = @$this->input->post('from_date');
+	        $to_date = @$this->input->post('to_date');     
+	        $curl_data = array('from_date'=>$from_date,'to_date'=>$to_date);
+	      	$curl = $this->link->hits('booking-report-data', $curl_data);
+	      	// echo '<pre>'; print_r($curl); exit;
+            $curl = json_decode($curl, true); 
+            $response['data'] = $curl['booking_reports'];
+	    }else{
+	    	 $response['status']='login_failure';
+             $response['url']=base_url().'superadmin';
+	    }
+	    echo json_encode($response);
+	}
 }

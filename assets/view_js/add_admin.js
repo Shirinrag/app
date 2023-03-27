@@ -161,8 +161,8 @@ $(document).on("click","#admin_data_table tbody tr, .edit_admin_details tbody tr
     $('#edit_company_name').val(data1.company_name);
     $('#edit_user_type').val(data1.user_type);
     $('#edit_user_type').trigger("chosen:updated");
-     $('#edit_vendor_type').val(data1.vendor_type);
-    $('#edit_vendor_type').trigger("chosen:updated");
+    //  $('#edit_vendor_type').val(data1.vendor_type);
+    // $('#edit_vendor_type').trigger("chosen:updated");
     $('#delete_admin_id').val(data1.id);
     $('#edit_id').val(data1.id);
      var edit_user_type = $('#edit_user_type').val();
