@@ -152,8 +152,8 @@ class Reports extends CI_Controller {
 	        $to_date = @$this->input->post('to_date');     
 	        $curl_data = array('from_date'=>$from_date,'to_date'=>$to_date);
 	      	$curl = $this->link->hits('booking-report-data', $curl_data);
-	      	// echo '<pre>'; print_r($curl); exit;
-            $curl = json_decode($curl, true); 
+            $curl = json_decode($curl, true);
+             
             $response['data'] = $curl['booking_reports'];
 	    }else{
 	    	 $response['status']='login_failure';

@@ -7,7 +7,6 @@ $(document).ready(function() {
             "data": function (data) {
                 data.from_date = $('#from_date').val();
                 data.to_date = $('#to_date').val();
-                console.log(data);
             }
         }, 
         dom: 'Bfrtip',           
@@ -35,17 +34,6 @@ $(document).ready(function() {
             },         
             {
                 "data": "place_name",
-                 // "render": function ( data, type, row, meta ) {                  
-                 //    var html="";
-
-                 //     html+= data+" "+row.address +", ";
-                 //     html+='</br>'; 
-                 //     html+=data+", "+row.state_name; 
-                 //     html+='</br>';
-                 //     html+=data+" "+row.city_name+", "+data+", "+row.pincode;
-                     
-                 //     return html;
-                 //  },
             },
             {
                 "data": "display_id",

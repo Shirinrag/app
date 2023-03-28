@@ -28,8 +28,8 @@ class Common extends CI_Controller {
 			  	'password'=>$password,
 			);
 			$curl = $this->link->hits('loggedin-data',$curl_data);
-			// echo '<pre>'; print_r($curl); exit;
 			$curl = json_decode($curl, TRUE);
+
 			if($curl['status']==1){
 				if (@$curl['data']['user_type']=="1") {
 					$this->session->set_userdata('parking_adda_superadmin_logged_in', @$curl['data']);

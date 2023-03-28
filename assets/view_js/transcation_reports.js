@@ -7,7 +7,6 @@ $(document).ready(function() {
             "data": function (data) {
                 data.from_date = $('#from_date').val();
                 data.to_date = $('#to_date').val();
-                console.log(data);
             }
         }, 
         dom: 'Bfrtip',           
