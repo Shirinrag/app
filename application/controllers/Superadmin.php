@@ -759,7 +759,7 @@ class Superadmin extends CI_Controller {
     public function save_parking_place()
     {
          if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
-            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');            
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');    
             $fk_vendor_id = $this->input->post('fk_vendor_id');        
             $fk_country_id = $this->input->post('fk_country_id');        
             $fk_state_id = $this->input->post('fk_state_id');        
@@ -780,6 +780,7 @@ class Superadmin extends CI_Controller {
             $total_place_count = $this->input->post('total_place_count');
             $referral_code = $this->input->post('referral_code');
             $place_type = $this->input->post('place_type');
+            
 
             // echo '<pre>'; print_r($_POST); exit;
             $this->form_validation->set_rules('fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
@@ -819,6 +820,8 @@ class Superadmin extends CI_Controller {
                      $from_hours[$fk_vehicle_type_row] = $this->input->post('from_hours_'.$fk_vehicle_type_row);              
                      $to_hours[$fk_vehicle_type_row] = $this->input->post('to_hours_'.$fk_vehicle_type_row);              
                      $price[$fk_vehicle_type_row] = $this->input->post('price_'.$fk_vehicle_type_row);    
+                     $no_of_days[$fk_vehicle_type_row] = $this->input->post('no_of_days_'.$fk_vehicle_type_row);    
+                     $cost[$fk_vehicle_type_row] = $this->input->post('cost_'.$fk_vehicle_type_row);    
                      // echo '<pre>'; print_r($from_hours);
                 }
                      // exit;
@@ -846,7 +849,10 @@ class Superadmin extends CI_Controller {
                     'total_place_count'=>$total_place_count,
                     'referral_code'=>$referral_code,
                     'place_type'=>$place_type,
-                );               
+                    'no_of_days'=>json_encode($no_of_days),
+                    'cost'=>json_encode($cost),
+                );             
+                // echo '<pre>'; print_r($curl_data); exit;  
                 $curl = $this->link->hits('add-place', $curl_data);
                 $curl = json_decode($curl, true);
                 if ($curl['status']==1) {
@@ -921,6 +927,7 @@ class Superadmin extends CI_Controller {
             $data['parking_place_vehicle_type'] = $curl['parking_place_vehicle_type'];
             $data['selected_parking_place_vehicle_type'] = $curl['selected_parking_place_vehicle_type'];
             $data['vehicle_type'] = $curl['vehicle_type'];
+            $data['monthly_price_slab'] = $curl['monthly_price_slab'];
             $response = $data;
             // echo '<pre>'; print_r($response); exit;
         }else {

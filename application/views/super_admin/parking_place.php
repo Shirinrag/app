@@ -232,6 +232,8 @@
                               
                               <div id="price_data_append"></div>
                               <hr>
+                              <div id="monthly_price_data_append"></div>
+                              <hr>
                               <div class="row">
                                  <div class="float-right">
                                     <button  type="submit" class="btn btn-block btn-lg  button_color text_color" id="add_parking_place_button"data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading">Submit</button>
@@ -532,9 +534,12 @@
                            <h4 class="card-title">Daily Price Slab</h4>
                            <div id="hour_price_details"></div>
                            <div id="edit_hour_price_details"></div>
-                        </div>
-                        <hr>
+                        </div>                       
                         <div class="row">
+                           <h4 class="card-title">Monthly Price Slab</h4>
+                           <div id="monthly_price_details"></div>
+                           <div id="edit_monthly_price_details"></div>
+                           <hr>
                            <h4 class="card-title">Machine Details</h4>
                            <div id="machine_details"></div>
                         </div>
