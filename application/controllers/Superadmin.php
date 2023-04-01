@@ -675,6 +675,7 @@ class Superadmin extends CI_Controller {
             $data['price_type'] = $curl['price_type'];
             $data['vendor'] = $curl['vendor'];
             $data['vehicle_data'] = $curl['vehicle_data'];
+            $data['pass_days_data'] = $curl['pass_days_data'];
             
             $this->load->view('super_admin/parking_place',$data);
         } else {
@@ -743,6 +744,7 @@ class Superadmin extends CI_Controller {
                  if (!empty($curl['vehicle_data'])) {
                     $response['status'] = 'success';
                     $response['vehicle_data'] = $curl['vehicle_data'];   
+                    $response['pass_days_data'] = $curl['pass_days_data'];   
                 } else {
                     $response['status'] = 'failure';
                 }
@@ -928,6 +930,7 @@ class Superadmin extends CI_Controller {
             $data['selected_parking_place_vehicle_type'] = $curl['selected_parking_place_vehicle_type'];
             $data['vehicle_type'] = $curl['vehicle_type'];
             $data['monthly_price_slab'] = $curl['monthly_price_slab'];
+            $data['pass_days_data'] = $curl['pass_days_data'];
             $response = $data;
             // echo '<pre>'; print_r($response); exit;
         }else {
