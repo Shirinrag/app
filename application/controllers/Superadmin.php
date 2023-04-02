@@ -761,8 +761,8 @@ class Superadmin extends CI_Controller {
     public function save_parking_place()
     {
          if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
-            $result = validation_two_wheeler('from_hours_1','to_hours_1','price_1',$_POST);exit;
-            echo '<pre>'; print_r($_POST); exit;
+            // $result = validation_two_wheeler('from_hours_1','to_hours_1','price_1',$_POST);exit;
+            // echo '<pre>'; print_r($_POST); exit;
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');    
             $fk_vendor_id = $this->input->post('fk_vendor_id');        
             $fk_country_id = $this->input->post('fk_country_id');        
@@ -944,8 +944,8 @@ class Superadmin extends CI_Controller {
     public function update_place_details()
     {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
-            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');            
-            
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            // echo '<pre>'; print_r($_POST); exit;                        
             $id = $this->input->post('edit_id');        
             $fk_vendor_id = $this->input->post('edit_fk_vendor_id');        
             $fk_country_id = $this->input->post('edit_fk_country_id');       
@@ -1005,6 +1005,9 @@ class Superadmin extends CI_Controller {
                     $from_hours[$fk_vehicle_type_row] = $this->input->post('edit_from_hours_'.$fk_vehicle_type_row);              
                     $to_hours[$fk_vehicle_type_row] = $this->input->post('edit_to_hours_'.$fk_vehicle_type_row);              
                     $price[$fk_vehicle_type_row] = $this->input->post('edit_price_'.$fk_vehicle_type_row);      
+                    $monthly_price_slab_id[$fk_vehicle_type_row] = $this->input->post('edit_monthly_price_slab_id_'.$fk_vehicle_type_row);      
+                    $edit_no_of_days[$fk_vehicle_type_row] = $this->input->post('edit_no_of_days_'.$fk_vehicle_type_row);      
+                    $edit_cost[$fk_vehicle_type_row] = $this->input->post('edit_cost_'.$fk_vehicle_type_row);      
                 }
                 $curl_data = array(
                     'fk_vendor_id'=>$fk_vendor_id,
@@ -1031,10 +1034,12 @@ class Superadmin extends CI_Controller {
                     'reserved_place_count'=>$reserved_place_count,
                     'total_place_count'=>$total_place_count,
                     'referral_code'=>$edit_referral_code,
-                     'place_type'=>$edit_place_type,
+                    'place_type'=>$edit_place_type,
+                    'monthly_price_slab_id'=>json_encode($monthly_price_slab_id),
+                    'no_of_days'=>json_encode($edit_no_of_days),
+                    'cost'=>json_encode($edit_cost),
                 );
                 $curl = $this->link->hits('update-place', $curl_data);
-                
                 $curl = json_decode($curl, true);
                 if ($curl['status']==1) {
                     $response['status']='success';
