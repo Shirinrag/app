@@ -44,3 +44,27 @@ function get_session_name($user_type='')
 		return $result;
 	}
 
+
+	function validation_two_wheeler($name_1,$name_2,$name_3,$data){
+		$result = [];
+		$is_first = true;
+		if(!empty($data[$name_1][0])){
+			$result[$name_1.'_0'] = 'From Time is required.';
+			$is_first =false;
+		}
+		if(!empty($data[$name_2][0])){
+			$result[$name_2.'_0'] = 'From Time is required.';
+			$is_first =false;
+		}
+		if(!empty($data[$name_3][0])){
+			$result[$name_3.'_0'] = 'From Time is required.';
+			$is_first =false;
+		}
+
+		if($is_first){
+			foreach ($variable as $key => $value) {
+				// code...
+			}
+		}
+	}
+

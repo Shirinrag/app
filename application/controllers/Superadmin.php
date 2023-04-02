@@ -759,6 +759,8 @@ class Superadmin extends CI_Controller {
     public function save_parking_place()
     {
          if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $result = validation_two_wheeler('from_hours_1','to_hours_1','price_1',$_POST);exit;
+            echo '<pre>'; print_r($_POST); exit;
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');    
             $fk_vendor_id = $this->input->post('fk_vendor_id');        
             $fk_country_id = $this->input->post('fk_country_id');        
