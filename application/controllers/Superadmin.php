@@ -1039,6 +1039,7 @@ class Superadmin extends CI_Controller {
                     'no_of_days'=>json_encode($edit_no_of_days),
                     'cost'=>json_encode($edit_cost),
                 );
+             
                 $curl = $this->link->hits('update-place', $curl_data);
                 $curl = json_decode($curl, true);
                 if ($curl['status']==1) {

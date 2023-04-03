@@ -247,12 +247,47 @@ $(document).on("click", ".edit_place_data", function() {
             $.each(vehicle_type, function(vehicle_type_index, vehicle_type_row) {
                 if(jQuery.inArray(vehicle_type_row['id'],selected_parking_place_vehicle_type) !== -1){
                     vehicle_type_option_data +=  '<option value="' + vehicle_type_row['id'] + '" selected >' + vehicle_type_row['vehicle_type'] + '</option>';
+                    if(monthly_price_slab == ""){
+                        var pass_days_data = data.pass_days_data;
+                        var html_101 = '';
+                        var html_111 = '';
+
+                        var pass_data_option = "";
+                        $.each( pass_days_data, function( pass_days_data_key, pass_days_data_row ) {
+                            pass_data_option +='<option value="'+pass_days_data_row['id']+'">'+pass_days_data_row['no_of_days']+'</option>'
+                        });
+
+                        html_101 += '<div id="new_price_data_append1_' + vehicle_type_row['id']+ '"><div class="row"> <h4 class="card-title">' + vehicle_type_row['vehicle_type'] +" " +'Monthly Price Slab</h4><div class="col-md-3"> <div class="form-group"> <label>No Of Days</label><select type="text" class="form-control chosen-select-deselect" name="edit_no_of_days_' + vehicle_type_row['id'] + '[]" id="edit_no_of_days_' + vehicle_type_row['id'] + '" data-placeholder="Monthly Price Slab"><option value=""></option>"'+pass_data_option+'"</select><span class="error_msg" id="no_of_days_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="edit_cost_' + vehicle_type_row['id'] + '[]" id="edit_cost_' + vehicle_type_row['id'] + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="edit_cost_error"></span> </div></div><div class="col-md-2"> <button id="addRowsMonthly_' + vehicle_type_row['id'] + '" type="button" class="btn btn-info" style="margin-top: 22px; margin-left: -20px;"><i class="icon-plus"></i> </button> <input type="hidden" class="form-control" name="count" id="monthly_count_' + vehicle_type_row['id'] + '" value="0"> </div></div> </div><div id="new_monthly_price_data_append_' + vehicle_type_row['id'] + '"></div>';
+                            $('#edit_monthly_price_details').append(html_101);
+                            $(".chosen-select-deselect").chosen({
+                                width: "100%",
+                            });
+                            $('#addRowsMonthly_' + vehicle_type_row['id'] + '').click(function() {
+                            var latest_count_1 = $('#monthly_count_' + vehicle_type_row['id'] + '').val();
+                            var new_count_1 = parseInt(latest_count_1) + 1;
+                       
+                            html_111 += '<div class="row"><div class="col-md-3"><div class="form-group"> <label>No Of Days</label><select type="text" class="form-control chosen-select-deselect" name="edit_no_of_days_' + vehicle_type_row['id'] + '[]" id="edit_no_of_days_' + new_count_1 + '" data-placeholder="Monthly Price Slab"><option value=""></option>"'+pass_data_option+'"</select></div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="edit_cost_' + vehicle_type_row['id'] + '[]" id="edit_cost_' + new_count_1 + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="edit_cost_error"></span> </div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
+                            $('#new_monthly_price_data_append_' + vehicle_type_row['id'] + '').append(html_111);
+                            $(".chosen-select-deselect").chosen({
+                                width: "100%",
+                            });
+                        });
+                        $(document).on('click', '#removeRow', function() {
+                            var latest_count_1 = $('#monthly_count_' + vehicle_type_row['id'] + '').val();
+                            var new_count_1 = parseInt(latest_count_1) - 1;
+                            $('#monthly_count_' + vehicle_type_row['id'] + '').val(new_count_1);
+                            $(this).closest("div").remove();
+                        });
+                    }
+
                 }else{
                     vehicle_type_option_data +=  '<option value="' + vehicle_type_row['id'] + '">' + vehicle_type_row['vehicle_type'] + '</option>';
                 }
+
+
             });
             $('#edit_fk_vehicle_type').html(vehicle_type_option_data);
-              $('#edit_fk_vehicle_type').trigger("chosen:updated");
+            $('#edit_fk_vehicle_type').trigger("chosen:updated");
             $.each(slot_info, function(slot_info_index, slot_info_row) {
                 if (slot_info_row['fk_machine_id'] == null) {
                     machine_id = "";
@@ -292,7 +327,6 @@ $(document).on("click", ".edit_place_data", function() {
                 var monthly_id = monthly_price_slab_row.id;
                 var no_of_days = monthly_price_slab_row.no_of_days;
                 var cost1 = monthly_price_slab_row.cost;
-
                 var monthly_id_1 = monthly_id.split(",");
                 var no_of_days_1 = no_of_days.split(',');
                 var cost_2 = cost1.split(',');
@@ -311,7 +345,7 @@ $(document).on("click", ".edit_place_data", function() {
                 });
                 var custom_class_1 = '';
                 custom_class_1 += monthly_price_slab_row['vehicle_type'].replace(" ", "_");
-                custom_class_1 += '_'+monthly_price_slab_row['fk_vehicle_type_id'];               
+                custom_class_1 += '_'+monthly_price_slab_row['fk_vehicle_type_id'];             
                 html_5 += '<div class="row"><div class="col-md-12"> <button class="addRowsMonthly_edit" id="'+custom_class_1+'" type="button" class="btn btn-info" style="margin-top: 22px; margin-left: 860px;"><i class="icon-plus"></i> </button> <input type="hidden" class="form-control" name="edit_count_monthly_'+custom_class_1+'" id="edit_count_monthly_'+custom_class_1+'" value="0"> </div><div><div class ="edit_monthly_price_slab_add_more" id="edit_monthly_price_data_append_'+custom_class_1+'"></div> <hr>';
                 });   
             $('#monthly_price_details').html(html_5);     
@@ -671,7 +705,7 @@ $('#edit_fk_vehicle_type').on('change', function(evt, params) {
                         pass_data_option +='<option value="'+pass_days_data_row['id']+'">'+pass_days_data_row['no_of_days']+'</option>'
                     });
 
-                    html_10 += '<div id="new_price_data_append1_' + vehicle_id1+ '"><div class="row"> <h4 class="card-title">' + response.vehicle_data.vehicle_type +" " +'Monthly Price Slab</h4><div class="col-md-3"> <div class="form-group"> <label>No Of Days</label><select type="text" class="form-control chosen-select-deselect" name="no_of_days_' + vehicle_id1 + '[]" id="no_of_days_' + vehicle_id1 + '" data-placeholder="Monthly Price Slab"><option value=""></option>"'+pass_data_option+'"</select><span class="error_msg" id="no_of_days_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="cost_' + vehicle_id1 + '[]" id="cost_' + vehicle_id1 + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="cost_error"></span> </div></div><div class="col-md-2"> <button id="addRowsMonthly_' + vehicle_id1 + '" type="button" class="btn btn-info" style="margin-top: 22px; margin-left: -20px;"><i class="icon-plus"></i> </button> <input type="hidden" class="form-control" name="count" id="monthly_count_' + vehicle_id1 + '" value="0"> </div></div> </div><div id="new_monthly_price_data_append_' + vehicle_id1 + '"></div>';
+                    html_10 += '<div id="new_price_data_append1_' + vehicle_id1+ '"><div class="row"> <h4 class="card-title">' + response.vehicle_data.vehicle_type +" " +'Monthly Price Slab</h4><div class="col-md-3"> <div class="form-group"> <label>No Of Days</label><select type="text" class="form-control chosen-select-deselect" name="edit_no_of_days_' + vehicle_id1 + '[]" id="edit_no_of_days_' + vehicle_id1 + '" data-placeholder="Monthly Price Slab"><option value=""></option>"'+pass_data_option+'"</select><span class="error_msg" id="edit_no_of_days_error"></span> </div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="edit_cost_' + vehicle_id1 + '[]" id="edit_cost_' + vehicle_id1 + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="edit_cost_error"></span> </div></div><div class="col-md-2"> <button id="addRowsMonthly_' + vehicle_id1 + '" type="button" class="btn btn-info" style="margin-top: 22px; margin-left: -20px;"><i class="icon-plus"></i> </button> <input type="hidden" class="form-control" name="count" id="monthly_count_' + vehicle_id1 + '" value="0"> </div></div> </div><div id="new_monthly_price_data_append_' + vehicle_id1 + '"></div>';
                         $('#edit_monthly_price_details').append(html_10);
                         $(".chosen-select-deselect").chosen({
                             width: "100%",
@@ -680,7 +714,7 @@ $('#edit_fk_vehicle_type').on('change', function(evt, params) {
                         var latest_count_1 = $('#monthly_count_' + vehicle_id1 + '').val();
                         var new_count_1 = parseInt(latest_count_1) + 1;
                        
-                        html_11 += '<div class="row"><div class="col-md-3"><div class="form-group"> <label>No Of Days</label><select type="text" class="form-control chosen-select-deselect" name="no_of_days_' + vehicle_id1 + '[]" id="no_of_days_' + new_count_1 + '" data-placeholder="Monthly Price Slab"><option value=""></option>"'+pass_data_option+'"</select></div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="cost_' + vehicle_id1 + '[]" id="cost_' + new_count_1 + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="cost_error"></span> </div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
+                        html_11 += '<div class="row"><div class="col-md-3"><div class="form-group"> <label>No Of Days</label><select type="text" class="form-control chosen-select-deselect" name="edit_no_of_days_' + vehicle_id1 + '[]" id="edit_no_of_days_' + new_count_1 + '" data-placeholder="Monthly Price Slab"><option value=""></option>"'+pass_data_option+'"</select></div></div><div class="col-md-3"> <div class="form-group"> <label>Price</label> <input type="text" class="form-control input-text" name="edit_cost_' + vehicle_id1 + '[]" id="edit_cost_' + new_count_1 + '" placeholder="Price" onkeypress="return isNumber(event)"> <span class="error_msg" id="edit_cost_error"></span> </div></div><button id="removeRow" type="button" class="btn btn-danger btn-sm removeRow" style="height: 29px; margin-top: 36px; width: 38px;">-</button></div>';
                         $('#new_monthly_price_data_append_' + vehicle_id1 + '').append(html_11);
                         $(".chosen-select-deselect").chosen({
                             width: "100%",
@@ -701,5 +735,11 @@ $('#edit_fk_vehicle_type').on('change', function(evt, params) {
         $('#new_price_data_append_'+vehicle_id_deselected+'').remove();
         $('#new_price_data_append1_'+vehicle_id_deselected+'').remove();
     }
+});
+
+
+$(document).ready(function() {
+    var edit_fk_vehicle_type = $('#edit_fk_vehicle_type').val();
+    console.log(edit_fk_vehicle_type);
 });
 
