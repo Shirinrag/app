@@ -2831,5 +2831,92 @@ class Superadmin extends CI_Controller {
         }
         echo json_encode($response); 
     }
+    public function add_nfc_device()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $this->load->view('super_admin/add_nfc_device');
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function save_nfc_device_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');            
+            $device_id = $this->input->post('nfc_device_id');         
+            $curl_data = array(
+                'device_id'=>$device_id,
+            );
+            $curl = $this->link->hits('add-nfc-device', $curl_data);
+            $curl = json_decode($curl, true);
+            if ($curl['status']==1) {
+                $response['status']='success';
+            } else {
+                $response['status'] = 'failure';
+                $response['error'] = array("nfc_device_id" => $curl['message']);
+            }
+        } else {
+            $resoponse['status']='login_failure';
+            $resoponse['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function display_all_nfc_device_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-nfc-device-data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['device_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+
+     public function change_nfc_device_status()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('id'); 
+            $status = $this->input->post('status'); 
+            if (empty($id)) {
+                $response['message'] = 'id is required.';
+                $response['status'] = 0;
+            }else if($status=='') {
+                $response['message'] = 'status is required.';
+                $response['status'] = 0;
+            }else{
+                $curl_data = array(   
+                  'id'=>$id,
+                  'status'=>$status,
+                );
+                $curl = $this->link->hits('update-nfc-device-status',$curl_data);
+                $curl = json_decode($curl, TRUE);
+                if($curl['message']=='success'){
+                    $response['message']='Status Changed successfully';
+                    $response['status'] = 1;
+                }else{
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "login";
+        }
+        echo json_encode($response);
+    }
+
+    public function applied_for_vendor()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $this->load->view('super_admin/applied_for_vendor');
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
     
 }

@@ -39,6 +39,12 @@
          </a>
       </li>
       <li class="nav-item">
+         <a class="nav-link" href="<?=base_url()?>superadmin/applied_for_vendor" aria-controls="form-elements">
+         <i class="icon-head menu-icon"></i>
+         <span class="menu-title">Applied For Vendor List</span>
+         </a>
+      </li>
+      <li class="nav-item">
          <a class="nav-link" href="<?=base_url()?>superadmin/add_admin" aria-controls="form-elements">
          <i class="icon-head menu-icon"></i>
          <span class="menu-title">Add Admin</span>
@@ -138,6 +144,12 @@
             </ul>
          </div>
 
+      </li>
+      <li class="nav-item">
+         <a class="nav-link" href="<?=base_url()?>superadmin/add_nfc_device" aria-controls="form-elements">
+         <i class="icon-open menu-icon"></i>
+         <span class="menu-title">NFC Device</span>
+         </a>
       </li>
       <li class="nav-item">
          <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic">
