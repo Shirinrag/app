@@ -2908,7 +2908,6 @@ class Superadmin extends CI_Controller {
         }
         echo json_encode($response);
     }
-
     public function applied_for_vendor()
     {
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
