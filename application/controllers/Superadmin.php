@@ -2901,7 +2901,7 @@ class Superadmin extends CI_Controller {
                     $response['message'] = $curl['message'];
                     $response['status'] = 0;
                 }
-            }
+               }
         } else {
             $response['status'] = 'failure';
             $response['url'] = base_url() . "login";
