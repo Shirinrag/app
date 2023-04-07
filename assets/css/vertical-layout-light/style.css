@@ -29031,7 +29031,7 @@ div.tagsinput span.tag a {
   -moz-transition: width 0.25s ease, background 0.25s ease;
   -ms-transition: width 0.25s ease, background 0.25s ease;*/
   overflow-y: scroll;
-    height: 300px;
+    height: 100vh;
 }
 
 .sidebar .nav {

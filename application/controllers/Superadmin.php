@@ -2917,5 +2917,18 @@ class Superadmin extends CI_Controller {
             redirect(base_url().'superadmin');
         }
     }
+    public function display_all_applied_for_vendor_data()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-applied-for-vendor-data', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['user_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
     
 }
