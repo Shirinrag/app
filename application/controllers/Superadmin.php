@@ -2923,7 +2923,29 @@ class Superadmin extends CI_Controller {
         {
             $curl = $this->link->hits('display-all-applied-for-vendor-data', array(), '', 0);
             $curl = json_decode($curl, true);
-            $response['data'] = $curl['user_data'];
+            $response['data'] = $curl['applied_for_vendor_data'];
+        } else {
+            $response['status']='login_failure';
+            $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+    public function user_pass_details()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $this->load->view('super_admin/user_pass_details');
+        } else {
+            redirect(base_url().'superadmin');
+        }
+    }
+    public function display_all_user_pass_details()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in'))
+        {
+            $curl = $this->link->hits('display-all-user-pass-details', array(), '', 0);
+            $curl = json_decode($curl, true);
+            $response['data'] = $curl['user_pass_details'];
         } else {
             $response['status']='login_failure';
             $response['url']=base_url().'superadmin';

@@ -230,6 +230,12 @@
          </a>
       </li>
       <li class="nav-item">
+         <a class="nav-link" href="<?=base_url()?>superadmin/user_pass_details" aria-controls="form-elements">
+         <i class="icon-grid menu-icon"></i>
+         <span class="menu-title">User Pass Details</span>
+         </a>
+      </li>
+      <li class="nav-item">
          <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic3" aria-expanded="false" aria-controls="ui-basic">
          <i class="icon-layout menu-icon"></i>
          <span class="menu-title">Reports</span>
