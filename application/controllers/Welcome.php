@@ -20,8 +20,8 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$data =  token_get();
-		echo '<pre>'; print_r($data); exit;
+		// $data =  token_get();
+		// echo '<pre>'; print_r($data); exit;
 		$this->load->view('welcome_message');
 	}
 }
