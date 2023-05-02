@@ -25,7 +25,6 @@ class Superadmin extends CI_Controller {
             $data['total_place_count'] = $curl['total_place_count'];
             $data['total_booking_count'] = $curl['total_booking_count'];
             $data['total_download_count'] = $curl['total_download_count'];
-            // echo '<pre>'; print_r($curl); exit;   
 			$this->load->view('super_admin/dashboard',$data);
 		} else {
             redirect(base_url().'superadmin');
@@ -2375,6 +2374,7 @@ class Superadmin extends CI_Controller {
         {
             $curl = $this->link->hits('display-all-register-user-complaint-data', array(), '', 0);
             $curl = json_decode($curl, true);
+            echo '<pre>'; print_r($curl); exit;
             $response['data'] = $curl['register_user_complaint_data'];
         } else {
             $response['status']='login_failure';
