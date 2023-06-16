@@ -789,10 +789,10 @@ class Superadmin extends CI_Controller {
             $this->form_validation->set_rules('fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_country_id','Country', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('fk_state_id','State', 'trim|required',array('required' => 'You must provide a %s',));
-            $this->form_validation->set_rules('fk_city_id','City', 'trim|required',array('required' => 'You must provide a %s',));
+            // $this->form_validation->set_rules('fk_city_id','City', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('place_name','Place Name', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('address','Address', 'trim|required',array('required' => 'You must provide a %s',));
-            $this->form_validation->set_rules('pincode','Pincode', 'trim|required',array('required' => 'You must provide a %s',));
+            // $this->form_validation->set_rules('pincode','Pincode', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('latitude','Latitude', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('longitude','Longitude', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('slots','Slots', 'trim|required',array('required' => 'You must provide a %s',));
@@ -805,10 +805,10 @@ class Superadmin extends CI_Controller {
                     'fk_vendor_id' => strip_tags(form_error('fk_vendor_id')),
                     'fk_country_id' => strip_tags(form_error('fk_country_id')),
                     'fk_state_id' => strip_tags(form_error('fk_state_id')),
-                    'fk_city_id' => strip_tags(form_error('fk_city_id')),
+                    // 'fk_city_id' => strip_tags(form_error('fk_city_id')),
                     'place_name' => strip_tags(form_error('place_name')),
                     'address' => strip_tags(form_error('address')),
-                    'pincode' => strip_tags(form_error('pincode')),
+                    // 'pincode' => strip_tags(form_error('pincode')),
                     'latitude' => strip_tags(form_error('latitude')),
                     'longitude' => strip_tags(form_error('longitude')),
                     'slots' => strip_tags(form_error('slots')),
