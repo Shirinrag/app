@@ -152,7 +152,7 @@
          </a>
       </li>
       <li class="nav-item">
-         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic">
+         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
          <i class="icon-layout menu-icon"></i>
          <span class="menu-title">About Us</span>
          <i class="menu-arrow"></i>
@@ -272,8 +272,7 @@
                   <a class="nav-link" href="<?=base_url()?>reports/booking_reports">
                      Booking Report
                   </a>
-               </li>
-              
+               </li>+              
             </ul>
          </div>
       </li>
