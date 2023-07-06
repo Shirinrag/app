@@ -965,7 +965,9 @@ class Superadmin extends CI_Controller {
             $reserved_place_count = $this->input->post('edit_reserved_place_count');
             $total_place_count = $this->input->post('edit_total_place_count');
             $edit_referral_code = $this->input->post('edit_referral_code');  
-            $edit_place_type = $this->input->post('edit_place_type');  
+            $edit_place_type = $this->input->post('edit_place_type');
+            $edit_profile_img = $this->input->post('last_price_image');
+            $is_file = true;
             $this->form_validation->set_rules('edit_fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_fk_country_id','Country', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_fk_state_id','State', 'trim|required',array('required' => 'You must provide a %s',));
@@ -999,53 +1001,81 @@ class Superadmin extends CI_Controller {
                     'edit_referral_code' => strip_tags(form_error('edit_referral_code')),
                 );
             } else {
-                foreach ($fk_vehicle_type as $fk_vehicle_type_key => $fk_vehicle_type_row) {
-                    $hour_price_slab_id[$fk_vehicle_type_row] = $this->input->post('hour_price_slab_id_'.$fk_vehicle_type_row);                    
-                    $from_hours[$fk_vehicle_type_row] = $this->input->post('edit_from_hours_'.$fk_vehicle_type_row);              
-                    $to_hours[$fk_vehicle_type_row] = $this->input->post('edit_to_hours_'.$fk_vehicle_type_row);              
-                    $price[$fk_vehicle_type_row] = $this->input->post('edit_price_'.$fk_vehicle_type_row);      
-                    $monthly_price_slab_id[$fk_vehicle_type_row] = $this->input->post('edit_monthly_price_slab_id_'.$fk_vehicle_type_row);      
-                    $edit_no_of_days[$fk_vehicle_type_row] = $this->input->post('edit_no_of_days_'.$fk_vehicle_type_row);      
-                    $edit_cost[$fk_vehicle_type_row] = $this->input->post('edit_cost_'.$fk_vehicle_type_row);      
+                // price_image
+                if(!empty($fk_vehicle_typ)){
+                    foreach ($fk_vehicle_type as $fk_vehicle_type_key => $fk_vehicle_type_row) {
+                        $hour_price_slab_id[$fk_vehicle_type_row] = $this->input->post('hour_price_slab_id_'.$fk_vehicle_type_row);                    
+                        $from_hours[$fk_vehicle_type_row] = $this->input->post('edit_from_hours_'.$fk_vehicle_type_row);              
+                        $to_hours[$fk_vehicle_type_row] = $this->input->post('edit_to_hours_'.$fk_vehicle_type_row);              
+                        $price[$fk_vehicle_type_row] = $this->input->post('edit_price_'.$fk_vehicle_type_row);      
+                        $monthly_price_slab_id[$fk_vehicle_type_row] = $this->input->post('edit_monthly_price_slab_id_'.$fk_vehicle_type_row);      
+                        $edit_no_of_days[$fk_vehicle_type_row] = $this->input->post('edit_no_of_days_'.$fk_vehicle_type_row);      
+                        $edit_cost[$fk_vehicle_type_row] = $this->input->post('edit_cost_'.$fk_vehicle_type_row);      
+                    }
                 }
-                $curl_data = array(
-                    'fk_vendor_id'=>$fk_vendor_id,
-                    'fk_country_id'=>$fk_country_id,
-                    'fk_state_id'=>$fk_state_id,
-                    'fk_city_id'=>$fk_city_id,
-                    'place_name'=>$place_name,
-                    'address'=>$address,
-                    'pincode'=>$pincode,
-                    'latitude'=>$latitude,
-                    'longitude'=>$longitude,
-                    'slots'=>$slots,
-                    'fk_place_status_id'=>$fk_place_status_id,
-                    'fk_parking_price_type'=>$fk_parking_price_type,
-                    'ext_price'=>$ext_price,
-                    'hour_price_slab_id'=>json_encode($hour_price_slab_id),
-                    'from_hours'=>json_encode($from_hours),
-                    'to_hours'=>json_encode($to_hours),
-                    'price'=>json_encode($price),
-                    'id'=>$id,
-                    'fk_vehicle_type'=>json_encode($fk_vehicle_type),
-                    'per_hour_charges'=>$per_hour_charges,
-                    'place_count'=>$place_count,
-                    'reserved_place_count'=>$reserved_place_count,
-                    'total_place_count'=>$total_place_count,
-                    'referral_code'=>$edit_referral_code,
-                    'place_type'=>$edit_place_type,
-                    'monthly_price_slab_id'=>json_encode($monthly_price_slab_id),
-                    'no_of_days'=>json_encode($edit_no_of_days),
-                    'cost'=>json_encode($edit_cost),
-                );
-             
-                $curl = $this->link->hits('update-place', $curl_data);
-                $curl = json_decode($curl, true);
-                if ($curl['status']==1) {
-                    $response['status']='success';
-                } else {
-                    $response['status'] = 'failure';
-                     $response['error'] = array("edit_place_name" => $curl['message']);
+                
+                if (!empty($_FILES['edit_price_image']['name'])) {
+                    $edit_profile_img = trim($_FILES['edit_price_image']['name']);
+                    $edit_profile_img = preg_replace('/\s/', '_', $edit_profile_img);
+                    $profile_image = mt_rand(100000, 999999) . '_' . $edit_profile_img;
+                    $config['upload_path'] = './uploads/';
+                    $config['file_name'] = $profile_image;
+                    $config['overwrite'] = TRUE;
+                    $config["allowed_types"] = 'jpg|jpeg|png|bmp';
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+                    if (!$this->upload->do_upload('edit_price_image')) {
+                        $is_file = false;
+                        $errors = $this->upload->display_errors();
+                        $response['status'] = 'failure';
+                        $response['error'] = array('edit_price_image' => $errors,);
+                    }
+                } 
+                if ($is_file) {
+                
+                    if (!empty($profile_image)) {
+                        $edit_profile_img = 'uploads/' .$profile_image;
+                    }
+                        $curl_data = array(
+                            'fk_vendor_id'=>$fk_vendor_id,
+                            'fk_country_id'=>$fk_country_id,
+                            'fk_state_id'=>$fk_state_id,
+                            'fk_city_id'=>$fk_city_id,
+                            'place_name'=>$place_name,
+                            'address'=>$address,
+                            'pincode'=>$pincode,
+                            'latitude'=>$latitude,
+                            'longitude'=>$longitude,
+                            'slots'=>$slots,
+                            'fk_place_status_id'=>$fk_place_status_id,
+                            'fk_parking_price_type'=>$fk_parking_price_type,
+                            'ext_price'=>$ext_price,
+                            'hour_price_slab_id'=>json_encode(@$hour_price_slab_id),
+                            'from_hours'=>json_encode(@$from_hours),
+                            'to_hours'=>json_encode(@$to_hours),
+                            'price'=>json_encode(@$price),
+                            'id'=>$id,
+                            'fk_vehicle_type'=>json_encode($fk_vehicle_type),
+                            'per_hour_charges'=>$per_hour_charges,
+                            'place_count'=>$place_count,
+                            'reserved_place_count'=>$reserved_place_count,
+                            'total_place_count'=>$total_place_count,
+                            'referral_code'=>$edit_referral_code,
+                            'place_type'=>$edit_place_type,
+                            'monthly_price_slab_id'=>json_encode(@$monthly_price_slab_id),
+                            'no_of_days'=>json_encode(@$edit_no_of_days),
+                            'cost'=>json_encode(@$edit_cost),
+                            'price_image' => $edit_profile_img,     
+                        );
+                     
+                        $curl = $this->link->hits('update-place', $curl_data);
+                        $curl = json_decode($curl, true);
+                        if ($curl['status']==1) {
+                            $response['status']='success';
+                        } else {
+                            $response['status'] = 'failure';
+                             $response['error'] = array("edit_place_name" => $curl['message']);
+                        }
                 }
             }
         } else {

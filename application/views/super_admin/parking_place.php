@@ -485,6 +485,17 @@
                                     <span class="error_msg" id="edit_place_type_error"></span>
                                  </div>
                               </div> 
+                              <div class="col-md-4">
+                                 <div class="form-group">
+                                    <label>Upload Price Image</label>
+                                    <input type="file" name="edit_price_image" id="edit_price_image" class="form-control file-text">
+                                    <span class="error_msg" id="edit_price_image_error"></span>
+                                 </div>
+                                 <input type="hidden" name="last_price_image" id="last_price_image">
+                              </div> 
+                              <div class="col-md-4">
+                                 <div id="price_image_data"></div>
+                              </div>
                         </div>
                            <div class="row">                      
                                        <div class="col-md-3">

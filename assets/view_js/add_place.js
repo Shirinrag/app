@@ -215,6 +215,8 @@ $(document).on("click", ".edit_place_data", function() {
             $('#edit_total_place_count').val(info['total_place_count']);
             $('#edit_referral_code').val(info['referral_code']);
             $('#edit_place_type').val(info['parking_place_type']);
+            $('#edit_place_type').trigger("chosen:updated");
+            $('#last_price_image').val(info['price_image']);
             var state_option = "";
             var option_data = "";
             $.each(state_details, function(state_details_index, state_details_row) {
@@ -352,6 +354,13 @@ $(document).on("click", ".edit_place_data", function() {
             $(".chosen-select-deselect").chosen({
                             width: "100%",
                         });   
+            
+             if(info['price_image'] !=="")
+            {   
+                var image = '';
+                image = '<img src="' + frontend_path +info['price_image'] + '" class="" width="150px" height="150px">';
+                 $('#price_image_data').html(image);
+            }
             
         },
     });
