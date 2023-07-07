@@ -60,7 +60,7 @@
                                     <div class="col-md-3">
                                        <div class="form-group">
                                           <label>Date</label>
-                                          <input type="text" class="form-control datepicker" name="date[]" id="date_0" placeholder="Price" onkeypress="return isNumber(event)">
+                                          <input type="text" class="form-control datepicker" name="date[]" id="date_0" placeholder="Date" onkeypress="return isNumber(event)">
                                           <span class="error_msg" id="date_error"></span>
                                        </div>
                                     </div>
