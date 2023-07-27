@@ -669,13 +669,15 @@ class Superadmin extends CI_Controller {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
             $curl = $this->link->hits('get-all-parking-data', array(), '', 0);
             $curl = json_decode($curl, true);
+           
             $data['countries_data'] = $curl['countries_data'];
             $data['place_status'] = $curl['place_status'];
             $data['price_type'] = $curl['price_type'];
             $data['vendor'] = $curl['vendor'];
             $data['vehicle_data'] = $curl['vehicle_data'];
             $data['pass_days_data'] = $curl['pass_days_data'];
-            
+            $data['currency_data'] = $curl['currency_data'];  
+            // echo '<pre>'; print_r($data); exit;      
             $this->load->view('super_admin/parking_place',$data);
         } else {
             redirect(base_url().'superadmin');
@@ -1002,7 +1004,7 @@ class Superadmin extends CI_Controller {
                 );
             } else {
                 // price_image
-                if(!empty($fk_vehicle_typ)){
+                if(!empty($fk_vehicle_type)){
                     foreach ($fk_vehicle_type as $fk_vehicle_type_key => $fk_vehicle_type_row) {
                         $hour_price_slab_id[$fk_vehicle_type_row] = $this->input->post('hour_price_slab_id_'.$fk_vehicle_type_row);                    
                         $from_hours[$fk_vehicle_type_row] = $this->input->post('edit_from_hours_'.$fk_vehicle_type_row);              
@@ -1013,7 +1015,7 @@ class Superadmin extends CI_Controller {
                         $edit_cost[$fk_vehicle_type_row] = $this->input->post('edit_cost_'.$fk_vehicle_type_row);      
                     }
                 }
-                
+                // echo '<pre>'; print_r($from_hours); exit;
                 if (!empty($_FILES['edit_price_image']['name'])) {
                     $edit_profile_img = trim($_FILES['edit_price_image']['name']);
                     $edit_profile_img = preg_replace('/\s/', '_', $edit_profile_img);
@@ -1067,7 +1069,7 @@ class Superadmin extends CI_Controller {
                             'cost'=>json_encode(@$edit_cost),
                             'price_image' => $edit_profile_img,     
                         );
-                     
+                     // echo '<pre>'; print_r($curl_data); exit;
                         $curl = $this->link->hits('update-place', $curl_data);
                         $curl = json_decode($curl, true);
                         if ($curl['status']==1) {

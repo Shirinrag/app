@@ -20,6 +20,9 @@ $(document).ready(function() {
                     }
                 },
             },
+            { "data": "referal_code"},
+            { "data": "created_at"},
+            
             { "data": "statusdata",
                 "className": "change_status",
                 render: function(data) {

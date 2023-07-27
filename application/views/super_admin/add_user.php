@@ -41,6 +41,8 @@
                           <th>Contact No</th>
                           <th>Car No.</th>
                           <th>OTP Verified</th>
+                          <th>Referal Code</th>
+                          <th>Registration Date</th>
                           <th>Status</th>
                         </tr>
                       </thead>
