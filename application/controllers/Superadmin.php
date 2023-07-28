@@ -1335,6 +1335,7 @@ class Superadmin extends CI_Controller {
         }
         echo json_encode($response);
     }
+
     // ======================== Duty Allocation ================================
     public function duty_allocation()
     {
@@ -2981,6 +2982,40 @@ class Superadmin extends CI_Controller {
         } else {
             $response['status']='login_failure';
             $response['url']=base_url().'superadmin';
+        }
+        echo json_encode($response);
+    }
+
+     public function update_bluetooth_device_status()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $id = $this->input->post('id'); 
+            $status = $this->input->post('status'); 
+            if (empty($id)) {
+                $response['message'] = 'User id is required.';
+                $response['status'] = 0;
+            }else if($status=='') {
+                $response['message'] = 'status is required.';
+                $response['status'] = 0;
+            }else{
+                $curl_data = array(   
+                  'id'=>$id,
+                  'status'=>$status,
+                );
+                // echo '<pre>'; print_r($curl_data); exit;
+                $curl = $this->link->hits('update-bluetooth-device-status',$curl_data);
+                $curl = json_decode($curl, TRUE);
+                if($curl['message']=='success'){
+                    $response['message']='Status Changed successfully';
+                    $response['status'] = 1;
+                }else{
+                    $response['message'] = $curl['message'];
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            $response['status'] = 'failure';
+            $response['url'] = base_url() . "login";
         }
         echo json_encode($response);
     }
