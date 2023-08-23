@@ -1,6 +1,11 @@
 $(document).ready(function() {
     table = $('#user_data_table').DataTable( {
         "ajax": frontend_path+"superadmin/display_all_user_data",
+        dom: 'Bfrtip',           
+        buttons: [
+              'excel',
+              'pdf',
+            ],
         "columns": [
             { "data": null},
             { "data": "firstName"},

@@ -741,11 +741,13 @@ class Superadmin extends CI_Controller {
             if (!empty($vehicle_id)) {
                 $curl_data = array('id' => $vehicle_id);
                 $curl = $this->link->hits('get-vehicle-details', $curl_data);
-                $curl = json_decode($curl, TRUE);          
+                $curl = json_decode($curl, TRUE);      
+                    // echo '<pre>'; print_r($curl); exit;
                  if (!empty($curl['vehicle_data'])) {
                     $response['status'] = 'success';
                     $response['vehicle_data'] = $curl['vehicle_data'];   
-                    $response['pass_days_data'] = $curl['pass_days_data'];   
+                    $response['pass_days_data'] = $curl['pass_days_data']; 
+                    $response['currency_data'] = $curl['currency_data'];   
                 } else {
                     $response['status'] = 'failure';
                 }
@@ -763,7 +765,7 @@ class Superadmin extends CI_Controller {
     {
          if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             // $result = validation_two_wheeler('from_hours_1','to_hours_1','price_1',$_POST);exit;
-            // echo '<pre>'; print_r($_POST); exit;
+            echo '<pre>'; print_r($_POST); exit;
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');    
             $fk_vendor_id = $this->input->post('fk_vendor_id');        
             $fk_country_id = $this->input->post('fk_country_id');        
@@ -825,8 +827,10 @@ class Superadmin extends CI_Controller {
                      $from_hours[$fk_vehicle_type_row] = $this->input->post('from_hours_'.$fk_vehicle_type_row);              
                      $to_hours[$fk_vehicle_type_row] = $this->input->post('to_hours_'.$fk_vehicle_type_row);              
                      $price[$fk_vehicle_type_row] = $this->input->post('price_'.$fk_vehicle_type_row);    
+                     $currency[$fk_vehicle_type_row] = $this->input->post('currency_'.$fk_vehicle_type_row);    
                      $no_of_days[$fk_vehicle_type_row] = $this->input->post('no_of_days_'.$fk_vehicle_type_row);    
                      $cost[$fk_vehicle_type_row] = $this->input->post('cost_'.$fk_vehicle_type_row);    
+                     $currencys[$fk_vehicle_type_row] = $this->input->post('currencys_'.$fk_vehicle_type_row);    
                      // echo '<pre>'; print_r($from_hours);
                 }
                      // exit;
@@ -847,6 +851,7 @@ class Superadmin extends CI_Controller {
                     'from_hours'=>json_encode($from_hours),
                     'to_hours'=>json_encode($to_hours),
                     'price'=>json_encode($price),
+                    'currency'=>json_encode($currency),
                     'per_hour_charges'=>$per_hour_charges,
                     'fk_vehicle_type' =>json_encode($fk_vehicle_type),
                     'place_count'=>$place_count,
@@ -856,6 +861,7 @@ class Superadmin extends CI_Controller {
                     'place_type'=>$place_type,
                     'no_of_days'=>json_encode($no_of_days),
                     'cost'=>json_encode($cost),
+                    'currencys'=>json_encode($currencys),
                 );             
                 // echo '<pre>'; print_r($curl_data); exit;  
                 $curl = $this->link->hits('add-place', $curl_data);
@@ -876,7 +882,6 @@ class Superadmin extends CI_Controller {
     public function display_all_parking_place()
     {
         $parking_place_data = $this->link->hits('display-all-parking-place-data', array());
-        // echo '<pre>'; print_r($parking_place_data); exit;
         $parking_place_data = json_decode($parking_place_data, true);
         $place_status = $parking_place_data['place_status'];
         $data = array();
@@ -922,6 +927,7 @@ class Superadmin extends CI_Controller {
             $id = $this->input->post('id');
             $curl_data = array('id' => $id);
             $curl = $this->link->hits('get-parking-place-details-on-id', $curl_data);
+            
             $curl = json_decode($curl, TRUE);
             $data['parking_place_data'] = $curl['parking_place_data'];
             $data['hour_price_slab'] = $curl['hour_price_slab'];
@@ -935,10 +941,10 @@ class Superadmin extends CI_Controller {
             $data['monthly_price_slab'] = $curl['monthly_price_slab'];
             $data['pass_days_data'] = $curl['pass_days_data'];
             $response = $data;
-            // echo '<pre>'; print_r($response); exit;
+            echo '<pre>'; print_r($response); exit;
         }else {
-            $resoponse['status']='login_failure'; 
-            $resoponse['url']=base_url().'superadmin';
+            $response['status']='login_failure'; 
+            $response['url']=base_url().'superadmin';
         }
         echo json_encode($response);
     }
@@ -1003,7 +1009,6 @@ class Superadmin extends CI_Controller {
                     'edit_referral_code' => strip_tags(form_error('edit_referral_code')),
                 );
             } else {
-                // price_image
                 if(!empty($fk_vehicle_type)){
                     foreach ($fk_vehicle_type as $fk_vehicle_type_key => $fk_vehicle_type_row) {
                         $hour_price_slab_id[$fk_vehicle_type_row] = $this->input->post('hour_price_slab_id_'.$fk_vehicle_type_row);                    
@@ -1015,7 +1020,6 @@ class Superadmin extends CI_Controller {
                         $edit_cost[$fk_vehicle_type_row] = $this->input->post('edit_cost_'.$fk_vehicle_type_row);      
                     }
                 }
-                // echo '<pre>'; print_r($from_hours); exit;
                 if (!empty($_FILES['edit_price_image']['name'])) {
                     $edit_profile_img = trim($_FILES['edit_price_image']['name']);
                     $edit_profile_img = preg_replace('/\s/', '_', $edit_profile_img);
@@ -1247,10 +1251,14 @@ class Superadmin extends CI_Controller {
             $edit_id = $this->input->post('edit_id');        
             $fk_machine_id = $this->input->post('fk_machine_id');        
             $edit_slot_id = $this->input->post('edit_slot_id');       
+            $bluetooth_device_name = $this->input->post('bluetooth_device_name'); 
+            $service_key = $this->input->post('service_key');     
             $curl_data = array(
                 'edit_id'=>$edit_id,
                 'fk_machine_id'=>json_encode($fk_machine_id),
                 'slot_id'=>json_encode($edit_slot_id),
+                'bluetooth_device_name'=>json_encode($bluetooth_device_name),
+                'service_key'=>json_encode($service_key),
             );
             $curl = $this->link->hits('save-mapped-device', $curl_data);
             $curl = json_decode($curl, true);
