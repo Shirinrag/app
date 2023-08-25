@@ -927,7 +927,6 @@ class Superadmin extends CI_Controller {
             $id = $this->input->post('id');
             $curl_data = array('id' => $id);
             $curl = $this->link->hits('get-parking-place-details-on-id', $curl_data);
-            
             $curl = json_decode($curl, TRUE);
             $data['parking_place_data'] = $curl['parking_place_data'];
             $data['hour_price_slab'] = $curl['hour_price_slab'];
@@ -940,8 +939,8 @@ class Superadmin extends CI_Controller {
             $data['vehicle_type'] = $curl['vehicle_type'];
             $data['monthly_price_slab'] = $curl['monthly_price_slab'];
             $data['pass_days_data'] = $curl['pass_days_data'];
+            $data['currency_data'] = $curl['currency_data'];
             $response = $data;
-            echo '<pre>'; print_r($response); exit;
         }else {
             $response['status']='login_failure'; 
             $response['url']=base_url().'superadmin';
@@ -950,6 +949,7 @@ class Superadmin extends CI_Controller {
     }
     public function update_place_details()
     {
+        // echo '<pre>'; print_r($_POST); exit;
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
             // echo '<pre>'; print_r($_POST); exit;                        
@@ -1015,9 +1015,11 @@ class Superadmin extends CI_Controller {
                         $from_hours[$fk_vehicle_type_row] = $this->input->post('edit_from_hours_'.$fk_vehicle_type_row);              
                         $to_hours[$fk_vehicle_type_row] = $this->input->post('edit_to_hours_'.$fk_vehicle_type_row);              
                         $price[$fk_vehicle_type_row] = $this->input->post('edit_price_'.$fk_vehicle_type_row);      
+                        $currency[$fk_vehicle_type_row] = $this->input->post('edit_currency_'.$fk_vehicle_type_row);     
                         $monthly_price_slab_id[$fk_vehicle_type_row] = $this->input->post('edit_monthly_price_slab_id_'.$fk_vehicle_type_row);      
                         $edit_no_of_days[$fk_vehicle_type_row] = $this->input->post('edit_no_of_days_'.$fk_vehicle_type_row);      
                         $edit_cost[$fk_vehicle_type_row] = $this->input->post('edit_cost_'.$fk_vehicle_type_row);      
+                        $currencys[$fk_vehicle_type_row] = $this->input->post('edit_currencys_'.$fk_vehicle_type_row);      
                     }
                 }
                 if (!empty($_FILES['edit_price_image']['name'])) {
@@ -1060,6 +1062,7 @@ class Superadmin extends CI_Controller {
                             'from_hours'=>json_encode(@$from_hours),
                             'to_hours'=>json_encode(@$to_hours),
                             'price'=>json_encode(@$price),
+                            'currency'=>json_encode(@$currency),
                             'id'=>$id,
                             'fk_vehicle_type'=>json_encode($fk_vehicle_type),
                             'per_hour_charges'=>$per_hour_charges,
@@ -1071,9 +1074,10 @@ class Superadmin extends CI_Controller {
                             'monthly_price_slab_id'=>json_encode(@$monthly_price_slab_id),
                             'no_of_days'=>json_encode(@$edit_no_of_days),
                             'cost'=>json_encode(@$edit_cost),
+                            'currencys'=>json_encode(@$currencys),
                             'price_image' => $edit_profile_img,     
                         );
-                     // echo '<pre>'; print_r($curl_data); exit;
+                        // echo '<pre>'; print_r($curl_data); exit;
                         $curl = $this->link->hits('update-place', $curl_data);
                         $curl = json_decode($curl, true);
                         if ($curl['status']==1) {
