@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+// require APPPATH . '/libraries/ColorInterpreter.php';
+require APPPATH . '/libraries/ColorFound.php';
+// require_once('ColorFound.php');
 class Superadmin extends CI_Controller {
 
     public function alpha_dash_space($fullname){
@@ -15,8 +17,15 @@ class Superadmin extends CI_Controller {
 	{
 		$this->load->view('super_admin/login');
 	}
+    function random_color_part() {
+    return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+}
+
+function random_color() {
+    return $this->random_color_part() . $this->random_color_part() . $this->random_color_part();
+}
 	public function dashboard()
-	{
+	{  
 		if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
             $curl = $this->link->hits('dashboard-data', array(), '', 0);
@@ -25,6 +34,27 @@ class Superadmin extends CI_Controller {
             $data['total_place_count'] = $curl['total_place_count'];
             $data['total_booking_count'] = $curl['total_booking_count'];
             $data['total_download_count'] = $curl['total_download_count'];
+            $monthly_count_of_user = $curl['monthly_count_of_user'];
+            foreach ($monthly_count_of_user as $monthly_count_of_user_key => $monthly_count_of_user_row) {
+               $month= $monthly_count_of_user_row['month'];
+               $dateObj   = DateTime::createFromFormat('!m', $month);
+               $monthName[] = $dateObj->format('F');
+               $user_monthly_count[]=$monthly_count_of_user_row['total'];
+               // $color = array("red", "green","blue","orange","brown","purple",);
+               $color = $this->random_color();
+                $colorFound = new ColorFound;
+                $instance = $colorFound->getName("#".$color); 
+
+                $color_1[] = $instance;
+               
+            }
+            
+            //    echo '<pre>'; print_r($color); 
+            // exit;
+               $data['month'] =  '"'.implode('","', $monthName).'"';
+               $data['user_monthly_count'] =  '"'.implode('","', $user_monthly_count).'"';            
+               $data['color'] =  '"'.implode('","', $color_1).'"';            
+               // echo '<pre>'; print_r($data); exit;
 			$this->load->view('super_admin/dashboard',$data);
 		} else {
             redirect(base_url().'superadmin');
@@ -2419,7 +2449,6 @@ class Superadmin extends CI_Controller {
         {
             $curl = $this->link->hits('display-all-register-user-complaint-data', array(), '', 0);
             $curl = json_decode($curl, true);
-            echo '<pre>'; print_r($curl); exit;
             $response['data'] = $curl['register_user_complaint_data'];
         } else {
             $response['status']='login_failure';

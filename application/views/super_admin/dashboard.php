@@ -65,6 +65,15 @@
                         </div>
                      <!-- </div> -->
                   </div>
+                  <div class="row">
+                     <div class="col-md-12">
+                        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+                     </div>
+                     <div class="col-md-12">
+                            <div style="width: 800px;"><canvas id="acquisitions"></canvas></div>
+                     </div>
+                     
+                  </div>
                </div>
                <!-- content-wrapper ends -->
                <!-- partial:partials/_footer.html -->
@@ -78,6 +87,55 @@
       <!-- container-scroller -->
       <!-- plugins:js -->
       <?php include 'common/jsfiles.php';?>
+      <script type="text/javascript">
+         var xValues = ["Today’s User", "Total Bookings", "Total Place", "Downloads"];
+var yValues = [<?=$total_user_count?>, <?=$total_booking_count?>, <?=$total_place_count?>, <?=$total_download_count?>];
+var barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  // "#1e7145"
+];
+
+new Chart("myChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      // text: "World Wide Wine Production 2018"
+    }
+  }
+});
+var xValues = [<?= $month ?>];
+var yValues = [<?= $user_monthly_count?>];
+var barColors = [<?= $color?>];
+
+new Chart("acquisitions", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "World Wine Production 2018"
+    }
+  }
+});
+      </script>
       <!-- End custom js for this page-->
    </body>
 </html>
