@@ -1,10 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-// require APPPATH . '/libraries/ColorInterpreter.php';
 require APPPATH . '/libraries/ColorFound.php';
-// require_once('ColorFound.php');
-class Superadmin extends CI_Controller {
 
+class Superadmin extends CI_Controller {
     public function alpha_dash_space($fullname){
         if (! preg_match('/^[a-zA-Z\s]+$/', $fullname)) {
             $this->form_validation->set_message('alpha_dash_space', 'The %s field may only contain alpha characters & White spaces');
@@ -18,12 +16,12 @@ class Superadmin extends CI_Controller {
 		$this->load->view('super_admin/login');
 	}
     function random_color_part() {
-    return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
-}
+        return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+    }
 
-function random_color() {
-    return $this->random_color_part() . $this->random_color_part() . $this->random_color_part();
-}
+    function random_color() {
+            return $this->random_color_part() . $this->random_color_part() . $this->random_color_part();
+    }
 	public function dashboard()
 	{  
 		if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
@@ -36,26 +34,19 @@ function random_color() {
             $data['total_download_count'] = $curl['total_download_count'];
             $monthly_count_of_user = $curl['monthly_count_of_user'];
             foreach ($monthly_count_of_user as $monthly_count_of_user_key => $monthly_count_of_user_row) {
-               $month= $monthly_count_of_user_row['month'];
-               $dateObj   = DateTime::createFromFormat('!m', $month);
-               $monthName[] = $dateObj->format('F');
-               $user_monthly_count[]=$monthly_count_of_user_row['total'];
-               // $color = array("red", "green","blue","orange","brown","purple",);
-               $color = $this->random_color();
-                $colorFound = new ColorFound;
-                $instance = $colorFound->getName("#".$color); 
-
-                $color_1[] = $instance;
-               
-            }
-            
-            //    echo '<pre>'; print_r($color); 
-            // exit;
+                       $month= $monthly_count_of_user_row['month'];
+                       $dateObj   = DateTime::createFromFormat('!m', $month);
+                       $monthName[] = $dateObj->format('F');
+                       $user_monthly_count[]=$monthly_count_of_user_row['total'];
+                       $color = $this->random_color();
+                        $colorFound = new ColorFound;
+                        $instance = $colorFound->getName("#".$color); 
+                        $color_1[] = $instance;               
+               }
                $data['month'] =  '"'.implode('","', $monthName).'"';
                $data['user_monthly_count'] =  '"'.implode('","', $user_monthly_count).'"';            
                $data['color'] =  '"'.implode('","', $color_1).'"';            
-               // echo '<pre>'; print_r($data); exit;
-			$this->load->view('super_admin/dashboard',$data);
+			   $this->load->view('super_admin/dashboard',$data);
 		} else {
             redirect(base_url().'superadmin');
         }
@@ -3043,7 +3034,6 @@ function random_color() {
                   'id'=>$id,
                   'status'=>$status,
                 );
-                // echo '<pre>'; print_r($curl_data); exit;
                 $curl = $this->link->hits('update-bluetooth-device-status',$curl_data);
                 $curl = json_decode($curl, TRUE);
                 if($curl['message']=='success'){
