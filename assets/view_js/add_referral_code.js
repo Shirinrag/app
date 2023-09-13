@@ -90,7 +90,6 @@ $(document).ready(function() {
 });
 
 function change_referral_code_status(status, id) {
-    console.log(status);console.log(id);
     var status = status;
     if (status == 1) {
         var user_status = 0;

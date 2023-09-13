@@ -223,6 +223,7 @@ $(document).on("click", ".edit_place_data", function () {
          $('#edit_place_type').val(info['parking_place_type']);
          $('#edit_place_type').trigger("chosen:updated");
          $('#last_price_image').val(info['price_image']);
+         $('#last_place_image').val(info['place_image']);
          var state_option = "";
          var option_data = "";
          $.each(state_details, function (state_details_index, state_details_row) {
@@ -398,6 +399,11 @@ $(document).on("click", ".edit_place_data", function () {
             var image = '';
             image = '<img src="' + frontend_path + info['price_image'] + '" class="" width="150px" height="150px">';
             $('#price_image_data').html(image);
+         }
+         if (info['place_image'] !== "") {
+            var place_image = '';
+            place_image = '<img src="' + frontend_path + info['place_image'] + '" class="" width="150px" height="150px">';
+            $('#edit_place_image_data').html(place_image);
          }
 
       },

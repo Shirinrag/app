@@ -183,7 +183,14 @@
                                           </select>
                                           <span class="error_msg" id="place_type_error"></span>
                                        </div>
-                                    </div>       
+                                    </div>  
+                                    <div class="col-md-4">
+                                       <div class="form-group">
+                                          <label>Upload Image</label>
+                                          <input type="file" class="form-control file-text" name="place_image" placeholder="Upload Image" accept="image/png, image/gif, image/jpeg">
+                                          <span class="error_msg" id="place_image_error"></span>
+                                       </div>
+                                    </div>     
                                  </div>    
                                  <div class="row">                      
                                        <div class="col-md-3">
@@ -496,7 +503,18 @@
                               <div class="col-md-4">
                                  <div id="price_image_data"></div>
                               </div>
-                        </div>
+                              <div class="col-md-4">
+                                 <div class="form-group">
+                                    <label>Upload Image</label>
+                                    <input type="file" class="form-control file-text" name="edit_place_image" placeholder="Upload Image" accept="image/png, image/gif, image/jpeg">
+                                    <span class="error_msg" id="edit_place_image_error"></span>
+                                 </div>
+                              </div> 
+                               <input type="hidden" name="last_place_image" id="last_place_image">
+                              <div class="col-md-4">
+                                    <div id="edit_place_image_data"></div>
+                              </div>
+                           </div>
                            <div class="row">                      
                                        <div class="col-md-3">
                                           <div class="form-group">

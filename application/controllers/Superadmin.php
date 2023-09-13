@@ -786,7 +786,7 @@ class Superadmin extends CI_Controller {
     {
          if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             // $result = validation_two_wheeler('from_hours_1','to_hours_1','price_1',$_POST);exit;
-            echo '<pre>'; print_r($_POST); exit;
+            // echo '<pre>'; print_r($_POST); exit;
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');    
             $fk_vendor_id = $this->input->post('fk_vendor_id');        
             $fk_country_id = $this->input->post('fk_country_id');        
@@ -842,56 +842,85 @@ class Superadmin extends CI_Controller {
                     'referral_code' => strip_tags(form_error('referral_code')),
                 );
             } else {
-
-                foreach ($fk_vehicle_type as $fk_vehicle_type_key => $fk_vehicle_type_row) {
+                $sample_image = '';
+                $is_signature_file = true;
+                if (!empty($_FILES['place_image']['name'])) {
+                    $filename = $_FILES['place_image']['name'];
+                    $test_img = $filename;
+                    $test_img = preg_replace('/\s/', '_', $test_img);
+                    $test_image = mt_rand(100000, 999999) . '_' .$test_img;
+                    $setting['image_path'] = $_FILES['place_image']['tmp_name'];
+                    $setting['image_name'] = $test_image;
+                    $setting['compress_path'] = './uploads/';
+                    $setting['jpg_compress_level'] = 5;
+                    $setting['png_compress_level'] = 5;
+                    $setting['create_thumb'] = FALSE;
+                    $this->load->library('imgcompressor');
+                    $results = $this->imgcompressor->do_compress($setting);
+                    if (empty($results['data']['compressed']['name'])) {
+                        $is_signature_file = false;
+                        $response['status'] = 'failure';
+                        $response['error'] = array(
+                            'place_image' => $results['message'],
+                        );
+                    } else {
+                        $sample_image = 'uploads/'.$test_image;
+                    }
+                }  
+                if(!empty($fk_vehicle_type)){
+                    foreach ($fk_vehicle_type as $fk_vehicle_type_key => $fk_vehicle_type_row) {
                     
-                     $from_hours[$fk_vehicle_type_row] = $this->input->post('from_hours_'.$fk_vehicle_type_row);              
-                     $to_hours[$fk_vehicle_type_row] = $this->input->post('to_hours_'.$fk_vehicle_type_row);              
-                     $price[$fk_vehicle_type_row] = $this->input->post('price_'.$fk_vehicle_type_row);    
-                     $currency[$fk_vehicle_type_row] = $this->input->post('currency_'.$fk_vehicle_type_row);    
-                     $no_of_days[$fk_vehicle_type_row] = $this->input->post('no_of_days_'.$fk_vehicle_type_row);    
-                     $cost[$fk_vehicle_type_row] = $this->input->post('cost_'.$fk_vehicle_type_row);    
-                     $currencys[$fk_vehicle_type_row] = $this->input->post('currencys_'.$fk_vehicle_type_row);    
-                     // echo '<pre>'; print_r($from_hours);
-                }
-                     // exit;
-                $curl_data = array(
-                    'fk_vendor_id'=>$fk_vendor_id,
-                    'fk_country_id'=>$fk_country_id,
-                    'fk_state_id'=>$fk_state_id,
-                    'fk_city_id'=>$fk_city_id,
-                    'place_name'=>$place_name,
-                    'address'=>$address,
-                    'pincode'=>$pincode,
-                    'latitude'=>$latitude,
-                    'longitude'=>$longitude,
-                    'slots'=>$slots,
-                    'fk_place_status_id'=>$fk_place_status_id,
-                    'fk_parking_price_type'=>$fk_parking_price_type,
-                    'ext_price'=>$ext_price,
-                    'from_hours'=>json_encode($from_hours),
-                    'to_hours'=>json_encode($to_hours),
-                    'price'=>json_encode($price),
-                    'currency'=>json_encode($currency),
-                    'per_hour_charges'=>$per_hour_charges,
-                    'fk_vehicle_type' =>json_encode($fk_vehicle_type),
-                    'place_count'=>$place_count,
-                    'reserved_place_count'=>$reserved_place_count,
-                    'total_place_count'=>$total_place_count,
-                    'referral_code'=>$referral_code,
-                    'place_type'=>$place_type,
-                    'no_of_days'=>json_encode($no_of_days),
-                    'cost'=>json_encode($cost),
-                    'currencys'=>json_encode($currencys),
-                );             
-                // echo '<pre>'; print_r($curl_data); exit;  
-                $curl = $this->link->hits('add-place', $curl_data);
-                $curl = json_decode($curl, true);
-                if ($curl['status']==1) {
-                    $response['status']='success';
-                } else {
-                    $response['status'] = 'failure';
-                     $response['error'] = array("place_name" => $curl['message']);
+                         $from_hours[$fk_vehicle_type_row] = $this->input->post('from_hours_'.$fk_vehicle_type_row);              
+                         $to_hours[$fk_vehicle_type_row] = $this->input->post('to_hours_'.$fk_vehicle_type_row);              
+                         $price[$fk_vehicle_type_row] = $this->input->post('price_'.$fk_vehicle_type_row);    
+                         $currency[$fk_vehicle_type_row] = $this->input->post('currency_'.$fk_vehicle_type_row);    
+                         $no_of_days[$fk_vehicle_type_row] = $this->input->post('no_of_days_'.$fk_vehicle_type_row);    
+                         $cost[$fk_vehicle_type_row] = $this->input->post('cost_'.$fk_vehicle_type_row);    
+                         $currencys[$fk_vehicle_type_row] = $this->input->post('currencys_'.$fk_vehicle_type_row);    
+                         // echo '<pre>'; print_r($from_hours);
+                    }
+                }      
+                
+                 if ($is_signature_file) {
+                        $curl_data = array(
+                            'fk_vendor_id'=>$fk_vendor_id,
+                            'fk_country_id'=>$fk_country_id,
+                            'fk_state_id'=>$fk_state_id,
+                            'fk_city_id'=>$fk_city_id,
+                            'place_name'=>$place_name,
+                            'address'=>$address,
+                            'pincode'=>$pincode,
+                            'latitude'=>$latitude,
+                            'longitude'=>$longitude,
+                            'slots'=>$slots,
+                            'fk_place_status_id'=>$fk_place_status_id,
+                            'fk_parking_price_type'=>$fk_parking_price_type,
+                            'ext_price'=>$ext_price,
+                            'from_hours'=>json_encode(@$from_hours),
+                            'to_hours'=>json_encode(@$to_hours),
+                            'price'=>json_encode(@$price),
+                            'currency'=>json_encode(@$currency),
+                            'per_hour_charges'=>$per_hour_charges,
+                            'fk_vehicle_type' =>json_encode($fk_vehicle_type),
+                            'place_count'=>$place_count,
+                            'reserved_place_count'=>$reserved_place_count,
+                            'total_place_count'=>$total_place_count,
+                            'referral_code'=>$referral_code,
+                            'place_type'=>$place_type,
+                            'no_of_days'=>json_encode(@$no_of_days),
+                            'cost'=>json_encode(@$cost),
+                            'currencys'=>json_encode(@$currencys),
+                            'place_image'=> $sample_image
+                        );             
+                        // echo '<pre>'; print_r($curl_data); exit;  
+                        $curl = $this->link->hits('add-place', $curl_data);
+                        $curl = json_decode($curl, true);
+                        if ($curl['status']==1) {
+                            $response['status']='success';
+                        } else {
+                            $response['status'] = 'failure';
+                             $response['error'] = array("place_name" => $curl['message']);
+                        }
                 }
             }
         } else {
@@ -970,7 +999,6 @@ class Superadmin extends CI_Controller {
     }
     public function update_place_details()
     {
-        // echo '<pre>'; print_r($_POST); exit;
         if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
             $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
             // echo '<pre>'; print_r($_POST); exit;                        
@@ -996,6 +1024,7 @@ class Superadmin extends CI_Controller {
             $edit_referral_code = $this->input->post('edit_referral_code');  
             $edit_place_type = $this->input->post('edit_place_type');
             $edit_profile_img = $this->input->post('last_price_image');
+            $edit_place_image = $this->input->post('last_place_image');
             $is_file = true;
             $this->form_validation->set_rules('edit_fk_vendor_id','Vendor', 'trim|required',array('required' => 'You must provide a %s',));
             $this->form_validation->set_rules('edit_fk_country_id','Country', 'trim|required',array('required' => 'You must provide a %s',));
@@ -1060,10 +1089,30 @@ class Superadmin extends CI_Controller {
                         $response['error'] = array('edit_price_image' => $errors,);
                     }
                 } 
+                if (!empty($_FILES['edit_place_image']['name'])) {
+                    $edit_place_image = trim($_FILES['edit_place_image']['name']);
+                    $edit_place_image = preg_replace('/\s/', '_', $edit_place_image);
+                    $edit_place_image_data = mt_rand(100000, 999999) . '_' . $edit_place_image;
+                    $config['upload_path'] = './uploads/';
+                    $config['file_name'] = $edit_place_image_data;
+                    $config['overwrite'] = TRUE;
+                    $config["allowed_types"] = 'jpg|jpeg|png|bmp';
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+                    if (!$this->upload->do_upload('edit_place_image')) {
+                        $is_file = false;
+                        $errors = $this->upload->display_errors();
+                        $response['status'] = 'failure';
+                        $response['error'] = array('edit_place_image' => $errors,);
+                    }
+                } 
                 if ($is_file) {
                 
                     if (!empty($profile_image)) {
                         $edit_profile_img = 'uploads/' .$profile_image;
+                    }
+                    if (!empty($edit_place_image_data)) {
+                        $edit_place_image = 'uploads/' .$edit_place_image_data;
                     }
                         $curl_data = array(
                             'fk_vendor_id'=>$fk_vendor_id,
@@ -1097,6 +1146,7 @@ class Superadmin extends CI_Controller {
                             'cost'=>json_encode(@$edit_cost),
                             'currencys'=>json_encode(@$currencys),
                             'price_image' => $edit_profile_img,     
+                            'place_image' => $edit_place_image,     
                         );
                         // echo '<pre>'; print_r($curl_data); exit;
                         $curl = $this->link->hits('update-place', $curl_data);
@@ -3049,6 +3099,15 @@ class Superadmin extends CI_Controller {
             $response['url'] = base_url() . "login";
         }
         echo json_encode($response);
+    }
+    public function add_referral_code()
+    {
+        if ($this->session->userdata('parking_adda_superadmin_logged_in')) {
+            $session_data = $this->session->userdata('parking_adda_superadmin_logged_in');
+            $this->load->view('super_admin/referral_code');
+        } else {
+            redirect(base_url().'superadmin');
+        }
     }
     
 }
